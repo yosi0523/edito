@@ -550,6 +550,52 @@ body {
     color: var(--text-light);
 }
 
+.today-cl-item .drag-handle {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 4px 6px;
+    cursor: grab;
+    opacity: 0.3;
+    flex-shrink: 0;
+    touch-action: none;
+}
+
+.today-cl-item .drag-handle span {
+    display: block;
+    width: 16px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+}
+
+.today-cl-item.dragging {
+    opacity: 0.4;
+    background: var(--primary-light);
+}
+
+.today-cl-item.drag-over {
+    border-top: 2px solid var(--primary);
+}
+
+.today-cl-drag-ghost {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(74,144,217,0.25);
+    opacity: 0.92;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    min-width: 200px;
+    max-width: 90vw;
+    transform: scale(1.03);
+}
+
 .today-cl-empty {
     text-align: center;
     color: var(--text-light);
@@ -3523,8 +3569,11 @@ function renderTodayChecklist(dateStr) {
     const dayNames = ['일', '월', '화', '수', '목', '금', '토'];
     const dateTitle = `${d.getMonth()+1}월 ${d.getDate()}일 (${dayNames[d.getDay()]})`;
 
-    const itemsHtml = allItems.map(item => `
-        <div class="today-cl-item">
+    const itemsHtml = allItems.map((item, flatIdx) => `
+        <div class="today-cl-item" data-flat-idx="${flatIdx}" data-cl-id="${item.clId}" data-item-idx="${item.idx}">
+            <div class="drag-handle" data-flat-idx="${flatIdx}">
+                <span></span><span></span><span></span>
+            </div>
             <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleChecklistItem('${item.clId}', ${item.idx}, this.checked)">
             <span class="${item.checked ? 'checked-text' : ''}">${escapeHtml(item.text)}</span>
         </div>
@@ -3536,11 +3585,13 @@ function renderTodayChecklist(dateStr) {
                 <span class="today-cl-card-title">${dateTitle} · 리스트 ${allItems.length}개</span>
                 <span class="today-cl-card-toggle ${isCollapsed ? 'collapsed' : ''}">▼</span>
             </div>
-            <div class="today-cl-card-body ${isCollapsed ? 'collapsed' : ''}">
+            <div class="today-cl-card-body ${isCollapsed ? 'collapsed' : ''}" id="today-cl-body">
                 ${itemsHtml}
             </div>
         </div>
     `;
+
+    initTodayClDnD(allItems, dateStr);
 }
 
 function toggleChecklistCard(dateStr) {
@@ -3551,6 +3602,166 @@ function toggleChecklistCard(dateStr) {
     const toggle = card.querySelector('.today-cl-card-toggle');
     if (body) body.classList.toggle('collapsed', checklistCollapsed[dateStr]);
     if (toggle) toggle.classList.toggle('collapsed', checklistCollapsed[dateStr]);
+}
+
+// ===== 할일 드래그 앤 드롭 =====
+function initTodayClDnD(allItems, dateStr) {
+    const body = document.getElementById('today-cl-body');
+    if (!body) return;
+
+    let dragSrcEl = null;
+    let ghost = null;
+    let touchOffsetX = 0, touchOffsetY = 0;
+    let longPressTimer = null;
+    let isDragging = false;
+
+    function getItemEls() {
+        return Array.from(body.querySelectorAll('.today-cl-item'));
+    }
+
+    function createGhost(el, x, y) {
+        ghost = document.createElement('div');
+        ghost.className = 'today-cl-drag-ghost';
+        const cb = el.querySelector('input[type="checkbox"]');
+        const txt = el.querySelector('span:not(.drag-handle span)');
+        ghost.innerHTML = `
+            <div style="width:22px;height:22px;border:2px solid #c5d8f5;border-radius:50%;background:white;flex-shrink:0;"></div>
+            <span>${txt ? txt.textContent : ''}</span>
+        `;
+        document.body.appendChild(ghost);
+        moveGhost(x, y);
+    }
+
+    function moveGhost(x, y) {
+        if (!ghost) return;
+        ghost.style.left = (x - touchOffsetX) + 'px';
+        ghost.style.top = (y - touchOffsetY) + 'px';
+    }
+
+    function removeGhost() {
+        if (ghost) { ghost.remove(); ghost = null; }
+    }
+
+    function getTargetEl(x, y) {
+        const items = getItemEls();
+        for (const item of items) {
+            if (item === dragSrcEl) continue;
+            const rect = item.getBoundingClientRect();
+            if (y < rect.top + rect.height / 2) return item;
+        }
+        return null;
+    }
+
+    function clearDragStates() {
+        getItemEls().forEach(el => {
+            el.classList.remove('dragging', 'drag-over');
+        });
+    }
+
+    async function saveDnDOrder() {
+        // 현재 DOM 순서로 allItems 재정렬
+        const newOrder = getItemEls().map(el => {
+            const fi = parseInt(el.dataset.flatIdx);
+            return allItems[fi];
+        });
+
+        // clId 별로 묶어서 저장
+        const byClId = {};
+        newOrder.forEach(item => {
+            if (!byClId[item.clId]) byClId[item.clId] = [];
+            byClId[item.clId].push({ text: item.text, checked: item.checked });
+        });
+
+        for (const [clId, items] of Object.entries(byClId)) {
+            await db.collection('users').doc(currentUser.uid).collection('checklists')
+                .doc(clId).update({ items });
+        }
+    }
+
+    // ── 터치 이벤트 ──
+    body.querySelectorAll('.drag-handle').forEach(handle => {
+        handle.addEventListener('touchstart', (e) => {
+            const item = handle.closest('.today-cl-item');
+            longPressTimer = setTimeout(() => {
+                isDragging = true;
+                dragSrcEl = item;
+                item.classList.add('dragging');
+                const touch = e.touches[0];
+                const rect = handle.getBoundingClientRect();
+                touchOffsetX = touch.clientX - rect.left + 10;
+                touchOffsetY = touch.clientY - rect.top + 10;
+                createGhost(item, touch.clientX, touch.clientY);
+                navigator.vibrate && navigator.vibrate(40);
+            }, 200);
+        }, { passive: true });
+
+        handle.addEventListener('touchmove', (e) => {
+            clearTimeout(longPressTimer);
+            if (!isDragging) return;
+            e.preventDefault();
+            const touch = e.touches[0];
+            moveGhost(touch.clientX, touch.clientY);
+            clearDragStates();
+            dragSrcEl.classList.add('dragging');
+            const target = getTargetEl(touch.clientX, touch.clientY);
+            if (target) target.classList.add('drag-over');
+        }, { passive: false });
+
+        handle.addEventListener('touchend', async (e) => {
+            clearTimeout(longPressTimer);
+            if (!isDragging) return;
+            isDragging = false;
+            const touch = e.changedTouches[0];
+            const target = getTargetEl(touch.clientX, touch.clientY);
+            if (target && target !== dragSrcEl) {
+                body.insertBefore(dragSrcEl, target);
+            } else if (!target) {
+                body.appendChild(dragSrcEl);
+            }
+            clearDragStates();
+            removeGhost();
+            await saveDnDOrder();
+        });
+
+        handle.addEventListener('touchcancel', () => {
+            clearTimeout(longPressTimer);
+            isDragging = false;
+            clearDragStates();
+            removeGhost();
+        });
+    });
+
+    // ── 마우스 이벤트 (데스크탑) ──
+    body.querySelectorAll('.today-cl-item').forEach(item => {
+        item.addEventListener('dragstart', (e) => {
+            dragSrcEl = item;
+            item.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        });
+        item.addEventListener('dragend', () => {
+            clearDragStates();
+            saveDnDOrder();
+        });
+        item.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            clearDragStates();
+            dragSrcEl && dragSrcEl.classList.add('dragging');
+            item.classList.add('drag-over');
+        });
+        item.addEventListener('drop', (e) => {
+            e.preventDefault();
+            if (dragSrcEl && dragSrcEl !== item) {
+                body.insertBefore(dragSrcEl, item);
+            }
+        });
+    });
+
+    body.querySelectorAll('.drag-handle').forEach(handle => {
+        const item = handle.closest('.today-cl-item');
+        handle.addEventListener('mousedown', () => { item.draggable = true; });
+        handle.addEventListener('mouseup', () => { item.draggable = false; });
+    });
 }
 
 // ===== 오늘의 명언 =====
