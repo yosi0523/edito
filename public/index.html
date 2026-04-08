@@ -192,6 +192,44 @@ body {
 
 .today-btn:hover { background: rgba(255,255,255,0.3); }
 
+#header-month-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 8px 14px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.15);
+    transition: background 0.2s;
+    user-select: none;
+}
+
+#header-month-toggle:hover { background: rgba(255,255,255,0.28); }
+
+#header-month-toggle #current-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    padding: 0;
+    min-width: 0;
+    white-space: nowrap;
+}
+
+.header-toggle-arrow {
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+    transition: transform 0.3s;
+    line-height: 1;
+}
+
+.header-toggle-arrow.collapsed {
+    transform: rotate(0deg);
+}
+
+.header-toggle-arrow.expanded {
+    transform: rotate(180deg);
+}
+
 .user-btn {
     width: 40px;
     height: 40px;
@@ -258,20 +296,50 @@ body {
     overflow: hidden;
 }
 
+/* ===== 달력 내부 월 이동 nav ===== */
+#cal-inner-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 10px 20px 6px;
+    background: white;
+}
+
+#cal-inner-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    min-width: 110px;
+    text-align: center;
+}
+
+.cal-inner-nav-btn {
+    width: 34px;
+    height: 34px;
+    border: none;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 22px;
+    font-weight: 700;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    line-height: 1;
+}
+
+.cal-inner-nav-btn:hover { background: #d0e4fb; }
+
 /* ===== 캘린더 접기/펴기 ===== */
 #calendar-collapse-section {
     flex-shrink: 0;
 }
 
 #calendar-toggle-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 10px 20px;
-    background: white;
-    cursor: pointer;
-    border-bottom: 1px solid var(--border);
+    display: none;
 }
 
 #today-display {
@@ -322,15 +390,33 @@ body {
     padding: 14px 6px 10px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     position: relative;
 }
 
+.checklist-header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checklist-date-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    background: var(--primary);
+    padding: 3px 10px;
+    border-radius: 20px;
+    line-height: 1.4;
+}
+
+.checklist-header-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+}
+
 #today-checklist-header .header-add-btn {
-    position: absolute;
-    right: 6px;
-    top: 50%;
-    transform: translateY(-50%);
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -423,11 +509,40 @@ body {
 }
 
 .today-cl-item input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
     width: 22px;
     height: 22px;
-    accent-color: var(--primary);
+    border: 2px solid #c5d8f5;
+    border-radius: 50%;
+    background: white;
     cursor: pointer;
     flex-shrink: 0;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.today-cl-item input[type="checkbox"]:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+.today-cl-item input[type="checkbox"]:checked {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.today-cl-item input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 6px;
+    height: 10px;
+    border: 2.5px solid white;
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg);
 }
 
 .today-cl-item .checked-text {
@@ -2013,9 +2128,10 @@ body {
             <!-- 캘린더 헤더 -->
             <header id="header-calendar" class="header">
                 <div class="header-left">
-                    <button id="prev-btn" class="nav-btn">&lt;</button>
-                    <h2 id="current-title"></h2>
-                    <button id="next-btn" class="nav-btn">&gt;</button>
+                    <div id="header-month-toggle" onclick="toggleCalendar()">
+                        <span id="current-title"></span>
+                        <span id="header-toggle-arrow" class="header-toggle-arrow collapsed">▼</span>
+                    </div>
                 </div>
                 <div class="header-right">
                     <button id="user-menu-btn" class="user-btn">
@@ -2060,6 +2176,12 @@ body {
                         <button id="calendar-toggle-btn" class="collapsed">▼</button>
                     </div>
                     <div id="calendar-body" class="collapsed">
+                        <!-- 달력 내부 월 이동 -->
+                        <div id="cal-inner-nav">
+                            <button id="prev-btn" class="cal-inner-nav-btn">&lsaquo;</button>
+                            <span id="cal-inner-title"></span>
+                            <button id="next-btn" class="cal-inner-nav-btn">&rsaquo;</button>
+                        </div>
                         <!-- 월간 보기 -->
                         <div id="month-view">
                             <div class="weekday-header">
@@ -2084,7 +2206,10 @@ body {
                 <!-- 할일 리스트 (선택한 날짜) -->
                 <div id="today-checklist-section">
                     <div id="today-checklist-header">
-                        <span>오늘의 할일</span>
+                        <div class="checklist-header-left">
+                            <span id="checklist-date-label" class="checklist-date-label"></span>
+                            <span class="checklist-header-title">오늘 할일</span>
+                        </div>
                         <button class="header-add-btn" id="header-add-checklist-btn" title="할일 추가">+</button>
                     </div>
                     <div id="today-checklist-list"></div>
@@ -2429,7 +2554,9 @@ function renderCalendar() {
     renderStarredWidget();
 
     const monthNames = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
-    if ($('current-title')) $('current-title').textContent = `${currentYear}년 ${monthNames[currentMonth]}`;
+    const monthLabel = `${currentYear}년 ${monthNames[currentMonth]}`;
+    if ($('current-title')) $('current-title').textContent = monthLabel;
+    if ($('cal-inner-title')) $('cal-inner-title').textContent = monthLabel;
 
     const firstDay = new Date(currentYear, currentMonth, 1).getDay();
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
@@ -3339,16 +3466,32 @@ function toggleCalendar() {
     calendarCollapsed = !calendarCollapsed;
     const body = $('calendar-body');
     const btn = $('calendar-toggle-btn');
+    const arrow = $('header-toggle-arrow');
     if (body) body.classList.toggle('collapsed', calendarCollapsed);
     if (btn) btn.classList.toggle('collapsed', calendarCollapsed);
+    if (arrow) {
+        arrow.classList.toggle('collapsed', calendarCollapsed);
+        arrow.classList.toggle('expanded', !calendarCollapsed);
+    }
 }
 
 function updateTodayDisplay() {
     const display = $('today-display');
-    if (!display) return;
-    const now = new Date();
-    const dayNames = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
-    display.textContent = `${now.getMonth() + 1}월 ${now.getDate()}일 ${dayNames[now.getDay()]}`;
+    if (display) {
+        const now = new Date();
+        const dayNames = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+        display.textContent = `${now.getMonth() + 1}월 ${now.getDate()}일 ${dayNames[now.getDay()]}`;
+    }
+    // 할일 헤더 날짜 레이블 업데이트
+    updateChecklistDateLabel(selectedCalDate || formatDate(new Date()));
+}
+
+function updateChecklistDateLabel(dateStr) {
+    const label = $('checklist-date-label');
+    if (!label) return;
+    const d = new Date(dateStr + 'T00:00:00');
+    const dayNames = ['일', '월', '화', '수', '목', '금', '토'];
+    label.textContent = `${d.getMonth()+1}월 ${d.getDate()}일 ${dayNames[d.getDay()]}요일`;
 }
 
 let checklistCollapsed = {};
@@ -3356,6 +3499,8 @@ let checklistCollapsed = {};
 function renderTodayChecklist(dateStr) {
     const list = $('today-checklist-list');
     if (!list) return;
+
+    updateChecklistDateLabel(dateStr);
 
     // Filter checklists for selected date
     const todayChecklists = checklists.filter(cl => cl.title === dateStr);
