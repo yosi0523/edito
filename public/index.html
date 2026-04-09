@@ -517,10 +517,11 @@ body {
     cursor: pointer;
     font-size: 16px;
     color: #ddd;
-    padding: 2px 0 2px 6px;
+    padding: 8px 4px 8px 12px;
     line-height: 1;
     flex-shrink: 0;
     transition: transform 0.15s;
+    touch-action: manipulation;
 }
 
 .today-cl-star.starred {
@@ -2923,7 +2924,7 @@ function loadChecklists() {
         .orderBy('updatedAt', 'desc')
         .onSnapshot((snapshot) => {
             checklists = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            renderTodayChecklist(selectedCalDate || formatDate(new Date()));
+            renderTodayChecklist(formatDate(new Date()));
         });
 }
 
@@ -3948,14 +3949,15 @@ function renderTodayChecklist(dateStr) {
 
     list.innerHTML = itemsHtml;
 
-    list.querySelectorAll('.today-cl-star').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+    if (!list._starListenerAttached) {
+        list._starListenerAttached = true;
+        list.addEventListener('click', (e) => {
+            const starBtn = e.target.closest('.today-cl-star');
+            if (!starBtn) return;
             e.stopPropagation();
-            const clId = btn.dataset.clId;
-            const idx = parseInt(btn.dataset.itemIdx);
-            toggleStarItem(clId, idx, btn);
+            toggleStarItem(starBtn.dataset.clId, parseInt(starBtn.dataset.itemIdx), starBtn);
         });
-    });
+    }
 }
 
 function toggleChecklistCard(dateStr) {
