@@ -2451,6 +2451,7 @@ body {
             <header id="header-reflection" class="header hidden">
                 <div class="header-left"><h2>성찰</h2></div>
                 <div class="header-right">
+                    <button id="header-add-reflection-btn" class="header-add-btn" title="성찰 추가" style="width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,0.25);color:white;font-size:22px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;">+</button>
                     <button class="user-btn umenu-btn"><img class="u-avatar" src="" alt="프로필"></button>
                 </div>
             </header>
@@ -4240,11 +4241,14 @@ function renderReflectionPage() {
 function openNewReflection() {
     selectedMood = '';
     selectedStars = 0;
-    editingReflectionDate = formatDate(new Date());
+    const today = new Date();
+    editingReflectionDate = formatDate(today);
+    const dayNames = ['일', '월', '화', '수', '목', '금', '토'];
+    const dateLabel = `${today.getMonth()+1}월 ${today.getDate()}일 (${dayNames[today.getDay()]})`;
     $('reflection-modal-title').textContent = '성찰 기록';
     $('reflection-id').value = '';
     $('reflection-text').value = '';
-    $('ref-date-display').textContent = editingReflectionDate;
+    $('ref-date-display').textContent = dateLabel;
     $('delete-reflection-btn').classList.add('hidden');
     document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
     document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('active'));
@@ -4307,6 +4311,19 @@ document.querySelectorAll('.star-btn').forEach(btn => {
 });
 
 if ($('close-saved-quotes')) $('close-saved-quotes').addEventListener('click', () => $('saved-quotes-modal').classList.add('hidden'));
+if ($('header-add-reflection-btn')) $('header-add-reflection-btn').addEventListener('click', openNewReflection);
+
+// 성찰 모달 바깥 클릭 닫기
+if ($('reflection-modal')) {
+    $('reflection-modal').addEventListener('click', (e) => {
+        if (e.target === $('reflection-modal')) $('reflection-modal').classList.add('hidden');
+    });
+}
+if ($('saved-quotes-modal')) {
+    $('saved-quotes-modal').addEventListener('click', (e) => {
+        if (e.target === $('saved-quotes-modal')) $('saved-quotes-modal').classList.add('hidden');
+    });
+}
 
 // ===== 탭 전환 =====
 $$('.nav-tab').forEach(tab => {
