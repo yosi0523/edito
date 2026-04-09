@@ -3226,12 +3226,12 @@ async function toggleChecklistItem(clId, idx, checked) {
 async function toggleStarItem(clId, idx, btn) {
     const cl = checklists.find(c => c.id === clId);
     if (!cl || !cl.items) return;
-    cl.items[idx].starred = !cl.items[idx].starred;
-    btn.classList.toggle('starred', cl.items[idx].starred);
+    const newVal = !cl.items[idx].starred;
+    cl.items[idx].starred = newVal;
+    btn.classList.toggle('starred', newVal);
     await db.collection('users').doc(currentUser.uid).collection('checklists')
         .doc(clId).update({ items: cl.items });
-    // 중요 항목 정렬 유지를 위해 재렌더
-    renderTodayChecklist(formatDate(new Date()));
+    // onSnapshot이 자동으로 재렌더
 }
 
 function openNewChecklist() {
@@ -3942,11 +3942,20 @@ function renderTodayChecklist(dateStr) {
         <div class="today-cl-item" data-flat-idx="${flatIdx}" data-cl-id="${item.clId}" data-item-idx="${item.idx}">
             <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleChecklistItem('${item.clId}', ${item.idx}, this.checked)">
             <span class="${item.checked ? 'checked-text' : ''}">${escapeHtml(item.text)}</span>
-            <button class="today-cl-star ${item.starred ? 'starred' : ''}" onclick="toggleStarItem('${item.clId}', ${item.idx}, this)">★</button>
+            <button class="today-cl-star ${item.starred ? 'starred' : ''}" data-cl-id="${item.clId}" data-item-idx="${item.idx}">★</button>
         </div>
     `).join('');
 
     list.innerHTML = itemsHtml;
+
+    list.querySelectorAll('.today-cl-star').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const clId = btn.dataset.clId;
+            const idx = parseInt(btn.dataset.itemIdx);
+            toggleStarItem(clId, idx, btn);
+        });
+    });
 }
 
 function toggleChecklistCard(dateStr) {
