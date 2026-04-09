@@ -3044,7 +3044,7 @@ function createCalendarCell(day, dateStr, isOtherMonth, isToday = false) {
         selectedCalDate = dateStr;
         renderDayDetail(dateStr);
         $('day-detail').classList.remove('hidden');
-        renderTodayChecklist(dateStr);
+        renderTodayChecklist(formatDate(new Date()));
     });
 
     return cell;
