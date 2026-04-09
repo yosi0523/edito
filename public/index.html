@@ -608,39 +608,51 @@ body {
 /* ===== 오늘의 명언 ===== */
 .daily-quote-box {
     margin-top: auto;
-    padding: 14px 16px 12px;
+    padding: 10px 14px 10px;
     background: #E8F5E9;
     border-radius: 14px;
-    line-height: 1.6;
-}
-
-.daily-quote-inner {
-    text-align: center;
+    line-height: 1.5;
 }
 
 .daily-quote-text {
-    font-size: 14px;
+    font-size: 13px;
     color: #2E7D32;
     font-weight: 500;
     word-break: keep-all;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+
+.daily-quote-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
 }
 
 .daily-quote-author {
     font-size: 11px;
     color: #66BB6A;
-    margin-top: 4px;
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .daily-quote-actions {
     display: flex;
-    justify-content: flex-end;
-    gap: 6px;
-    margin-top: 10px;
+    gap: 5px;
+    flex-shrink: 0;
+    margin-top: 0;
 }
 
 .quote-action-btn {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     border: none;
     cursor: pointer;
@@ -4137,15 +4149,15 @@ function renderDailyQuote() {
     const dayOfYear = Math.floor((now - start) / 86400000);
     currentQuote = DAILY_QUOTES[dayOfYear % DAILY_QUOTES.length];
     quoteEl.innerHTML = `
-        <div class="daily-quote-inner">
-            <div class="daily-quote-text">"${currentQuote.text}"</div>
-            <div class="daily-quote-author">— ${currentQuote.author}</div>
-        </div>
-        <div class="daily-quote-actions">
-            <button class="quote-action-btn quote-list-btn" onclick="showSavedQuotes()" title="저장된 명언">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="14" y2="18"/></svg>
-            </button>
-            <button class="quote-action-btn quote-save-btn" onclick="saveCurrentQuote()" title="명언 저장">+</button>
+        <div class="daily-quote-text">"${currentQuote.text}"</div>
+        <div class="daily-quote-footer">
+            <span class="daily-quote-author">— ${currentQuote.author}</span>
+            <div class="daily-quote-actions">
+                <button class="quote-action-btn quote-list-btn" onclick="showSavedQuotes()" title="저장된 명언">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="14" y2="18"/></svg>
+                </button>
+                <button class="quote-action-btn quote-save-btn" onclick="saveCurrentQuote()" title="명언 저장">+</button>
+            </div>
         </div>
     `;
 }
