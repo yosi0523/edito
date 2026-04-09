@@ -195,16 +195,16 @@ body {
 #header-month-toggle {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     cursor: pointer;
-    padding: 5px 10px;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.15);
-    transition: background 0.2s;
+    padding: 4px 2px;
+    border-radius: 8px;
+    background: transparent;
+    transition: opacity 0.2s;
     user-select: none;
 }
 
-#header-month-toggle:hover { background: rgba(255,255,255,0.28); }
+#header-month-toggle:hover { opacity: 0.75; }
 
 #header-month-toggle #current-title {
     font-size: 15px;
@@ -216,10 +216,8 @@ body {
 }
 
 .header-toggle-arrow {
-    font-size: 11px;
-    color: rgba(255,255,255,0.85);
     transition: transform 0.3s;
-    line-height: 1;
+    flex-shrink: 0;
 }
 
 .header-toggle-arrow.collapsed {
@@ -1569,7 +1567,8 @@ body {
 }
 
 .cl-date-icon {
-    font-size: 20px;
+    color: var(--text-light);
+    flex-shrink: 0;
 }
 
 .cl-calendar {
@@ -2208,7 +2207,7 @@ body {
                 <div class="header-left">
                     <div id="header-month-toggle" onclick="toggleCalendar()">
                         <span id="current-title"></span>
-                        <span id="header-toggle-arrow" class="header-toggle-arrow collapsed">▼</span>
+                        <svg id="header-toggle-arrow" class="header-toggle-arrow collapsed" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
                     </div>
                 </div>
                 <div class="header-right">
@@ -2431,7 +2430,7 @@ body {
                         <label>날짜</label>
                         <div class="cl-date-box" id="cl-date-box">
                             <span id="cl-date-display"></span>
-                            <span class="cl-date-icon">📅</span>
+                            <svg class="cl-date-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="5"/><line x1="16" y1="2" x2="16" y2="5"/></svg>
                         </div>
                         <div id="cl-calendar" class="cl-calendar hidden">
                             <div class="cl-cal-header">
@@ -2909,14 +2908,26 @@ async function toggleChecklistItem(clId, idx, checked) {
 function openNewChecklist() {
     $('checklist-modal-title').textContent = '할일 추가';
     $('checklist-form').reset();
-    $('checklist-id').value = '';
     const dateToUse = selectedCalDate || formatDate(new Date());
     $('checklist-title').value = dateToUse;
     initClCalendar(dateToUse);
     $('cl-calendar').classList.add('hidden');
     $('checklist-items').innerHTML = '';
     $('delete-checklist-btn').classList.add('hidden');
-    addChecklistItemRow();
+
+    // 해당 날짜의 기존 항목 로드
+    const existing = checklists.filter(cl => cl.title === dateToUse);
+    if (existing.length > 0) {
+        // 기존 문서 ID 사용해서 수정 모드로
+        const cl = existing[0];
+        $('checklist-id').value = cl.id;
+        $('checklist-modal-title').textContent = '할일';
+        $('delete-checklist-btn').classList.remove('hidden');
+        (cl.items || []).forEach(item => addChecklistItemRow(item.text, item.checked));
+    } else {
+        $('checklist-id').value = '';
+        addChecklistItemRow();
+    }
     $('checklist-modal').classList.remove('hidden');
 }
 
