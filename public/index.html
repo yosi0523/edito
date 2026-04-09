@@ -608,11 +608,14 @@ body {
 /* ===== 오늘의 명언 ===== */
 .daily-quote-box {
     margin-top: auto;
-    padding: 14px 18px;
+    padding: 14px 16px 12px;
     background: #E8F5E9;
     border-radius: 14px;
-    text-align: center;
     line-height: 1.6;
+}
+
+.daily-quote-inner {
+    text-align: center;
 }
 
 .daily-quote-text {
@@ -626,6 +629,215 @@ body {
     font-size: 11px;
     color: #66BB6A;
     margin-top: 4px;
+}
+
+.daily-quote-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.quote-action-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: opacity 0.2s;
+}
+
+.quote-save-btn {
+    background: #4CAF50;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.quote-list-btn {
+    background: rgba(46,125,50,0.12);
+    color: #2E7D32;
+}
+
+.quote-list-btn svg { width: 14px; height: 14px; }
+
+.quote-action-btn:hover { opacity: 0.75; }
+
+/* ===== 저장된 명언 리스트 ===== */
+.saved-quote-item {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.saved-quote-item:last-child { border-bottom: none; }
+
+.saved-quote-item-text {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+    word-break: keep-all;
+    line-height: 1.6;
+    margin-bottom: 4px;
+}
+
+.saved-quote-item-author {
+    font-size: 12px;
+    color: var(--text-light);
+}
+
+.saved-quote-item-del {
+    float: right;
+    border: none;
+    background: none;
+    color: var(--text-light);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+}
+
+/* ===== 성찰 탭 ===== */
+#content-reflection {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.reflection-empty {
+    text-align: center;
+    color: var(--text-light);
+    padding: 60px 0;
+    font-size: 15px;
+}
+
+.reflection-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 16px;
+}
+
+.reflection-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.reflection-card-date {
+    font-size: 13px;
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.reflection-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.reflection-mood-badge {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.reflection-stars {
+    font-size: 13px;
+    color: #F39C12;
+    letter-spacing: 1px;
+}
+
+.reflection-card-text {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.7;
+    word-break: keep-all;
+    white-space: pre-wrap;
+}
+
+.reflection-card-del {
+    border: none;
+    background: none;
+    color: var(--text-light);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 6px;
+}
+
+.reflection-card-del:hover { background: #fee; color: var(--sunday); }
+
+/* ===== 성찰 모달 ===== */
+.mood-selector {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.mood-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: white;
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+}
+
+.mood-btn.selected {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    transform: scale(1.1);
+}
+
+.star-rating {
+    display: flex;
+    gap: 6px;
+}
+
+.star-btn {
+    font-size: 26px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: #E0E0E0;
+    padding: 0;
+    transition: color 0.15s, transform 0.1s;
+    line-height: 1;
+}
+
+.star-btn.active { color: #F39C12; }
+.star-btn:hover { transform: scale(1.15); }
+
+.reflection-textarea {
+    width: 100%;
+    min-height: 120px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 15px;
+    font-family: inherit;
+    resize: vertical;
+    color: var(--text);
+    line-height: 1.6;
+}
+
+.reflection-textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
 }
 
 /* ===== 뷰 모드 버튼 ===== */
@@ -2235,6 +2447,14 @@ body {
                 </div>
             </header>
 
+            <!-- 성찰 헤더 -->
+            <header id="header-reflection" class="header hidden">
+                <div class="header-left"><h2>성찰</h2></div>
+                <div class="header-right">
+                    <button class="user-btn umenu-btn"><img class="u-avatar" src="" alt="프로필"></button>
+                </div>
+            </header>
+
             <!-- 유저 메뉴 드롭다운 -->
             <div id="user-menu" class="user-menu hidden">
                 <p id="user-name"></p>
@@ -2336,10 +2556,78 @@ body {
                     <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 13h12l-1.5 7h-9z"/><path d="M5 13c0-4 3-7 7-7s7 3 7 7"/><path d="M9 10c0-2 1-3 3-3s3 1 3 3"/><circle cx="12" cy="5" r="1.5" fill="currentColor" stroke="none"/></svg></span>
                     <span class="tab-label">레시피</span>
                 </button>
+                <button class="nav-tab" data-tab="reflection">
+                    <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3C8 3 5 6 5 10c0 2.5 1.2 4.7 3 6v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2c1.8-1.3 3-3.5 3-6 0-4-3-7-7-7z"/><line x1="9" y1="21" x2="15" y2="21"/><line x1="10" y1="17" x2="10" y2="21"/><line x1="14" y1="17" x2="14" y2="21"/></svg></span>
+                    <span class="tab-label">성찰</span>
+                </button>
             </nav>
+
+            <!-- 성찰 콘텐츠 -->
+            <div id="content-reflection" class="content-section hidden">
+                <div id="reflection-list"></div>
+            </div>
 
             <!-- FAB 버튼 -->
             <button id="fab-btn" class="fab-btn">+</button>
+        </div>
+
+        <!-- ===== 저장된 명언 모달 ===== -->
+        <div id="saved-quotes-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>저장된 명언</h3>
+                    <button class="close-btn" id="close-saved-quotes">&times;</button>
+                </div>
+                <div id="saved-quotes-list"></div>
+            </div>
+        </div>
+
+        <!-- ===== 성찰 모달 ===== -->
+        <div id="reflection-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="reflection-modal-title">성찰 기록</h3>
+                    <button class="close-btn" id="close-reflection-modal">&times;</button>
+                </div>
+                <div class="form-group">
+                    <label>날짜</label>
+                    <div class="cl-date-box" id="ref-date-box">
+                        <span id="ref-date-display"></span>
+                        <svg class="cl-date-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="5"/><line x1="16" y1="2" x2="16" y2="5"/></svg>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>오늘의 기분</label>
+                    <div class="mood-selector" id="mood-selector">
+                        <button type="button" class="mood-btn" data-mood="😊">😊</button>
+                        <button type="button" class="mood-btn" data-mood="😌">😌</button>
+                        <button type="button" class="mood-btn" data-mood="😐">😐</button>
+                        <button type="button" class="mood-btn" data-mood="😔">😔</button>
+                        <button type="button" class="mood-btn" data-mood="😤">😤</button>
+                        <button type="button" class="mood-btn" data-mood="🤔">🤔</button>
+                        <button type="button" class="mood-btn" data-mood="😴">😴</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>중요도</label>
+                    <div class="star-rating" id="star-rating">
+                        <button type="button" class="star-btn" data-star="1">★</button>
+                        <button type="button" class="star-btn" data-star="2">★</button>
+                        <button type="button" class="star-btn" data-star="3">★</button>
+                        <button type="button" class="star-btn" data-star="4">★</button>
+                        <button type="button" class="star-btn" data-star="5">★</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>메모</label>
+                    <textarea id="reflection-text" class="reflection-textarea" placeholder="오늘 느낀 것, 명심할 것들을 자유롭게 적어보세요..."></textarea>
+                </div>
+                <input type="hidden" id="reflection-id">
+                <div class="form-actions">
+                    <button type="button" id="delete-reflection-btn" class="btn-delete hidden">삭제</button>
+                    <button type="button" id="save-reflection-btn" class="btn-save">저장</button>
+                </div>
+            </div>
         </div>
 
         <!-- ===== 일별 상세 모달 ===== -->
@@ -2546,6 +2834,7 @@ auth.onAuthStateChanged((user) => {
         if ($('user-name')) $('user-name').textContent = user.displayName || user.email;
         loadEvents();
         loadChecklists();
+        loadReflections();
         loadSavedRecipes();
         renderCalendar();
         updateTodayDisplay();
@@ -3835,18 +4124,189 @@ const DAILY_QUOTES = [
     {text: "인생 2막은 더 담대하게, 더 나답게 시작하는 것이다.", author: "안철수"}
 ];
 
+let currentQuote = null;
+
 function renderDailyQuote() {
     const quoteEl = $('daily-quote');
     if (!quoteEl) return;
-    // 날짜 기반으로 매일 다른 명언 표시
+    // UTC 기준 dayOfYear로 웹/모바일 동일하게
     const today = new Date();
-    const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
-    const quote = DAILY_QUOTES[dayOfYear % DAILY_QUOTES.length];
+    const start = Date.UTC(today.getFullYear(), 0, 0);
+    const now = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+    const dayOfYear = Math.floor((now - start) / 86400000);
+    currentQuote = DAILY_QUOTES[dayOfYear % DAILY_QUOTES.length];
     quoteEl.innerHTML = `
-        <div class="daily-quote-text">"${quote.text}"</div>
-        <div class="daily-quote-author">— ${quote.author}</div>
+        <div class="daily-quote-inner">
+            <div class="daily-quote-text">"${currentQuote.text}"</div>
+            <div class="daily-quote-author">— ${currentQuote.author}</div>
+        </div>
+        <div class="daily-quote-actions">
+            <button class="quote-action-btn quote-list-btn" onclick="showSavedQuotes()" title="저장된 명언">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="14" y2="18"/></svg>
+            </button>
+            <button class="quote-action-btn quote-save-btn" onclick="saveCurrentQuote()" title="명언 저장">+</button>
+        </div>
     `;
 }
+
+async function saveCurrentQuote() {
+    if (!currentUser || !currentQuote) return;
+    const btn = document.querySelector('.quote-save-btn');
+    try {
+        await db.collection('users').doc(currentUser.uid).collection('savedQuotes').add({
+            text: currentQuote.text,
+            author: currentQuote.author,
+            savedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        if (btn) { btn.textContent = '✓'; btn.style.background = '#388E3C'; setTimeout(() => { btn.textContent = '+'; btn.style.background = '#4CAF50'; }, 1500); }
+    } catch(e) { alert('저장 실패'); }
+}
+
+let savedQuotes = [];
+
+async function showSavedQuotes() {
+    const modal = $('saved-quotes-modal');
+    if (!modal || !currentUser) return;
+    const snap = await db.collection('users').doc(currentUser.uid).collection('savedQuotes').orderBy('savedAt', 'desc').get();
+    savedQuotes = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderSavedQuotesList();
+    modal.classList.remove('hidden');
+}
+
+function renderSavedQuotesList() {
+    const list = $('saved-quotes-list');
+    if (!list) return;
+    if (savedQuotes.length === 0) {
+        list.innerHTML = '<p style="text-align:center;color:var(--text-light);padding:30px 0;">저장된 명언이 없습니다</p>';
+        return;
+    }
+    list.innerHTML = savedQuotes.map(q => `
+        <div class="saved-quote-item">
+            <button class="saved-quote-item-del" onclick="deleteSavedQuote('${q.id}')">&times;</button>
+            <div class="saved-quote-item-text">"${escapeHtml(q.text)}"</div>
+            <div class="saved-quote-item-author">— ${escapeHtml(q.author)}</div>
+        </div>
+    `).join('');
+}
+
+async function deleteSavedQuote(id) {
+    if (!currentUser) return;
+    await db.collection('users').doc(currentUser.uid).collection('savedQuotes').doc(id).delete();
+    savedQuotes = savedQuotes.filter(q => q.id !== id);
+    renderSavedQuotesList();
+}
+
+// ===== 성찰 =====
+let reflections = [];
+let selectedMood = '';
+let selectedStars = 0;
+let editingReflectionDate = '';
+
+function loadReflections() {
+    if (!currentUser) return;
+    db.collection('users').doc(currentUser.uid).collection('reflections')
+        .orderBy('date', 'desc')
+        .onSnapshot(snap => {
+            reflections = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            if (currentTab === 'reflection') renderReflectionPage();
+        });
+}
+
+function renderReflectionPage() {
+    const list = $('reflection-list');
+    if (!list) return;
+    if (reflections.length === 0) {
+        list.innerHTML = '<div class="reflection-empty">아직 기록된 성찰이 없어요<br>+ 버튼을 눌러 오늘의 생각을 남겨보세요 🌱</div>';
+        return;
+    }
+    list.innerHTML = reflections.map(r => {
+        const stars = '★'.repeat(r.stars || 0) + '☆'.repeat(5 - (r.stars || 0));
+        return `
+        <div class="reflection-card">
+            <div class="reflection-card-top">
+                <span class="reflection-card-date">${r.date || ''}</span>
+                <div class="reflection-card-meta">
+                    <span class="reflection-mood-badge">${r.mood || ''}</span>
+                    <span class="reflection-stars">${stars}</span>
+                    <button class="reflection-card-del" onclick="deleteReflection('${r.id}')">&times;</button>
+                </div>
+            </div>
+            <div class="reflection-card-text">${escapeHtml(r.text || '')}</div>
+        </div>
+        `;
+    }).join('');
+}
+
+function openNewReflection() {
+    selectedMood = '';
+    selectedStars = 0;
+    editingReflectionDate = formatDate(new Date());
+    $('reflection-modal-title').textContent = '성찰 기록';
+    $('reflection-id').value = '';
+    $('reflection-text').value = '';
+    $('ref-date-display').textContent = editingReflectionDate;
+    $('delete-reflection-btn').classList.add('hidden');
+    document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+    document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('active'));
+    $('reflection-modal').classList.remove('hidden');
+}
+
+async function saveReflection() {
+    const text = $('reflection-text').value.trim();
+    if (!text) { alert('메모를 입력해주세요'); return; }
+    if (!currentUser) return;
+    const data = {
+        date: editingReflectionDate,
+        mood: selectedMood,
+        stars: selectedStars,
+        text,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+    const id = $('reflection-id').value;
+    const ref = db.collection('users').doc(currentUser.uid).collection('reflections');
+    if (id) {
+        await ref.doc(id).update(data);
+    } else {
+        data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+        await ref.add(data);
+    }
+    $('reflection-modal').classList.add('hidden');
+}
+
+async function deleteReflection(id) {
+    if (!confirm('이 성찰을 삭제할까요?')) return;
+    await db.collection('users').doc(currentUser.uid).collection('reflections').doc(id).delete();
+}
+
+// 성찰 모달 이벤트
+if ($('close-reflection-modal')) $('close-reflection-modal').addEventListener('click', () => $('reflection-modal').classList.add('hidden'));
+if ($('save-reflection-btn')) $('save-reflection-btn').addEventListener('click', saveReflection);
+if ($('delete-reflection-btn')) $('delete-reflection-btn').addEventListener('click', async () => {
+    const id = $('reflection-id').value;
+    if (id && confirm('삭제할까요?')) {
+        await db.collection('users').doc(currentUser.uid).collection('reflections').doc(id).delete();
+        $('reflection-modal').classList.add('hidden');
+    }
+});
+
+document.querySelectorAll('.mood-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        selectedMood = btn.dataset.mood;
+        document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+    });
+});
+
+document.querySelectorAll('.star-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        selectedStars = parseInt(btn.dataset.star);
+        document.querySelectorAll('.star-btn').forEach(b => {
+            b.classList.toggle('active', parseInt(b.dataset.star) <= selectedStars);
+        });
+    });
+});
+
+if ($('close-saved-quotes')) $('close-saved-quotes').addEventListener('click', () => $('saved-quotes-modal').classList.add('hidden'));
 
 // ===== 탭 전환 =====
 $$('.nav-tab').forEach(tab => {
@@ -3857,7 +4317,7 @@ $$('.nav-tab').forEach(tab => {
         $$('.nav-tab').forEach(t => t.classList.remove('active'));
         $$(`.nav-tab[data-tab="${target}"]`).forEach(t => t.classList.add('active'));
 
-        ['calendar', 'quiz', 'recipe'].forEach(section => {
+        ['calendar', 'quiz', 'recipe', 'reflection'].forEach(section => {
             const header = $(`header-${section}`);
             const content = $(`content-${section}`);
             if (header) header.classList.toggle('hidden', section !== target);
@@ -3873,6 +4333,8 @@ $$('.nav-tab').forEach(tab => {
         if (target === 'recipe') renderRecipePage();
         // 필기 탭 진입 시 렌더링
         if (target === 'quiz') renderQuizPage();
+        // 성찰 탭 진입 시 렌더링
+        if (target === 'reflection') renderReflectionPage();
     });
 });
 
@@ -3881,6 +4343,7 @@ if ($('fab-btn')) {
     $('fab-btn').addEventListener('click', () => {
         switch (currentTab) {
             case 'calendar': openNewChecklist(); break;
+            case 'reflection': openNewReflection(); break;
         }
     });
 }
