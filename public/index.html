@@ -4392,7 +4392,7 @@ $$('.nav-tab').forEach(tab => {
 
         // 레시피 탭 진입 시 렌더링
         if (target === 'recipe') renderRecipePage();
-        // 필기 탭 진입 시 렌더링
+        // 이론 탭 진입 시 렌더링
         if (target === 'quiz') renderQuizPage();
         // 성찰 탭 진입 시 렌더링
         if (target === 'reflection') renderReflectionPage();
@@ -4662,12 +4662,7 @@ const QB = [
     {q:"프랑스 빵에서 '클루트(cloche)'란?", o:["빵 바구니","돔 형태의 덮개로 스팀 효과","칼 종류","밀가루 종류"], a:1, e:"클루트는 돔 모양 덮개로, 가정에서 바게트 등을 구울 때 스팀 효과를 내기 위해 사용합니다."},
     // ── B. 프랑스어 전문 용어 ──
     {q:"'페트리사주(pétrissage)'란?", o:["성형하기","반죽하기","발효시키기","굽기"], a:1, e:"Pétrissage는 재료를 혼합하여 반죽하는 과정을 뜻하는 프랑스어입니다."},
-    {q:"'퐁타주(pointage)'란 제빵 공정에서 무엇인가?", o:["분할","1차 발효","2차 발효","굽기"], a:1, e:"Pointage는 믹싱 후 첫 번째 발효(벌크 발효)를 뜻합니다."},
-    {q:"'아프레(apprêt)'란?", o:["1차 발효","성형","2차 발효(최종 발효)","냉각"], a:2, e:"Apprêt는 성형 후 오븐에 넣기 전 최종 발효 단계입니다."},
-    {q:"'파소나주(façonnage)'의 뜻은?", o:["발효","성형","분할","굽기"], a:1, e:"Façonnage는 반죽을 원하는 형태로 만드는 성형 과정입니다."},
     {q:"'퀴송(cuisson)'이란?", o:["냉각","발효","굽기","반죽"], a:2, e:"Cuisson은 오븐에서 빵을 굽는 과정을 뜻하는 프랑스어입니다."},
-    {q:"'투라주(tourage)'란 어떤 기법인가?", o:["반죽을 접어 층을 만드는 기법","발효 기법","굽기 기법","장식 기법"], a:0, e:"Tourage는 크루아상·퓌유타주에서 반죽과 버터를 반복 접어 층을 만드는 기법입니다."},
-    {q:"'프라자주(frasage)'란?", o:["고속 믹싱","손바닥으로 반죽을 밀어 합치기","체에 치기","발효시키기"], a:1, e:"Frasage는 타르트 반죽 등에서 손바닥으로 재료를 밀듯이 합치는 기법입니다."},
     {q:"'도뤼르(dorure)'란?", o:["반죽 굽기","달걀물 바르기","설탕 뿌리기","냉각하기"], a:1, e:"Dorure는 빵 표면에 달걀물을 발라 광택과 색을 내는 것입니다."},
     {q:"'플뢰레(fleurer)'란?", o:["꽃 장식하기","작업대에 밀가루를 뿌리기","반죽 접기","발효시키기"], a:1, e:"Fleurer는 반죽이 달라붙지 않도록 작업대에 밀가루를 가볍게 뿌리는 것입니다."},
     {q:"'뵈르 드 투라주(beurre de tourage)'란?", o:["일반 식용 버터","접기용 고지방 건조 버터","무염버터","마가린"], a:1, e:"Beurre de tourage는 수분 함량이 낮고 지방 함량이 높아(84% 이상) 크루아상 등 접기 작업에 최적화된 전문 버터입니다."},
@@ -4709,7 +4704,6 @@ const QB = [
     {q:"'미(mie)'란?", o:["빵 껍질","빵의 속살(내부 조직)","발효종","밀가루"], a:1, e:"Mie는 빵의 내부 조직(크럼)을 뜻하며, pain de mie(팡 드 미)는 부드러운 속살의 식빵입니다."},
     {q:"'크루트(croûte)'란?", o:["빵의 속살","빵의 외피(껍질)","발효종","버터 종류"], a:1, e:"Croûte는 빵의 바깥쪽 딱딱한 껍질을 뜻합니다."},
     {q:"단백질 응고 온도는 약?", o:["40~50°C","60~70°C","70~80°C","90~100°C"], a:2, e:"빵 반죽의 단백질(글루텐)은 약 70~80°C에서 응고되어 빵의 구조를 형성합니다."},
-    {q:"'르쉬페(ressuage)'란?", o:["발효 과정","굽기 직후 빵에서 수분과 알코올이 빠져나가는 냉각 과정","반죽 과정","성형 과정"], a:1, e:"Ressuage는 빵이 오븐에서 나온 후 내부의 수증기와 알코올이 빠져나가며 냉각되는 과정입니다. 이때 자르면 속이 끈적입니다."},
     {q:"'비가(biga)'와 '풀리쉬(poolish)'의 공통점은?", o:["둘 다 르방이다","둘 다 사전 발효종(pre-ferment)이다","둘 다 고체이다","둘 다 액체이다"], a:1, e:"비가와 풀리쉬 모두 사전 발효종으로, 빵의 풍미와 조직을 개선하기 위해 미리 발효시키는 반죽입니다."},
     {q:"베이커 퍼센트에서 밀가루 500g, 물 325g일 때 수화율은?", o:["50%","55%","60%","65%"], a:3, e:"수화율 = (물/밀가루)×100 = (325/500)×100 = 65%입니다."},
     {q:"'오토리즈' 시 소금을 넣지 않는 이유는?", o:["맛이 변해서","소금이 글루텐 형성을 방해하므로","소금이 녹지 않으므로","색이 변해서"], a:1, e:"오토리즈 단계에서는 소금이 글루텐 형성을 억제하므로 넣지 않고, 밀가루와 물만으로 자연 수화를 진행합니다."},
@@ -4809,7 +4803,6 @@ const QB = [
     {q:"가장 많이 사용되는 밀가루 타입은?", o:["Type 45","Type 55~65","Type 110","Type 150"], a:1, e:"Type 55~65는 회분 0.5~0.6%로 가장 많이 사용되는 밀가루입니다."},
     {q:"Type 150 밀가루의 특징은?", o:["가장 흰 밀가루","통밀가루, 회분 1.2~1.4%","글루텐이 없음","케이크용"], a:1, e:"Type 150은 회분 1.2~1.4%의 통밀가루로 통밀빵이나 밀기울 빵에 주로 사용됩니다."},
     {q:"호밀가루의 특징으로 옳은 것은?", o:["글루텐 함량이 높음","글루텐이 거의 없어 식이섬유 함량 높음","단맛이 강함","색이 흰색"], a:1, e:"호밀(seigle)은 글루텐 함량이 적어 밀가루와 혼합하여 사용하며, 건강빵 등에 쓰입니다."},
-    {q:"메밀가루의 주요 용도는?", o:["바게트","크레프(crêpe)나 갈레트(galette)","케이크","이스트빵"], a:1, e:"메밀(검은 밀이라고도 불림)은 주로 크레프나 갈레트에 사용되며 식이요법을 고려한 건강식에도 쓰입니다."},
     {q:"그뤼오(gruau) 밀가루의 특징은?", o:["글루텐이 없음","고품질의 힘 센 밀가루, 비에누아즈리에 사용","통밀가루","호밀가루"], a:1, e:"그뤼오는 고품질의 힘 센(fort) 밀가루로 주로 비에누아즈리(크루아상 등)에 사용됩니다."},
     // ── M. 설탕 심화 ──
     {q:"설탕의 주요 원료 두 가지는?", o:["쌀과 옥수수","사탕수수와 사탕무","밀과 보리","포도와 사과"], a:1, e:"설탕의 주요 원료는 사탕수수(약 70%)와 사탕무(약 30%)입니다."},
@@ -4894,7 +4887,7 @@ const QB = [
 ];
 
 let quizState = {}; // {rounds:[{indices,answered,submitted},...]}
-let quizCurrentRound = 0;
+let quizCurrentRound = -1; // -1 = auto-select on next render
 let quizShowHistory = false;
 let quizHistoryDetail = null; // {dateKey, round}
 
@@ -4936,23 +4929,28 @@ function qGetIndices(dateKey, roundIdx) {
     const seed = qSeed(dateKey + '_r' + roundIdx);
     const all = Array.from({length: QB.length}, (_, i) => i);
     const shuffled = qShuffle(all, seed);
-    // 이전 라운드에서 사용한 문제 제외
-    const used = new Set();
+    // 오늘 이미 사용한 문제 제외
+    const todayUsed = new Set();
     const state = qLoad(dateKey);
     for (let r = 0; r < roundIdx; r++) {
-        if (state.rounds[r]) state.rounds[r].indices.forEach(i => used.add(i));
+        if (state.rounds[r]) state.rounds[r].indices.forEach(i => todayUsed.add(i));
     }
-    const available = shuffled.filter(i => !used.has(i));
-    // 다른 날 사용한 문제도 최근 3일 내 제외 시도
-    const recentUsed = new Set();
-    for (let d = 1; d <= 3; d++) {
-        const dt = new Date();
-        dt.setDate(dt.getDate() - d);
-        const dk = qDateKey(dt);
-        const ps = qLoad(dk);
-        ps.rounds.forEach(r => r.indices.forEach(i => recentUsed.add(i)));
-    }
-    const fresh = available.filter(i => !recentUsed.has(i));
+    // 전체 이력(모든 날짜)에서 이미 풀었던 문제 추적
+    const allUsed = new Set(todayUsed);
+    try {
+        for (let i = 0; i < localStorage.length; i++) {
+            const k = localStorage.key(i);
+            if (k && k.startsWith('quiz2_') && k !== 'quiz2_' + dateKey) {
+                const ps = JSON.parse(localStorage.getItem(k) || '{}');
+                (ps.rounds || []).forEach(r => (r.indices || []).forEach(j => allUsed.add(j)));
+            }
+        }
+    } catch(e) {}
+    // 우선: 전체 이력에도 없는 신선한 문제
+    const fresh = shuffled.filter(i => !allUsed.has(i));
+    // 차선: 오늘 사용 안 한 문제(이력 무관)
+    const available = shuffled.filter(i => !todayUsed.has(i));
+    // 전부 소진 시 전체 셔플로 처음부터
     const pool = fresh.length >= 10 ? fresh : available.length >= 10 ? available : shuffled;
     return pool.slice(0, 10);
 }
@@ -4998,10 +4996,19 @@ function renderQuizPage() {
     const dateKey = qDateKey();
     quizState = qLoad(dateKey);
 
-    // 첫 진입 시 라운드 없으면 생성
-    if (quizState.rounds.length === 0) {
-        quizState.rounds.push({indices: qGetIndices(dateKey, 0), answered: {}, submitted: false});
-        qSave(dateKey, quizState);
+    // quizCurrentRound == -1: 자동 선택 (앱 첫 진입 / 탭 전환 시)
+    if (quizCurrentRound < 0) {
+        const unfinishedIdx = quizState.rounds.findIndex(r => !r.submitted);
+        if (unfinishedIdx >= 0) {
+            // 미완성 라운드로 이어서
+            quizCurrentRound = unfinishedIdx;
+        } else {
+            // 모든 라운드 완료됐거나 첫 진입 → 새 문제 자동 생성
+            const newIdx = quizState.rounds.length;
+            quizState.rounds.push({indices: qGetIndices(dateKey, newIdx), answered: {}, submitted: false});
+            qSave(dateKey, quizState);
+            quizCurrentRound = newIdx;
+        }
     }
 
     // 현재 라운드가 범위를 벗어나면 마지막 라운드로
