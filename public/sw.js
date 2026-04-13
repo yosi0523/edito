@@ -1,10 +1,12 @@
-const CACHE_NAME = 'edito-v15';
+const CACHE_NAME = 'edito-v16';
 const urlsToCache = [
     '/',
     '/index.html',
     '/style.css',
     '/app.js',
-    '/manifest.json'
+    '/manifest.json',
+    '/icon-192.png',
+    '/icon-512.png'
 ];
 
 self.addEventListener('install', (event) => {
