@@ -1,58 +1,30 @@
-// Mobile nav toggle
-const navToggle = document.getElementById('navToggle');
-const navMobile = document.getElementById('navMobile');
-if (navToggle && navMobile) {
-  navToggle.addEventListener('click', () => navMobile.classList.toggle('open'));
-  navMobile.querySelectorAll('a').forEach(a =>
-    a.addEventListener('click', () => navMobile.classList.remove('open'))
-  );
+// Mobile nav
+const burger = document.getElementById('burger');
+const drawer = document.getElementById('drawer');
+if (burger && drawer) {
+  burger.addEventListener('click', () => drawer.classList.toggle('open'));
+  drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => drawer.classList.remove('open')));
 }
 
-// Subtle parallax on the hero cookie stack
-const stack = document.querySelector('.cookie-stack');
-if (stack && window.matchMedia('(pointer:fine)').matches) {
-  stack.addEventListener('mousemove', (e) => {
-    const rect = stack.getBoundingClientRect();
-    const cx = (e.clientX - rect.left) / rect.width - 0.5;
-    const cy = (e.clientY - rect.top) / rect.height - 0.5;
-    stack.querySelectorAll('.cookie').forEach((el, i) => {
-      const depth = (i % 3 + 1) * 6;
-      el.style.transform =
-        `translate(calc(var(--x) + ${cx * depth}px), calc(var(--y) + ${cy * depth}px)) rotate(var(--r))`;
-    });
-  });
-  stack.addEventListener('mouseleave', () => {
-    stack.querySelectorAll('.cookie').forEach((el) => {
-      el.style.transform = '';
-    });
-  });
-}
+// Scroll reveal
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+}, { threshold: 0.12 });
 
-// Reveal sections on scroll
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.style.opacity = 1;
-      e.target.style.transform = 'translateY(0)';
-      io.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.product, .ing, blockquote, .story__text, .story__image, .gift__visual, .gift__text').forEach(el => {
-  el.style.opacity = 0;
-  el.style.transform = 'translateY(24px)';
-  el.style.transition = 'opacity .7s ease, transform .7s ease';
-  io.observe(el);
+document.querySelectorAll('.pcard,.ing__item,blockquote,.story__text,.story__img,.gift__text,.gift__img,.gal__item,.story__nums > div').forEach(el => {
+  el.classList.add('reveal');
+  ro.observe(el);
 });
 
-// Order form — demo only
-const form = document.getElementById('orderForm');
-if (form) {
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const data = Object.fromEntries(new FormData(form).entries());
-    alert(`문의 접수 완료 (데모):\n\n이름: ${data.name}\n연락처: ${data.phone}\n내용: ${data.message}\n\n실제 연동 전입니다. 010-6238-1934 로도 문의 주세요.`);
-    form.reset();
-  });
-}
+// Nav shadow on scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('nav')?.classList.toggle('nav--scrolled', window.scrollY > 40);
+});
+
+// Order form demo
+document.getElementById('orderForm')?.addEventListener('submit', e => {
+  e.preventDefault();
+  const d = Object.fromEntries(new FormData(e.target));
+  alert(`문의 접수!\n\n이름: ${d.name}\n연락처: ${d.phone}\n\n빠른 시일 내 연락드리겠습니다 🍪\n(데모 — 실제 문의: 010-6238-1934)`);
+  e.target.reset();
+});

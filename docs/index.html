@@ -1,467 +1,350 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>EditO · 달콤한 첫인사 드립니다</title>
-<meta name="description" content="프랑스산 고메버터와 밀가루, 미국산 아몬드 가루로 정성껏 구운 EditO 수제 스탬프 쿠키와 휘낭시에. 달콤한 첫인사를 전하세요." />
-<meta property="og:title" content="EditO · 달콤한 첫인사 드립니다" />
-<meta property="og:description" content="프랑스산 고메버터 · 밀가루 / 미국산 아몬드 가루로 정성껏 구운 수제 쿠키&휘낭시에" />
+<meta name="description" content="프랑스산 고메버터·밀가루, 미국산 아몬드가루로 정성껏 구운 EditO 수제 스탬프 쿠키와 휘낭시에."/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Myeongjo:wght@400;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Nanum+Myeongjo:wght@400;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-<!-- ANNOUNCEMENT BAR -->
+<!-- ANNOUNCE -->
 <div class="announce">
-  <div class="announce__inner">
-    <span>🍪 NEW · 오픈 기념 답례 박스 10세트 이상 주문 시 2세트 증정</span>
-    <span class="announce__dot">·</span>
-    <span>전국 택배 / 서울·경기 당일 픽업</span>
-  </div>
+  <span>🍪 오픈 기념 · 10봉 이상 주문 시 2봉 증정</span>
+  <span class="sep">|</span>
+  <span>전국 택배 · 서울경기 당일 픽업</span>
 </div>
 
 <!-- NAV -->
 <header class="nav" id="nav">
   <div class="nav__inner">
-    <a href="#top" class="brand">
-      <span class="brand__mark">
-        <svg viewBox="0 0 40 40" width="28" height="28" aria-hidden="true">
-          <circle cx="20" cy="20" r="17" fill="#C98C5A"/>
-          <circle cx="13" cy="15" r="2.2" fill="#4A2C17"/>
-          <circle cx="25" cy="13" r="1.6" fill="#4A2C17"/>
-          <circle cx="28" cy="22" r="2" fill="#4A2C17"/>
-          <circle cx="17" cy="26" r="1.8" fill="#4A2C17"/>
-          <circle cx="22" cy="19" r="1.4" fill="#4A2C17"/>
-        </svg>
-      </span>
-      <span class="brand__name">Edit<span class="brand__o">O</span></span>
+    <a href="#" class="logo">
+      <svg viewBox="0 0 40 40" width="26" height="26"><circle cx="20" cy="20" r="17" fill="#C98C5A"/><circle cx="13" cy="15" r="2.2" fill="#4A2C17"/><circle cx="25" cy="13" r="1.6" fill="#4A2C17"/><circle cx="28" cy="22" r="2" fill="#4A2C17"/><circle cx="17" cy="26" r="1.8" fill="#4A2C17"/><circle cx="22" cy="19" r="1.4" fill="#4A2C17"/></svg>
+      <span>Edit<em>O</em></span>
     </a>
-    <nav class="nav__menu">
-      <a href="#story">Story</a>
+    <nav class="nav__links">
       <a href="#products">Products</a>
-      <a href="#ingredients">Ingredients</a>
-      <a href="#gift">Gift</a>
+      <a href="#story">Story</a>
+      <a href="#gallery">Gallery</a>
       <a href="#order">Order</a>
     </nav>
-    <a href="#order" class="btn btn--ghost btn--sm">주문하기</a>
-    <button class="nav__toggle" id="navToggle" aria-label="menu">
+    <a href="#order" class="nav__cta">주문하기</a>
+    <button class="nav__burger" id="burger">
       <span></span><span></span><span></span>
     </button>
   </div>
-  <div class="nav__mobile" id="navMobile">
-    <a href="#story">Story</a>
+  <div class="nav__drawer" id="drawer">
     <a href="#products">Products</a>
-    <a href="#ingredients">Ingredients</a>
-    <a href="#gift">Gift</a>
+    <a href="#story">Story</a>
+    <a href="#gallery">Gallery</a>
     <a href="#order">Order</a>
   </div>
 </header>
 
 <!-- HERO -->
-<section class="hero" id="top">
-  <div class="hero__bg"></div>
-  <div class="hero__inner">
-    <div class="hero__text">
-      <p class="eyebrow">Handmade · Seoul · Since 2026</p>
-      <h1 class="hero__title">
-        달콤한 첫인사,<br/>
-        <em>Edit<span class="brand__o">O</span></em>
-      </h1>
-      <p class="hero__lead">
-        프랑스산 고메버터와 밀가루, 미국산 아몬드 가루로<br/>
-        하나하나 손으로 도장 찍어 구운 수제 스탬프 쿠키.
-      </p>
-      <div class="hero__cta">
-        <a href="#products" class="btn btn--primary">제품 보러가기</a>
-        <a href="#gift" class="btn btn--ghost">답례 박스 상담</a>
-      </div>
-      <ul class="hero__chips">
-        <li>🧈 프랑스산 고메버터</li>
-        <li>🌾 프랑스산 밀가루</li>
-        <li>🌰 미국산 아몬드 파우더</li>
-        <li>🎁 맞춤 레터링</li>
-      </ul>
-    </div>
-
-    <div class="hero__visual">
-      <div class="cookie-stack">
-        <!-- 강아지 (초코) -->
-        <div class="cookie c-dog" style="--x:-140px;--y:-120px;--r:-8deg">
-          <svg viewBox="0 0 100 100"><ellipse cx="32" cy="36" rx="11" ry="16" transform="rotate(-20 32 36)" fill="#6B3F22"/><ellipse cx="68" cy="36" rx="11" ry="16" transform="rotate(20 68 36)" fill="#6B3F22"/><circle cx="50" cy="58" r="34" fill="#7B4E2D"/><circle cx="39" cy="54" r="3.5" fill="#1A0E08"/><circle cx="61" cy="54" r="3.5" fill="#1A0E08"/><circle cx="40" cy="52" r="1" fill="#fff"/><circle cx="62" cy="52" r="1" fill="#fff"/><ellipse cx="50" cy="64" rx="4" ry="3" fill="#1A0E08"/><path d="M44,72 Q50,78 56,72" stroke="#1A0E08" stroke-width="1.5" fill="none"/></svg>
-        </div>
-        <!-- 브로콜리 (녹색) -->
-        <div class="cookie c-brocc" style="--x:-30px;--y:-185px;--r:6deg">
-          <svg viewBox="0 0 100 110"><path d="M20,55 Q16,38 28,30 Q33,18 50,22 Q67,18 72,30 Q84,38 80,55 Q84,72 70,76 L30,76 Q16,72 20,55Z" fill="#5E8044"/><circle cx="38" cy="48" r="3" fill="#1A0E08"/><circle cx="62" cy="48" r="3" fill="#1A0E08"/><path d="M43,58 Q50,65 57,58" stroke="#1A0E08" stroke-width="1.5" fill="none"/><rect x="42" y="76" width="16" height="20" rx="3" fill="#7AAA58"/></svg>
-        </div>
-        <!-- 벚꽃 (핑크) -->
-        <div class="cookie c-cherry" style="--x:125px;--y:-130px;--r:-5deg">
-          <svg viewBox="0 0 100 100"><g transform="translate(50,50)"><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2"/><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2" transform="rotate(72)"/><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2" transform="rotate(144)"/><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2" transform="rotate(216)"/><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2" transform="rotate(288)"/><circle r="6" fill="#C87888"/></g></svg>
-        </div>
-        <!-- 은행잎 (노란) -->
-        <div class="cookie c-ginkgo" style="--x:-185px;--y:20px;--r:12deg">
-          <svg viewBox="0 0 100 110"><g transform="translate(50,52)"><path d="M0,28 Q-32,18 -38,-8 Q-28,-32 0,-36 Q28,-32 38,-8 Q32,18 0,28Z" fill="#E6C96D"/><line x1="0" y1="28" x2="-26" y2="-18" stroke="#B89A3C" stroke-width="1"/><line x1="0" y1="28" x2="-12" y2="-32" stroke="#B89A3C" stroke-width="1"/><line x1="0" y1="28" x2="0" y2="-36" stroke="#B89A3C" stroke-width="1"/><line x1="0" y1="28" x2="12" y2="-32" stroke="#B89A3C" stroke-width="1"/><line x1="0" y1="28" x2="26" y2="-18" stroke="#B89A3C" stroke-width="1"/><rect x="-4" y="28" width="8" height="22" rx="2" fill="#C9A847"/></g></svg>
-        </div>
-        <!-- Thank you 말풍선 (아이보리) -->
-        <div class="cookie c-thankyou" style="--x:0;--y:0;--r:-2deg">
-          <svg viewBox="0 0 110 90"><path d="M12,12 Q12,4 20,4 L90,4 Q98,4 98,12 L98,52 Q98,60 90,60 L42,60 L28,76 L30,60 L20,60 Q12,60 12,52Z" fill="#F2E0BE"/><text x="55" y="28" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-style="italic" fill="#6B4226">Thank</text><text x="55" y="47" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-style="italic" fill="#6B4226">you</text></svg>
-        </div>
-        <!-- 나뭇잎 (연두) -->
-        <div class="cookie c-leaf" style="--x:185px;--y:30px;--r:-10deg">
-          <svg viewBox="0 0 100 120"><g transform="translate(50,60)"><path d="M0,-48 Q-26,-32 -22,0 Q-26,32 0,48 Q26,32 22,0 Q26,-32 0,-48Z" fill="#9DB77E"/><line x1="0" y1="-48" x2="0" y2="48" stroke="#7B9660" stroke-width="1.5"/><path d="M0,-20 Q-18,-14 -22,-8" stroke="#7B9660" stroke-width="1" fill="none"/><path d="M0,-20 Q18,-14 22,-8" stroke="#7B9660" stroke-width="1" fill="none"/><path d="M0,4 Q-20,10 -22,6" stroke="#7B9660" stroke-width="1" fill="none"/><path d="M0,4 Q20,10 22,6" stroke="#7B9660" stroke-width="1" fill="none"/></g></svg>
-        </div>
-        <!-- 네잎클로버 (짙은녹색) -->
-        <div class="cookie c-clover" style="--x:-100px;--y:162px;--r:8deg">
-          <svg viewBox="0 0 100 100"><g transform="translate(50,50)"><path d="M-3,-6 Q-20,-42 -3,-36 Q0,-44 3,-36 Q20,-42 3,-6Z" fill="#4A7034"/><path d="M6,-3 Q42,-20 36,-3 Q44,0 36,3 Q42,20 6,3Z" fill="#4A7034"/><path d="M3,6 Q20,42 3,36 Q0,44 -3,36 Q-20,42 -3,6Z" fill="#4A7034"/><path d="M-6,3 Q-42,20 -36,3 Q-44,0 -36,-3 Q-42,-20 -6,-3Z" fill="#4A7034"/><circle r="4" fill="#336020"/><rect x="-2" y="10" width="4" height="20" rx="2" fill="#4A7034"/></g></svg>
-        </div>
-        <!-- 쑥꽃 (쑥색) -->
-        <div class="cookie c-mugwort" style="--x:112px;--y:172px;--r:-14deg">
-          <svg viewBox="0 0 100 100"><g transform="translate(50,50)"><ellipse cx="0" cy="-28" rx="9" ry="14" fill="#4B6B38"/><ellipse cx="0" cy="-28" rx="9" ry="14" fill="#4B6B38" transform="rotate(60)"/><ellipse cx="0" cy="-28" rx="9" ry="14" fill="#4B6B38" transform="rotate(120)"/><ellipse cx="0" cy="-28" rx="9" ry="14" fill="#4B6B38" transform="rotate(180)"/><ellipse cx="0" cy="-28" rx="9" ry="14" fill="#4B6B38" transform="rotate(240)"/><ellipse cx="0" cy="-28" rx="9" ry="14" fill="#4B6B38" transform="rotate(300)"/><circle r="8" fill="#688A52"/><circle r="3" fill="#8AAE6A"/></g></svg>
-        </div>
-      </div>
-      <div class="hero__sparkle"></div>
+<section class="hero">
+  <div class="hero__media">
+    <img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=1600&q=85&auto=format&fit=crop"
+         alt="EditO 수제 스탬프 쿠키"
+         onerror="this.style.display='none'"/>
+    <div class="hero__overlay"></div>
+  </div>
+  <div class="hero__content">
+    <p class="hero__sub">Handmade Stamp Cookies · Seoul · 2026</p>
+    <h1>달콤한 첫인사<br/><em>드립니다.</em></h1>
+    <p class="hero__desc">프랑스산 고메버터 · 밀가루, 미국산 아몬드가루<br/>천연 색소 · 베이킹파우더 0g</p>
+    <div class="hero__btns">
+      <a href="#products" class="btn btn--light">제품 보기</a>
+      <a href="#order" class="btn btn--outline">답례 상담</a>
     </div>
   </div>
+  <div class="hero__scroll">scroll</div>
+</section>
 
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee__track">
-      <span>FRESH BAKED</span><span>·</span>
-      <span>STAMP COOKIES</span><span>·</span>
-      <span>FRENCH BUTTER</span><span>·</span>
-      <span>ALMOND FINANCIER</span><span>·</span>
-      <span>SMALL BATCH</span><span>·</span>
-      <span>HANDMADE WITH LOVE</span><span>·</span>
-      <span>FRESH BAKED</span><span>·</span>
-      <span>STAMP COOKIES</span><span>·</span>
-      <span>FRENCH BUTTER</span><span>·</span>
-      <span>ALMOND FINANCIER</span><span>·</span>
+<!-- BRAND STRIP -->
+<div class="strip">
+  <div class="strip__track">
+    <span>FRESH BAKED</span><span>·</span><span>STAMP COOKIES</span><span>·</span>
+    <span>FRENCH BUTTER</span><span>·</span><span>ALMOND FINANCIER</span><span>·</span>
+    <span>SMALL BATCH</span><span>·</span><span>NO ADDITIVES</span><span>·</span>
+    <span>FRESH BAKED</span><span>·</span><span>STAMP COOKIES</span><span>·</span>
+    <span>FRENCH BUTTER</span><span>·</span><span>ALMOND FINANCIER</span><span>·</span>
+    <span>SMALL BATCH</span><span>·</span><span>NO ADDITIVES</span><span>·</span>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="label">Signature Menu</p>
+      <h2>오늘의 디저트 큐레이션</h2>
+      <p class="sec-desc">매일 아침 작은 오븐에서, 한 번에 한 판만.</p>
+    </header>
+
+    <div class="pgrid">
+
+      <!-- 클래식 8색 스탬프 -->
+      <article class="pcard pcard--wide">
+        <div class="pcard__img">
+          <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=900&q=85&auto=format&fit=crop"
+               alt="8색 스탬프 쿠키"
+               onerror="this.style.display='none'"/>
+          <div class="pcard__badge">BEST</div>
+          <div class="pcard__overlay">
+            <div class="cookie-row">
+              <svg viewBox="0 0 100 100" width="52" height="52"><ellipse cx="32" cy="36" rx="11" ry="16" transform="rotate(-20 32 36)" fill="#6B3F22"/><ellipse cx="68" cy="36" rx="11" ry="16" transform="rotate(20 68 36)" fill="#6B3F22"/><circle cx="50" cy="58" r="34" fill="#7B4E2D"/><circle cx="39" cy="54" r="3.5" fill="#1A0E08"/><circle cx="61" cy="54" r="3.5" fill="#1A0E08"/><ellipse cx="50" cy="64" rx="4" ry="3" fill="#1A0E08"/><path d="M44,72 Q50,78 56,72" stroke="#1A0E08" stroke-width="2" fill="none"/></svg>
+              <svg viewBox="0 0 100 110" width="50" height="55"><path d="M20,55 Q16,38 28,30 Q33,18 50,22 Q67,18 72,30 Q84,38 80,55 Q84,72 70,76 L30,76 Q16,72 20,55Z" fill="#5E8044"/><circle cx="38" cy="48" r="3" fill="#1A0E08"/><circle cx="62" cy="48" r="3" fill="#1A0E08"/><path d="M43,58 Q50,65 57,58" stroke="#1A0E08" stroke-width="1.5" fill="none"/><rect x="42" y="76" width="16" height="20" rx="3" fill="#7AAA58"/></svg>
+              <svg viewBox="0 0 100 100" width="48" height="48"><g transform="translate(50,50)"><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2"/><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2" transform="rotate(72)"/><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2" transform="rotate(144)"/><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2" transform="rotate(216)"/><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2" transform="rotate(288)"/><circle r="6" fill="#C87888"/></g></svg>
+              <svg viewBox="0 0 110 90" width="64" height="52"><path d="M12,12 Q12,4 20,4 L90,4 Q98,4 98,12 L98,52 Q98,60 90,60 L42,60 L28,76 L30,60 L20,60 Q12,60 12,52Z" fill="#F2E0BE"/><text x="55" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-style="italic" fill="#6B4226">Thank</text><text x="55" y="45" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-style="italic" fill="#6B4226">you</text></svg>
+              <svg viewBox="0 0 100 110" width="48" height="53"><g transform="translate(50,52)"><path d="M0,28 Q-32,18 -38,-8 Q-28,-32 0,-36 Q28,-32 38,-8 Q32,18 0,28Z" fill="#E6C96D"/><line x1="0" y1="28" x2="0" y2="-36" stroke="#B89A3C" stroke-width="1"/><rect x="-4" y="28" width="8" height="18" rx="2" fill="#C9A847"/></g></svg>
+            </div>
+          </div>
+        </div>
+        <div class="pcard__body">
+          <div>
+            <h3>클래식 8색 스탬프 박스</h3>
+            <p>강아지 · 브로콜리 · 벚꽃 · 은행잎 · 네잎클로버 · 나뭇잎 · 쑥꽃 · Thank you. 8가지 천연 컬러.</p>
+          </div>
+          <div class="pcard__foot">
+            <span class="price">₩18,000</span>
+            <span class="tag">8개입 1봉</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 휘낭시에 세트 -->
+      <article class="pcard">
+        <div class="pcard__img">
+          <img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=700&q=85&auto=format&fit=crop"
+               alt="휘낭시에 세트"
+               onerror="this.style.display='none'"/>
+          <div class="pcard__badge pcard__badge--gold">NEW</div>
+        </div>
+        <div class="pcard__body">
+          <div>
+            <h3>브라운버터 휘낭시에 세트</h3>
+            <p>헤이즐넛향 브라운버터 · 말차 · 얼그레이. 촉촉하고 묵직한 프랑스식 구움과자 3종.</p>
+          </div>
+          <div class="pcard__foot">
+            <span class="price">₩16,500</span>
+            <span class="tag">3종 × 2개</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 구움과자 세트 -->
+      <article class="pcard">
+        <div class="pcard__img">
+          <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=700&q=85&auto=format&fit=crop"
+               alt="구움과자 세트"
+               onerror="this.style.display='none'"/>
+          <div class="pcard__badge pcard__badge--sage">SET</div>
+        </div>
+        <div class="pcard__body">
+          <div>
+            <h3>구움과자 세트</h3>
+            <p>스탬프 쿠키 4종 + 휘낭시에 3종. 커피·차 선물용, 집들이·돌 답례에.</p>
+          </div>
+          <div class="pcard__foot">
+            <span class="price">₩24,000</span>
+            <span class="tag">7개입 선물박스</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 답례 박스 -->
+      <article class="pcard">
+        <div class="pcard__img">
+          <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=700&q=85&auto=format&fit=crop"
+               alt="답례 박스"
+               onerror="this.style.display='none'"/>
+          <div class="pcard__badge pcard__badge--brown">GIFT</div>
+        </div>
+        <div class="pcard__body">
+          <div>
+            <h3>첫인사 답례 박스 10봉</h3>
+            <p>크라프트 헤더택 · QR 홍보 카드 포함. 사내 첫인사 · 이사 · 개업 · 돌 답례.</p>
+          </div>
+          <div class="pcard__foot">
+            <span class="price">₩165,000</span>
+            <span class="tag">10봉 맞춤 레터링</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 시즌 리프 -->
+      <article class="pcard">
+        <div class="pcard__img">
+          <img src="https://images.unsplash.com/photo-1490567674331-8d42cc4a9f8b?w=700&q=85&auto=format&fit=crop"
+               alt="시즌 리프 콜렉션"
+               onerror="this.style.display='none'"/>
+          <div class="pcard__badge pcard__badge--sage">한정</div>
+        </div>
+        <div class="pcard__body">
+          <div>
+            <h3>시즌 리프 콜렉션</h3>
+            <p>쑥 · 녹차 · 인절미. 할매니얼 감성의 고소하고 깊은 천연 컬러 쿠키.</p>
+          </div>
+          <div class="pcard__foot">
+            <span class="price">₩16,000</span>
+            <span class="tag">6개입 한정</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 아몬드 튀일 -->
+      <article class="pcard">
+        <div class="pcard__img">
+          <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=700&q=85&auto=format&fit=crop"
+               alt="아몬드 튀일"
+               onerror="this.style.display='none'"/>
+        </div>
+        <div class="pcard__body">
+          <div>
+            <h3>아몬드 튀일</h3>
+            <p>얇고 바삭한 프랑스식 과자. 커피 한 잔과 가장 잘 어울립니다.</p>
+          </div>
+          <div class="pcard__foot">
+            <span class="price">₩9,800</span>
+            <span class="tag">20g × 5봉</span>
+          </div>
+        </div>
+      </article>
+
     </div>
   </div>
 </section>
 
 <!-- STORY -->
 <section class="story" id="story">
-  <div class="container story__inner">
-    <div class="story__image">
-      <div class="frame">
-        <div class="frame__tag">Baked with care</div>
-        <div class="polaroid polaroid--1"></div>
-        <div class="polaroid polaroid--2"></div>
-        <div class="polaroid polaroid--3"></div>
-      </div>
+  <div class="wrap story__inner">
+    <div class="story__img">
+      <img src="https://images.unsplash.com/photo-1590080876351-41d8c1f29292?w=900&q=85&auto=format&fit=crop"
+           alt="EditO 쿠키 만들기"
+           onerror="this.style.display='none'"/>
+      <div class="story__tag">Baked with care ✦</div>
     </div>
     <div class="story__text">
-      <p class="eyebrow">Our Story</p>
+      <p class="label">Our Story</p>
       <h2>작은 쿠키 한 조각에 담은<br/>가장 다정한 첫 문장.</h2>
-      <p>
-        EditO는 새로운 시작의 순간, 가장 먼저 건네고 싶은 달콤한 인사말입니다.
-        매일 아침 한 판씩만 굽는 소량 생산 원칙으로, 프랑스 노르망디의 고메버터와
-        밀가루, 미국 캘리포니아 아몬드 가루를 사용해 가장 깨끗한 맛만 담았습니다.
-      </p>
-      <p>
-        8가지 천연 컬러의 스탬프 쿠키와, 따뜻한 버터향의 휘낭시에.
-        종이와 실, 손글씨까지. 받는 분의 하루에 조용히 스며드는 선물을 만듭니다.
-      </p>
-      <div class="story__stats">
-        <div><strong>8</strong><span>시그니처 컬러</span></div>
-        <div><strong>0g</strong><span>베이킹파우더·첨가물</span></div>
-        <div><strong>24h</strong><span>이내 구움 · 당일 포장</span></div>
+      <p>EditO는 새로운 시작의 순간, 가장 먼저 건네고 싶은 달콤한 인사말입니다. 프랑스 노르망디의 고메버터와 밀가루, 미국 캘리포니아 아몬드가루로 매일 소량만 굽습니다.</p>
+      <p>베이킹파우더 0g. 합성 첨가물 없이. 8가지 천연 컬러의 스탬프 쿠키와 따뜻한 버터향의 휘낭시에.</p>
+      <div class="story__nums">
+        <div><b>8</b><span>시그니처 컬러</span></div>
+        <div><b>0g</b><span>베이킹파우더</span></div>
+        <div><b>24h</b><span>당일 구움</span></div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRODUCTS -->
-<section class="products" id="products">
-  <div class="container">
-    <header class="section-head">
-      <p class="eyebrow">Signature</p>
-      <h2>오늘의 디저트 큐레이션</h2>
-      <p class="section-desc">매일 아침 작은 오븐에서, 한 번에 한 판만.</p>
-    </header>
-
-    <!-- 쿠키 타입 쇼케이스 -->
-    <div class="cookie-types">
-      <p class="cookie-types__label">8가지 시그니처 쿠키</p>
-      <div class="cookie-types__row">
-        <div class="ctype"><svg viewBox="0 0 100 100"><ellipse cx="32" cy="36" rx="11" ry="16" transform="rotate(-20 32 36)" fill="#6B3F22"/><ellipse cx="68" cy="36" rx="11" ry="16" transform="rotate(20 68 36)" fill="#6B3F22"/><circle cx="50" cy="58" r="34" fill="#7B4E2D"/><circle cx="39" cy="54" r="3.5" fill="#1A0E08"/><circle cx="61" cy="54" r="3.5" fill="#1A0E08"/><circle cx="40" cy="52" r="1" fill="#fff"/><circle cx="62" cy="52" r="1" fill="#fff"/><ellipse cx="50" cy="64" rx="4" ry="3" fill="#1A0E08"/><path d="M44,72 Q50,78 56,72" stroke="#1A0E08" stroke-width="1.5" fill="none"/></svg><span>강아지</span></div>
-        <div class="ctype"><svg viewBox="0 0 100 110"><path d="M20,55 Q16,38 28,30 Q33,18 50,22 Q67,18 72,30 Q84,38 80,55 Q84,72 70,76 L30,76 Q16,72 20,55Z" fill="#5E8044"/><circle cx="38" cy="48" r="3" fill="#1A0E08"/><circle cx="62" cy="48" r="3" fill="#1A0E08"/><path d="M43,58 Q50,65 57,58" stroke="#1A0E08" stroke-width="1.5" fill="none"/><rect x="42" y="76" width="16" height="20" rx="3" fill="#7AAA58"/></svg><span>브로콜리</span></div>
-        <div class="ctype"><svg viewBox="0 0 100 100"><g transform="translate(50,50)"><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2"/><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2" transform="rotate(72)"/><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2" transform="rotate(144)"/><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2" transform="rotate(216)"/><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2" transform="rotate(288)"/><circle r="6" fill="#C87888"/></g></svg><span>벚꽃</span></div>
-        <div class="ctype"><svg viewBox="0 0 100 110"><g transform="translate(50,52)"><path d="M0,28 Q-32,18 -38,-8 Q-28,-32 0,-36 Q28,-32 38,-8 Q32,18 0,28Z" fill="#E6C96D"/><line x1="0" y1="28" x2="-26" y2="-18" stroke="#B89A3C" stroke-width="1"/><line x1="0" y1="28" x2="0" y2="-36" stroke="#B89A3C" stroke-width="1"/><line x1="0" y1="28" x2="26" y2="-18" stroke="#B89A3C" stroke-width="1"/><rect x="-4" y="28" width="8" height="18" rx="2" fill="#C9A847"/></g></svg><span>은행잎</span></div>
-        <div class="ctype"><svg viewBox="0 0 110 90"><path d="M12,12 Q12,4 20,4 L90,4 Q98,4 98,12 L98,52 Q98,60 90,60 L42,60 L28,76 L30,60 L20,60 Q12,60 12,52Z" fill="#F2E0BE"/><text x="55" y="28" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-style="italic" fill="#6B4226">Thank</text><text x="55" y="47" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-style="italic" fill="#6B4226">you</text></svg><span>Thank you</span></div>
-        <div class="ctype"><svg viewBox="0 0 100 120"><g transform="translate(50,60)"><path d="M0,-48 Q-26,-32 -22,0 Q-26,32 0,48 Q26,32 22,0 Q26,-32 0,-48Z" fill="#9DB77E"/><line x1="0" y1="-48" x2="0" y2="48" stroke="#7B9660" stroke-width="1.5"/><path d="M0,-20 Q-18,-14 -22,-8" stroke="#7B9660" stroke-width="1" fill="none"/><path d="M0,-20 Q18,-14 22,-8" stroke="#7B9660" stroke-width="1" fill="none"/><path d="M0,4 Q-20,10 -22,6" stroke="#7B9660" stroke-width="1" fill="none"/><path d="M0,4 Q20,10 22,6" stroke="#7B9660" stroke-width="1" fill="none"/></g></svg><span>나뭇잎</span></div>
-        <div class="ctype"><svg viewBox="0 0 100 100"><g transform="translate(50,50)"><path d="M-3,-6 Q-20,-42 -3,-36 Q0,-44 3,-36 Q20,-42 3,-6Z" fill="#4A7034"/><path d="M6,-3 Q42,-20 36,-3 Q44,0 36,3 Q42,20 6,3Z" fill="#4A7034"/><path d="M3,6 Q20,42 3,36 Q0,44 -3,36 Q-20,42 -3,6Z" fill="#4A7034"/><path d="M-6,3 Q-42,20 -36,3 Q-44,0 -36,-3 Q-42,-20 -6,-3Z" fill="#4A7034"/><circle r="4" fill="#336020"/></g></svg><span>네잎클로버</span></div>
-        <div class="ctype"><svg viewBox="0 0 100 100"><g transform="translate(50,50)"><ellipse cx="0" cy="-28" rx="9" ry="14" fill="#4B6B38"/><ellipse cx="0" cy="-28" rx="9" ry="14" fill="#4B6B38" transform="rotate(60)"/><ellipse cx="0" cy="-28" rx="9" ry="14" fill="#4B6B38" transform="rotate(120)"/><ellipse cx="0" cy="-28" rx="9" ry="14" fill="#4B6B38" transform="rotate(180)"/><ellipse cx="0" cy="-28" rx="9" ry="14" fill="#4B6B38" transform="rotate(240)"/><ellipse cx="0" cy="-28" rx="9" ry="14" fill="#4B6B38" transform="rotate(300)"/><circle r="8" fill="#688A52"/><circle r="3" fill="#8AAE6A"/></g></svg><span>쑥꽃</span></div>
-      </div>
-    </div>
-
-    <div class="product-grid">
-      <!-- P1: 클래식 8색 스탬프 -->
-      <article class="product">
-        <div class="product__img product__img--classic">
-          <div class="cookie-badge">BEST</div>
-          <div class="p-cookie" style="left:18%;top:22%">
-            <svg viewBox="0 0 100 100" width="70" height="70"><ellipse cx="32" cy="36" rx="11" ry="16" transform="rotate(-20 32 36)" fill="#6B3F22"/><ellipse cx="68" cy="36" rx="11" ry="16" transform="rotate(20 68 36)" fill="#6B3F22"/><circle cx="50" cy="58" r="34" fill="#7B4E2D"/><circle cx="39" cy="54" r="3.5" fill="#1A0E08"/><circle cx="61" cy="54" r="3.5" fill="#1A0E08"/><ellipse cx="50" cy="64" rx="4" ry="3" fill="#1A0E08"/><path d="M44,72 Q50,78 56,72" stroke="#1A0E08" stroke-width="2" fill="none"/></svg>
-          </div>
-          <div class="p-cookie" style="left:50%;top:10%">
-            <svg viewBox="0 0 100 100" width="65" height="65"><g transform="translate(50,50)"><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2"/><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2" transform="rotate(72)"/><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2" transform="rotate(144)"/><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2" transform="rotate(216)"/><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2" transform="rotate(288)"/><circle r="6" fill="#C87888"/></g></svg>
-          </div>
-          <div class="p-cookie" style="right:12%;bottom:18%">
-            <svg viewBox="0 0 110 90" width="80" height="65"><path d="M12,12 Q12,4 20,4 L90,4 Q98,4 98,12 L98,52 Q98,60 90,60 L42,60 L28,76 L30,60 L20,60 Q12,60 12,52Z" fill="#F2E0BE"/><text x="55" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-style="italic" fill="#6B4226">Thank</text><text x="55" y="45" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-style="italic" fill="#6B4226">you</text></svg>
-          </div>
-          <div class="p-cookie" style="left:55%;bottom:14%">
-            <svg viewBox="0 0 100 110" width="60" height="66"><path d="M20,55 Q16,38 28,30 Q33,18 50,22 Q67,18 72,30 Q84,38 80,55 Q84,72 70,76 L30,76 Q16,72 20,55Z" fill="#5E8044"/><circle cx="38" cy="48" r="3" fill="#1A0E08"/><circle cx="62" cy="48" r="3" fill="#1A0E08"/><path d="M43,58 Q50,65 57,58" stroke="#1A0E08" stroke-width="1.5" fill="none"/><rect x="42" y="76" width="16" height="20" rx="3" fill="#7AAA58"/></svg>
-          </div>
-        </div>
-        <div class="product__body">
-          <h3>클래식 8색 스탬프 박스</h3>
-          <p>강아지 · 브로콜리 · 벚꽃 · 은행잎 · 네잎클로버 · 나뭇잎 · 쑥 · Thank you</p>
-          <div class="product__meta">
-            <span class="price">₩18,000</span>
-            <span class="tag">8개입 · 1봉</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- P2: 휘낭시에 세트 -->
-      <article class="product">
-        <div class="product__img product__img--financier2">
-          <div class="cookie-badge cookie-badge--alt">NEW</div>
-          <div class="fin-wrap">
-            <svg class="fin-svg" viewBox="0 0 180 80">
-              <rect x="4" y="4" width="172" height="72" rx="8" fill="#C8905A"/>
-              <rect x="4" y="4" width="172" height="22" rx="8" fill="#E8B87A"/>
-              <rect x="4" y="54" width="172" height="22" rx="8" fill="#9A6030"/>
-              <rect x="10" y="8" width="160" height="5" rx="2" fill="#F5D4A0" opacity="0.5"/>
-              <path d="M30,38 Q90,28 150,38" stroke="#B07840" stroke-width="1" fill="none" opacity="0.5"/>
-            </svg>
-            <svg class="fin-svg fin-svg--2" viewBox="0 0 180 80">
-              <rect x="4" y="4" width="172" height="72" rx="8" fill="#C8905A"/>
-              <rect x="4" y="4" width="172" height="22" rx="8" fill="#E8B87A"/>
-              <rect x="4" y="54" width="172" height="22" rx="8" fill="#9A6030"/>
-              <rect x="10" y="8" width="160" height="5" rx="2" fill="#F5D4A0" opacity="0.5"/>
-            </svg>
-            <svg class="fin-svg fin-svg--3" viewBox="0 0 180 80">
-              <rect x="4" y="4" width="172" height="72" rx="8" fill="#D4A070"/>
-              <rect x="4" y="4" width="172" height="22" rx="8" fill="#ECC488"/>
-              <rect x="4" y="54" width="172" height="22" rx="8" fill="#A87848"/>
-            </svg>
-          </div>
-          <div class="fin-tag">브라운버터 · 말차 · 얼그레이</div>
-        </div>
-        <div class="product__body">
-          <h3>휘낭시에 세트</h3>
-          <p>헤이즐넛향 브라운버터 · 말차 · 얼그레이 3가지 맛. 촉촉하고 묵직한 프랑스식 구움과자.</p>
-          <div class="product__meta">
-            <span class="price">₩16,500</span>
-            <span class="tag">3종 × 2개 · 6개입</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- P3: 구움과자 세트 -->
-      <article class="product">
-        <div class="product__img product__img--baked">
-          <div class="cookie-badge cookie-badge--new">SET</div>
-          <div class="baked-grid">
-            <!-- 휘낭시에 -->
-            <svg viewBox="0 0 90 44" width="90" height="44" style="position:absolute;left:8%;top:12%">
-              <rect x="3" y="3" width="84" height="38" rx="6" fill="#C8905A"/>
-              <rect x="3" y="3" width="84" height="12" rx="6" fill="#E8B87A"/>
-              <rect x="3" y="29" width="84" height="12" rx="6" fill="#9A6030"/>
-            </svg>
-            <!-- 쿠키 강아지 -->
-            <svg viewBox="0 0 100 100" width="56" height="56" style="position:absolute;right:10%;top:8%">
-              <ellipse cx="32" cy="36" rx="11" ry="16" transform="rotate(-20 32 36)" fill="#6B3F22"/><ellipse cx="68" cy="36" rx="11" ry="16" transform="rotate(20 68 36)" fill="#6B3F22"/><circle cx="50" cy="58" r="34" fill="#7B4E2D"/><circle cx="39" cy="54" r="3.5" fill="#1A0E08"/><circle cx="61" cy="54" r="3.5" fill="#1A0E08"/><ellipse cx="50" cy="64" rx="4" ry="3" fill="#1A0E08"/><path d="M44,72 Q50,78 56,72" stroke="#1A0E08" stroke-width="2" fill="none"/>
-            </svg>
-            <!-- 말차 휘낭시에 -->
-            <svg viewBox="0 0 90 44" width="80" height="38" style="position:absolute;left:5%;bottom:14%">
-              <rect x="3" y="3" width="84" height="38" rx="6" fill="#6B8E4E"/>
-              <rect x="3" y="3" width="84" height="12" rx="6" fill="#8AAE68"/>
-              <rect x="3" y="29" width="84" height="12" rx="6" fill="#4A6832"/>
-            </svg>
-            <!-- 벚꽃 쿠키 -->
-            <svg viewBox="0 0 100 100" width="54" height="54" style="position:absolute;right:8%;bottom:10%">
-              <g transform="translate(50,50)"><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2"/><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2" transform="rotate(72)"/><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2" transform="rotate(144)"/><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2" transform="rotate(216)"/><path d="M0,-38 Q-12,-28 -8,-12 Q0,-8 8,-12 Q12,-28 0,-38Z" fill="#E8A5B2" transform="rotate(288)"/><circle r="6" fill="#C87888"/></g>
-            </svg>
-          </div>
-        </div>
-        <div class="product__body">
-          <h3>구움과자 세트</h3>
-          <p>휘낭시에 3종 + 스탬프 쿠키 4종. 커피·차 선물용, 집들이·돌 답례에 딱.</p>
-          <div class="product__meta">
-            <span class="price">₩24,000</span>
-            <span class="tag">7개입 · 선물 박스</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- P4: 답례 박스 -->
-      <article class="product">
-        <div class="product__img product__img--gift">
-          <div class="cookie-badge cookie-badge--alt">GIFT</div>
-          <div class="ribbon"></div>
-          <div class="gift-box"></div>
-        </div>
-        <div class="product__body">
-          <h3>첫인사 답례 박스 (10봉 세트)</h3>
-          <p>크라프트 헤더택 · QR 홍보 카드 포함. 사내 첫인사·이사·개업·돌 답례에.</p>
-          <div class="product__meta">
-            <span class="price">₩165,000</span>
-            <span class="tag">10봉 · 맞춤 레터링</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- P5: 시즌 리프 -->
-      <article class="product">
-        <div class="product__img product__img--seasonal">
-          <div class="cookie-badge cookie-badge--new">NEW</div>
-          <div class="p-cookie" style="left:12%;top:18%">
-            <svg viewBox="0 0 100 100" width="68" height="68"><g transform="translate(50,50)"><path d="M-3,-6 Q-20,-42 -3,-36 Q0,-44 3,-36 Q20,-42 3,-6Z" fill="#4A7034"/><path d="M6,-3 Q42,-20 36,-3 Q44,0 36,3 Q42,20 6,3Z" fill="#4A7034"/><path d="M3,6 Q20,42 3,36 Q0,44 -3,36 Q-20,42 -3,6Z" fill="#4A7034"/><path d="M-6,3 Q-42,20 -36,3 Q-44,0 -36,-3 Q-42,-20 -6,-3Z" fill="#4A7034"/><circle r="4" fill="#336020"/></g></svg>
-          </div>
-          <div class="p-cookie" style="right:10%;top:14%">
-            <svg viewBox="0 0 100 120" width="58" height="70"><g transform="translate(50,60)"><path d="M0,-48 Q-26,-32 -22,0 Q-26,32 0,48 Q26,32 22,0 Q26,-32 0,-48Z" fill="#9DB77E"/><line x1="0" y1="-48" x2="0" y2="48" stroke="#7B9660" stroke-width="1.5"/></g></svg>
-          </div>
-          <div class="p-cookie" style="left:30%;bottom:12%">
-            <svg viewBox="0 0 100 100" width="65" height="65"><g transform="translate(50,50)"><ellipse cx="0" cy="-28" rx="9" ry="14" fill="#4B6B38"/><ellipse cx="0" cy="-28" rx="9" ry="14" fill="#4B6B38" transform="rotate(60)"/><ellipse cx="0" cy="-28" rx="9" ry="14" fill="#4B6B38" transform="rotate(120)"/><ellipse cx="0" cy="-28" rx="9" ry="14" fill="#4B6B38" transform="rotate(180)"/><ellipse cx="0" cy="-28" rx="9" ry="14" fill="#4B6B38" transform="rotate(240)"/><ellipse cx="0" cy="-28" rx="9" ry="14" fill="#4B6B38" transform="rotate(300)"/><circle r="8" fill="#688A52"/></g></svg>
-          </div>
-        </div>
-        <div class="product__body">
-          <h3>시즌 리프 콜렉션</h3>
-          <p>쑥 · 녹차 · 인절미. 할매니얼 감성의 고소하고 깊은 맛.</p>
-          <div class="product__meta">
-            <span class="price">₩16,000</span>
-            <span class="tag">6개입 · 한정</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- P6: 맞춤 레터링 -->
-      <article class="product">
-        <div class="product__img product__img--letter">
-          <div class="letter-card"></div>
-          <div class="p-cookie" style="right:10%;bottom:10%">
-            <svg viewBox="0 0 110 90" width="90" height="74"><path d="M12,12 Q12,4 20,4 L90,4 Q98,4 98,12 L98,52 Q98,60 90,60 L42,60 L28,76 L30,60 L20,60 Q12,60 12,52Z" fill="#F2E0BE"/><text x="55" y="26" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-style="italic" fill="#6B4226">Thank</text><text x="55" y="45" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-style="italic" fill="#6B4226">you</text></svg>
-          </div>
-        </div>
-        <div class="product__body">
-          <h3>맞춤 레터링 쿠키</h3>
-          <p>원하시는 문구·이름·로고를 스탬프로 제작합니다. 기업 답례품 환영.</p>
-          <div class="product__meta">
-            <span class="price">문의</span>
-            <span class="tag">B2B · 대량</span>
-          </div>
-        </div>
-      </article>
     </div>
   </div>
 </section>
 
 <!-- INGREDIENTS -->
-<section class="ingredients" id="ingredients">
-  <div class="container">
-    <header class="section-head section-head--light">
-      <p class="eyebrow eyebrow--light">Premium Ingredients</p>
+<section class="ing" id="ingredients">
+  <div class="wrap">
+    <header class="sec-head sec-head--light">
+      <p class="label label--light">Premium Ingredients</p>
       <h2>재료부터 다르게, 정직하게.</h2>
-      <p class="section-desc">식품위생에 맞는 최상급 원물, 첨가물·팽창제·방부제 없이.</p>
+      <p class="sec-desc" style="color:#E6D5BD">첨가물·팽창제·방부제 없이 최상급 원물만.</p>
     </header>
-
-    <div class="ing-grid">
-      <div class="ing">
+    <div class="ing__grid">
+      <div class="ing__item">
         <div class="ing__icon">🧈</div>
-        <h3>프랑스산 고메버터</h3>
-        <p>노르망디 목초지에서 자란 젖소의 우유로 만든 82% 발효 버터. 깊은 유향과 부드러운 입자가 특징입니다.</p>
+        <h4>프랑스산 고메버터</h4>
+        <p>노르망디 82% 발효버터. 깊은 유향과 풍미.</p>
       </div>
-      <div class="ing">
+      <div class="ing__item">
         <div class="ing__icon">🌾</div>
-        <h3>프랑스산 T45 밀가루</h3>
-        <p>회분 낮은 고운 입자의 파티시에용 박력분. 섬세한 스탬프 자국을 그대로 지켜줍니다.</p>
+        <h4>프랑스산 T45 밀가루</h4>
+        <p>파티시에용 박력분. 섬세한 스탬프 자국 유지.</p>
       </div>
-      <div class="ing">
+      <div class="ing__item">
         <div class="ing__icon">🌰</div>
-        <h3>미국산 아몬드 파우더</h3>
-        <p>캘리포니아 논파레일 품종. 로스팅하여 곱게 갈아 고소한 사블레 식감과 향을 더합니다.</p>
+        <h4>미국산 아몬드 파우더</h4>
+        <p>캘리포니아 논파레일. 고소한 사블레 식감.</p>
       </div>
-      <div class="ing">
+      <div class="ing__item">
         <div class="ing__icon">🌿</div>
-        <h3>천연 컬러링</h3>
-        <p>말차 · 쑥 · 인절미 · 코코아 · 단호박 · 홍국쌀. 색소에 의존하지 않는 고유의 맛과 빛.</p>
+        <h4>천연 컬러링</h4>
+        <p>말차 · 쑥 · 인절미 · 코코아 · 단호박 · 홍국쌀.</p>
       </div>
-    </div>
-
-    <div class="ing-note">
-      <span class="dot"></span>
-      베이킹파우더 0g · 팽창제·보존료·합성착향료 사용하지 않습니다.
     </div>
   </div>
 </section>
 
-<!-- GIFT / PACKAGING -->
-<section class="gift" id="gift">
-  <div class="container gift__inner">
-    <div class="gift__text">
-      <p class="eyebrow">Gift & Packaging</p>
-      <h2>첫 인상을 포장합니다.</h2>
-      <p>
-        크라프트지 120g 헤더택, 비접착 OPP 봉투, 실리카겔까지.
-        받는 분의 책상 위에서도 예쁘게 서 있을 수 있도록 포장 각도까지 설계했어요.
-      </p>
-      <ul class="checks">
-        <li>✓ 브랜드 헤더택 (앞·뒤 맞춤 인쇄)</li>
-        <li>✓ 홍보 QR 코드 / 연락처 삽입 가능</li>
-        <li>✓ 회사·팀·이름 맞춤 레터링 카드</li>
-        <li>✓ 10봉 이상 대량 주문 단가 할인</li>
-      </ul>
-      <a href="#order" class="btn btn--primary">맞춤 견적 받기</a>
-    </div>
-    <div class="gift__visual">
-      <div class="pack">
-        <div class="pack__header">
-          <div class="brand brand--pack">
-            <span class="brand__mark brand__mark--sm">
-              <svg viewBox="0 0 40 40" width="20" height="20"><circle cx="20" cy="20" r="17" fill="#C98C5A"/><circle cx="13" cy="15" r="2.2" fill="#4A2C17"/><circle cx="25" cy="13" r="1.6" fill="#4A2C17"/><circle cx="28" cy="22" r="2" fill="#4A2C17"/><circle cx="17" cy="26" r="1.8" fill="#4A2C17"/></svg>
-            </span>
-            <span class="brand__name">Edit<span class="brand__o">O</span></span>
-          </div>
-          <p class="pack__msg">달콤한 첫인사 드립니다.<br/>잘 부탁드립니다.</p>
-          <div class="pack__staple"></div>
-          <div class="pack__staple pack__staple--r"></div>
-        </div>
-        <div class="pack__window">
-          <div class="cookie pc"><span>🐶</span></div>
-          <div class="cookie pc pc--p"><span>🌸</span></div>
-          <div class="cookie pc pc--c"><span>Thank<br/>you</span></div>
-          <div class="cookie pc pc--g"><span>🥦</span></div>
-          <div class="cookie pc pc--y"><span>🍂</span></div>
-          <div class="cookie pc pc--l"><span>🍃</span></div>
-        </div>
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="label">Gallery</p>
+      <h2>EditO의 순간들</h2>
+    </header>
+    <div class="gal">
+      <div class="gal__item gal__item--tall">
+        <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&q=85&auto=format&fit=crop" alt="쿠키"/>
       </div>
+      <div class="gal__item">
+        <img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=600&q=85&auto=format&fit=crop" alt="쿠키 플랫레이"/>
+      </div>
+      <div class="gal__item">
+        <img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=600&q=85&auto=format&fit=crop" alt="휘낭시에"/>
+      </div>
+      <div class="gal__item gal__item--wide">
+        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=900&q=85&auto=format&fit=crop" alt="구움과자"/>
+      </div>
+      <div class="gal__item">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=85&auto=format&fit=crop" alt="커피와 쿠키"/>
+      </div>
+      <div class="gal__item gal__item--tall">
+        <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600&q=85&auto=format&fit=crop" alt="포장"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GIFT -->
+<section class="gift" id="gift">
+  <div class="wrap gift__inner">
+    <div class="gift__text">
+      <p class="label">Gift & Packaging</p>
+      <h2>첫 인상을<br/>포장합니다.</h2>
+      <p>크라프트지 120g 헤더택, 비접착 OPP 봉투, 실리카겔. 받는 분의 책상 위에서도 예쁘게 서 있도록 설계했습니다.</p>
+      <ul class="checks">
+        <li>브랜드 헤더택 앞·뒤 맞춤 인쇄</li>
+        <li>QR 코드 / 연락처 삽입</li>
+        <li>이름·회사 맞춤 레터링</li>
+        <li>10봉 이상 대량 단가 할인</li>
+      </ul>
+      <a href="#order" class="btn btn--dark">맞춤 견적 받기</a>
+    </div>
+    <div class="gift__img">
+      <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&q=85&auto=format&fit=crop"
+           alt="선물 패키지"
+           onerror="this.style.display='none'"/>
     </div>
   </div>
 </section>
 
 <!-- REVIEWS -->
 <section class="reviews">
-  <div class="container">
-    <header class="section-head">
-      <p class="eyebrow">Reviews</p>
-      <h2>먼저 맛본 분들의 이야기</h2>
-    </header>
-    <div class="review-grid">
+  <div class="wrap">
+    <header class="sec-head"><p class="label">Reviews</p><h2>먼저 맛본 분들의 이야기</h2></header>
+    <div class="rev-grid">
       <blockquote>
-        <p>“새 팀에 첫 출근하면서 돌렸어요. 포장이 너무 예뻐서 다들 사진부터 찍더라고요. 인사가 훨씬 자연스러워졌어요.”</p>
-        <footer>— 정OO · 디자이너</footer>
+        <p>"새 팀에 첫 출근하면서 돌렸어요. 포장이 너무 예뻐서 다들 사진부터 찍더라고요."</p>
+        <cite>— 정OO · 디자이너</cite>
       </blockquote>
       <blockquote>
-        <p>“커피랑 먹었는데 버터향이 진짜 깊어요. 베이킹파우더 없이 이런 식감이 나오다니.”</p>
-        <footer>— 김OO · 바리스타</footer>
+        <p>"버터향이 진짜 깊어요. 베이킹파우더 없이 이런 식감이 나오다니 놀랐습니다."</p>
+        <cite>— 김OO · 바리스타</cite>
       </blockquote>
       <blockquote>
-        <p>“회사 답례품으로 50세트 주문했는데 레터링까지 완벽했습니다. 다음 분기에도 고정으로 쓸 예정.”</p>
-        <footer>— HR팀 · IT스타트업</footer>
+        <p>"회사 답례품으로 50세트 주문했는데 레터링까지 완벽했어요. 고정으로 쓸 예정입니다."</p>
+        <cite>— HR팀 · IT스타트업</cite>
       </blockquote>
     </div>
   </div>
@@ -469,41 +352,29 @@
 
 <!-- ORDER -->
 <section class="order" id="order">
-  <div class="container order__inner">
-    <div class="order__card">
-      <p class="eyebrow eyebrow--light">Order</p>
-      <h2>주문 & 문의</h2>
-      <p>카카오톡·전화·인스타 DM으로 편하게 문의 주세요. 영업일 기준 1일 이내 답변드립니다.</p>
-
-      <div class="order__grid">
-        <a class="order__item" href="tel:01062381934">
-          <span class="order__icon">📞</span>
-          <strong>010-6238-1934</strong>
-          <span>평일 10:00 – 18:00</span>
-        </a>
-        <a class="order__item" href="#">
-          <span class="order__icon">💬</span>
-          <strong>카카오톡 상담</strong>
-          <span>@EditO</span>
-        </a>
-        <a class="order__item" href="#">
-          <span class="order__icon">📷</span>
-          <strong>Instagram</strong>
-          <span>@edito.cookie</span>
-        </a>
+  <div class="wrap">
+    <div class="order__box">
+      <div class="order__left">
+        <p class="label label--light">Order</p>
+        <h2>주문 & 문의</h2>
+        <p>영업일 기준 1일 이내 답변드립니다.</p>
+        <div class="order__contacts">
+          <a href="tel:01062381934"><span>📞</span><div><strong>010-6238-1934</strong><small>평일 10:00–18:00</small></div></a>
+          <a href="#"><span>💬</span><div><strong>카카오톡</strong><small>@EditO</small></div></a>
+          <a href="#"><span>📷</span><div><strong>Instagram</strong><small>@edito.cookie</small></div></a>
+        </div>
       </div>
-
       <form class="order__form" id="orderForm">
-        <div class="row">
-          <label>이름<input type="text" name="name" placeholder="홍길동" required></label>
-          <label>연락처<input type="tel" name="phone" placeholder="010-0000-0000" required></label>
+        <div class="frow">
+          <label>이름<input type="text" name="name" placeholder="홍길동" required/></label>
+          <label>연락처<input type="tel" name="phone" placeholder="010-0000-0000" required/></label>
         </div>
         <label>주문 내용
-          <textarea name="message" rows="4" placeholder="예: 첫인사 답례 박스 30세트 / 4월 25일 수령 / 레터링: OOO 팀 OOO 드림" required></textarea>
+          <textarea name="message" rows="4" placeholder="예) 첫인사 답례 박스 30세트 / 4월 25일 수령 / 레터링: OOO팀 OOO 드림" required></textarea>
         </label>
-        <div class="row row--submit">
-          <small>· 주문 3일 전까지 신청 부탁드립니다.</small>
-          <button class="btn btn--primary" type="submit">보내기</button>
+        <div class="frow frow--end">
+          <small>* 주문 3일 전까지 신청 부탁드립니다.</small>
+          <button class="btn btn--light" type="submit">보내기</button>
         </div>
       </form>
     </div>
@@ -512,40 +383,23 @@
 
 <!-- FOOTER -->
 <footer class="footer">
-  <div class="container footer__inner">
+  <div class="wrap footer__inner">
     <div class="footer__brand">
-      <div class="brand">
-        <span class="brand__mark">
-          <svg viewBox="0 0 40 40" width="24" height="24"><circle cx="20" cy="20" r="17" fill="#C98C5A"/><circle cx="13" cy="15" r="2.2" fill="#4A2C17"/><circle cx="25" cy="13" r="1.6" fill="#4A2C17"/><circle cx="28" cy="22" r="2" fill="#4A2C17"/><circle cx="17" cy="26" r="1.8" fill="#4A2C17"/></svg>
-        </span>
-        <span class="brand__name">Edit<span class="brand__o">O</span></span>
-      </div>
+      <a href="#" class="logo logo--light">
+        <svg viewBox="0 0 40 40" width="22" height="22"><circle cx="20" cy="20" r="17" fill="#C98C5A"/><circle cx="13" cy="15" r="2.2" fill="#4A2C17"/><circle cx="25" cy="13" r="1.6" fill="#4A2C17"/><circle cx="28" cy="22" r="2" fill="#4A2C17"/><circle cx="17" cy="26" r="1.8" fill="#4A2C17"/></svg>
+        <span>Edit<em>O</em></span>
+      </a>
       <p>달콤한 첫인사 드립니다.</p>
     </div>
     <div class="footer__cols">
-      <div>
-        <h4>Shop</h4>
-        <a href="#products">Products</a>
-        <a href="#gift">Gift Box</a>
-        <a href="#order">B2B 대량 주문</a>
-      </div>
-      <div>
-        <h4>About</h4>
-        <a href="#story">Story</a>
-        <a href="#ingredients">Ingredients</a>
-        <a href="#">Q&A</a>
-      </div>
-      <div>
-        <h4>Contact</h4>
-        <a href="tel:01062381934">010-6238-1934</a>
-        <a href="#">@edito.cookie</a>
-        <a href="mailto:hello@edito.kr">hello@edito.kr</a>
-      </div>
+      <div><h5>Shop</h5><a href="#products">Products</a><a href="#gift">Gift Box</a><a href="#order">B2B 대량</a></div>
+      <div><h5>About</h5><a href="#story">Story</a><a href="#ingredients">Ingredients</a><a href="#">Q&A</a></div>
+      <div><h5>Contact</h5><a href="tel:01062381934">010-6238-1934</a><a href="#">@edito.cookie</a><a href="mailto:hello@edito.kr">hello@edito.kr</a></div>
     </div>
   </div>
   <div class="footer__bottom">
     <span>© 2026 EditO. All rights reserved.</span>
-    <span>Baked fresh in Seoul · 사업자번호 000-00-00000</span>
+    <span>Baked fresh in Seoul</span>
   </div>
 </footer>
 
