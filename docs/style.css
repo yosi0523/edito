@@ -581,3 +581,30 @@ blockquote footer{color: var(--muted); font-size:.88rem}
   .polaroid{width:200px;height:260px}
   .polaroid--3{width:220px;height:160px}
 }
+
+/* ---------- Cookie shapes (SVG) ---------- */
+.cookie svg{display:block;width:100%;height:100%}
+
+/* Cookie types showcase */
+.cookie-types{margin-bottom:44px;text-align:center}
+.cookie-types__label{font-size:.82rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;font-weight:600}
+.cookie-types__row{display:flex;justify-content:center;gap:18px;flex-wrap:wrap}
+.ctype{display:flex;flex-direction:column;align-items:center;gap:8px}
+.ctype svg{width:64px;height:64px;filter:drop-shadow(0 4px 6px rgba(74,44,23,.18))}
+.ctype span{font-size:.78rem;color:var(--muted);font-weight:500}
+
+/* Product image absolute-positioned cookies */
+.p-cookie{position:absolute;filter:drop-shadow(0 4px 8px rgba(0,0,0,.2))}
+
+/* Financier set */
+.product__img--financier2{background:linear-gradient(160deg,#F3E2C0,#D9A870)}
+.fin-wrap{position:relative;width:80%;height:70%}
+.fin-svg{position:absolute;width:100%;filter:drop-shadow(0 6px 10px rgba(0,0,0,.25))}
+.fin-svg--2{top:18px;opacity:.85}
+.fin-svg--3{top:36px;opacity:.7}
+.fin-tag{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:.78rem;color:var(--brown-2);background:rgba(255,255,255,.6);padding:5px 10px;border-radius:999px;width:fit-content;margin:0 auto}
+
+/* Baked goods set */
+.product__img--baked{background:linear-gradient(150deg,#F7EDE0,#E8C898)}
+.baked-grid{position:relative;width:100%;height:100%}
+
