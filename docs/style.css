@@ -163,10 +163,10 @@ h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:
 .story__name b{display:block;font-family:var(--ff-serif);font-size:1.5rem;font-weight:600;color:var(--brown2);margin-bottom:8px;letter-spacing:-.01em}
 .story__name b span{color:var(--kraft);margin:0 4px;font-weight:400}
 .story__name p{margin:0;color:var(--muted);font-size:.92rem;line-height:1.75}
-.story__nums{display:flex;gap:20px;margin-top:28px}
-.story__nums>div{flex:1;background:#fff;border-radius:var(--r);padding:20px 16px;box-shadow:var(--sh2);text-align:center}
-.story__nums b{display:block;font-family:var(--ff-serif);font-size:2rem;color:var(--brown2)}
-.story__nums span{font-size:.78rem;color:var(--muted)}
+.story__fresh{display:inline-flex;align-items:center;gap:16px;margin:-4px 0 26px;padding:14px 22px;background:#fff;border-radius:14px;box-shadow:var(--sh2);border-left:3px solid var(--kraft)}
+.story__fresh b{font-family:var(--ff-serif);font-size:2.1rem;color:var(--kraft);line-height:1;font-weight:600;letter-spacing:-.01em}
+.story__fresh strong{display:block;color:var(--brown2);font-size:.98rem;font-weight:600;margin-bottom:2px;letter-spacing:-.005em}
+.story__fresh span{font-size:.82rem;color:var(--muted);line-height:1.5}
 
 /* --- Ingredients (merged into Story section) --- */
 .story__ing{margin-top:80px;padding-top:56px;border-top:1px solid var(--line)}
@@ -257,6 +257,7 @@ h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:
   .story__ing{margin-top:56px;padding-top:40px}
 }
 @media(max-width:480px){
-  .story__nums{gap:10px}
+  .story__fresh{padding:12px 18px;gap:14px}
+  .story__fresh b{font-size:1.85rem}
   .footer__cols{grid-template-columns:1fr}
 }
