@@ -89,9 +89,10 @@ h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:
 
 /* --- Strip --- */
 .strip{overflow:hidden;background:var(--brown2)}
-.strip__track{display:flex;padding:18px 0;white-space:nowrap;font-family:var(--ff-serif);font-style:italic;color:rgba(255,255,255,.65);font-size:1.2rem;letter-spacing:.08em;animation:marquee 36s linear infinite;width:max-content}
-.strip__track span{padding-right:28px;flex:none}
-.strip__track span:nth-child(even){color:var(--kraft)}
+.strip__track{display:flex;padding:18px 0;white-space:nowrap;font-family:var(--ff-serif);font-style:italic;color:rgba(255,255,255,.65);font-size:1.2rem;letter-spacing:.08em;animation:marquee 48s linear infinite;width:max-content}
+.strip__half{display:flex;flex:none}
+.strip__half span{padding-right:28px;flex:none}
+.strip__half span:nth-child(even){color:var(--kraft)}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* --- Products --- */
