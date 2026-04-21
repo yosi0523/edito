@@ -10,7 +10,7 @@
 <link rel="preload" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" as="style">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Nanum+Myeongjo:wght@400;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=20260421l"/>
+<link rel="stylesheet" href="style.css?v=20260421m"/>
 </head>
 <body>
 
@@ -104,7 +104,7 @@
             <p>귀여운 강아지, 브로콜리, 벚꽃, 네잎클로버, 잎, 나뭇잎, 은행잎, "감사합니다" 탭. 말로 꺼내기 어려운 진심을, 8가지 천연 컬러와 깊은 풍미의 프리미엄 버터 사블레에 담았습니다. 소중한 분께 전하는 특별한 메시지, 10봉부터 정성껏 준비해 드립니다.</p>
           </div>
           <div class="pcard__foot">
-            <span class="price">₩3,500 <span class="price__unit">/ 1봉</span></span>
+            <span class="price"><span class="price__cur">₩</span>3,500 <span class="price__unit">/ 1봉</span></span>
             <span class="tag">최소 주문 10봉부터 · 대량 주문 할인</span>
           </div>
         </div>
@@ -122,7 +122,7 @@
             <p>짙은 코코아 쿠키 두 쪽 사이에 다크 가나슈를 채운, 이탈리안 스타일의 한 입 초콜릿 쿠키. 입안에서 천천히 녹는 잔향이 깊습니다.</p>
           </div>
           <div class="pcard__foot">
-            <span class="price">₩16,500</span>
+            <span class="price"><span class="price__cur">₩</span>16,500</span>
             <span class="tag">한 입 사이즈 · 20개입 1box</span>
           </div>
         </div>
@@ -140,7 +140,7 @@
             <p>바닐라·코코아·시나몬·녹차·패션프룻·버터 스트라이프·더블초코. 한 박스에 일곱 가지 맛을 가지런히 편집했습니다.</p>
           </div>
           <div class="pcard__foot">
-            <span class="price">₩24,000</span>
+            <span class="price"><span class="price__cur">₩</span>24,000</span>
             <span class="tag">7종 × 4개 / 28pcs</span>
           </div>
         </div>
@@ -158,7 +158,7 @@
             <p>피칸 · 패션프룻 · 녹차 프랑부아즈 · 얼그레이 · 허니 5종. 크리스피 글레이즈로 마감한, 조금 특별한 프랑스식 구움과자.</p>
           </div>
           <div class="pcard__foot">
-            <span class="price">₩28,000</span>
+            <span class="price"><span class="price__cur">₩</span>28,000</span>
             <span class="tag">5종 × 2개 / 10pcs</span>
           </div>
         </div>
@@ -176,7 +176,7 @@
             <p>설탕 결정으로 테두리를 낸 사블레 디아망과 아몬드·피스타치오 비스코티. 커피 혹은 와인 한 잔과 가장 오래 어울립니다.</p>
           </div>
           <div class="pcard__foot">
-            <span class="price">₩18,500</span>
+            <span class="price"><span class="price__cur">₩</span>18,500</span>
             <span class="tag">2종 플레이트 / 12pcs</span>
           </div>
         </div>
@@ -194,7 +194,7 @@
             <p>크랙이 살아있는 얇은 탑, 묵직한 다크 초콜릿 크럼. 한 조각이면 오후의 피로가 달래지는 농밀한 브라우니.</p>
           </div>
           <div class="pcard__foot">
-            <span class="price">₩17,000</span>
+            <span class="price"><span class="price__cur">₩</span>17,000</span>
             <span class="tag">6pcs 박스</span>
           </div>
         </div>
@@ -212,7 +212,7 @@
             <p>얼그레이, 클래식 버터, 레몬 글레이즈드, 넛츠. EditO의 파운드 케이크 네 가지 맛을 한 번에 편집한 가장 합리적인 입문 세트. 프리미엄 로고 박스에 단정하게 담아드립니다.</p>
           </div>
           <div class="pcard__foot">
-            <span class="price"><s>₩20,000</s> <strong>₩19,000</strong></span>
+            <span class="price"><s><span class="price__cur">₩</span>20,000</s> <strong><span class="price__cur">₩</span>19,000</strong></span>
             <span class="tag">4조각 1box · 세트 특가</span>
           </div>
         </div>
@@ -309,7 +309,7 @@
   <div class="wrap">
     <header class="sec-head">
       <p class="label">How to Order</p>
-      <h2>문의부터 도착까지, <em>3단계.</em></h2>
+      <h2>문의부터 도착까지, <em><span class="num">3</span>단계.</em></h2>
       <p class="sec-desc">수령일 당일 아침, 갓 구운 쿠키를 바로 포장해 보냅니다.</p>
     </header>
 
@@ -364,7 +364,6 @@
   <div class="wrap footer__inner">
     <div class="footer__brand">
       <a href="#" class="logo logo--light">
-        <svg viewBox="0 0 40 40" width="22" height="22"><circle cx="20" cy="20" r="17" fill="#C98C5A"/><circle cx="13" cy="15" r="2.2" fill="#4A2C17"/><circle cx="25" cy="13" r="1.6" fill="#4A2C17"/><circle cx="28" cy="22" r="2" fill="#4A2C17"/><circle cx="17" cy="26" r="1.8" fill="#4A2C17"/></svg>
         <span>Edit<em>O</em></span>
       </a>
       <p>Edit your day, sweetly.</p>
@@ -377,7 +376,6 @@
   </div>
   <div class="footer__bottom">
     <span>© 2026 EditO. All rights reserved.</span>
-    <span>Baked fresh in Seoul</span>
   </div>
 </footer>
 

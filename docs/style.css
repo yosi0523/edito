@@ -28,6 +28,7 @@ h1{font-size:clamp(2.8rem,6vw,5.5rem);font-weight:500}
 h2{font-size:clamp(2rem,3.5vw,3rem);font-weight:600}
 h3{font-size:1.22rem;font-weight:600}
 h1 em,h2 em{font-style:italic;font-weight:400}
+h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:italic;line-height:1;vertical-align:-0.04em;margin-right:.04em;color:var(--kraft)}
 
 .label{display:block;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:14px}
 .label--light{color:rgba(255,255,255,.65)}
@@ -88,7 +89,8 @@ h1 em,h2 em{font-style:italic;font-weight:400}
 
 /* --- Strip --- */
 .strip{overflow:hidden;background:var(--brown2)}
-.strip__track{display:flex;gap:28px;padding:18px 0;white-space:nowrap;font-family:var(--ff-serif);font-style:italic;color:rgba(255,255,255,.65);font-size:1.2rem;letter-spacing:.08em;animation:marquee 36s linear infinite}
+.strip__track{display:flex;padding:18px 0;white-space:nowrap;font-family:var(--ff-serif);font-style:italic;color:rgba(255,255,255,.65);font-size:1.2rem;letter-spacing:.08em;animation:marquee 36s linear infinite;width:max-content}
+.strip__track span{padding-right:28px;flex:none}
 .strip__track span:nth-child(even){color:var(--kraft)}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
@@ -133,6 +135,7 @@ h1 em,h2 em{font-style:italic;font-weight:400}
 .price{font-family:var(--ff-serif);font-size:1.3rem;font-weight:600;color:var(--brown2)}
 .price s{font-size:.82em;font-weight:400;color:var(--muted);margin-right:4px}
 .price strong{font-weight:700;color:var(--kraft)}
+.price__cur{font-size:.78em;font-weight:500;margin-right:2px}
 .price__unit{font-family:var(--ff-sans);font-size:.75em;font-weight:400;color:var(--muted);margin-left:2px}
 .tag{font-size:.78rem;color:var(--muted);background:var(--cream2);padding:5px 11px;border-radius:999px}
 
