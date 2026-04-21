@@ -145,7 +145,7 @@ h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:
 .process__step{text-align:center;padding:0 12px;position:relative}
 .process__step:not(:last-child)::after{content:'';position:absolute;top:40px;right:-20px;width:40px;height:1px;background:var(--cream2)}
 .process__num{width:80px;height:80px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 22px;font-family:var(--ff-serif);font-style:italic;font-size:1.7rem;font-weight:500;color:var(--kraft);border:1px solid var(--line);box-shadow:var(--sh2)}
-.process__step h4{color:var(--brown2);margin-bottom:10px;font-size:1.1rem}
+.process__step h4{color:var(--brown2);margin-bottom:10px;font-family:var(--ff-sans);font-size:1.18rem;font-weight:600;letter-spacing:-.005em;line-height:1.35}
 .process__step p{color:var(--muted);font-size:.92rem;line-height:1.75}
 .process__note{text-align:center;margin-top:44px;color:var(--muted);font-size:.85rem;letter-spacing:.01em}
 .nav--scrolled{box-shadow:0 8px 32px rgba(30,15,5,.06)}
