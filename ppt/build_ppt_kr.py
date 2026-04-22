@@ -707,5 +707,21 @@ def slide_tenneco_share():
     add_footer(s, 9)
 
 
-print("Part 2 loaded")
+# ===== Run =====
+if __name__ == "__main__":
+    slide_cover()                       # 1
+    slide_toc()                         # 2
+    slide_section1()                    # 3
+    slide_global_market()               # 4
+    slide_section2()                    # 5
+    slide_america_detail()              # 6
+    slide_america_vs_competitor()       # 7
+    slide_section3()                    # 8
+    slide_tenneco_share()               # 9
+
+    import os
+    out_dir = os.path.dirname(os.path.abspath(__file__))
+    out_path = os.path.join(out_dir, "Tenneco_Hyundai_KR_preview.pptx")
+    prs.save(out_path)
+    print(f"Saved: {out_path}  ({len(prs.slides)} slides)")
 
