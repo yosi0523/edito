@@ -707,6 +707,1344 @@ def slide_tenneco_share():
     add_footer(s, 9)
 
 
+# -------------------- S10: Section 4 divider --------------------
+def slide_section4():
+    s = add_slide()
+    add_section_divider(s, 4, "테네코에서의 현대 공급 프로그램",
+                        "Tenneco Hyundai Supply Programs  |  China · India · Brazil", 10)
+
+
+# -------------------- S11: 4-1 Regional Overview --------------------
+def slide_supply_overview():
+    s = add_slide()
+    add_top_bar(s, 4, "테네코에서의 현대 공급 프로그램",
+                "4-1.  지역별 공급 프로그램 Overview")
+
+    # 3 region cards
+    regions = [
+        ("CHINA", "중국", "5개 프로젝트", "IX25 · Verna · Elantra 6th · Elantra PHEV · Elantra 7th",
+         "2014~2023 누적 공급 / Shock Absorber MTV·MTV CL", TEAL),
+        ("INDIA", "인도", "2개 프로젝트", "Venue (QXI 2019) · Elite (BI3 2020)",
+         "MTV 밸브 적용 / 인도 현지 수요 대응", TEAL_DARK),
+        ("BRAZIL", "브라질", "3개 프로젝트", "HB20 (BR2 2022) · Creta (SU2b 2023) · BC4b (개발중)",
+         "MTV + RV+ 듀얼 사양 / 남미 전용 튜닝", TEAL_DEEP),
+    ]
+    card_w = Inches(4.0)
+    card_h = Inches(4.3)
+    gap = Inches(0.2)
+    start_x = Inches(0.5)
+    y = Inches(1.9)
+
+    for i, (en, kr, cnt, models, note, color) in enumerate(regions):
+        x = start_x + (card_w + gap) * i
+        # top band
+        add_rect(s, x, y, card_w, Inches(1.0), fill=color)
+        add_text(s, x, y + Inches(0.15), card_w, Inches(0.4),
+                 en, size=14, bold=True, color=LIME,
+                 align=PP_ALIGN.CENTER, font=FONT_EN)
+        add_text(s, x, y + Inches(0.5), card_w, Inches(0.45),
+                 kr, size=22, bold=True, color=WHITE,
+                 align=PP_ALIGN.CENTER)
+        # body
+        add_rect(s, x, y + Inches(1.0), card_w, card_h - Inches(1.0),
+                 fill=BG_LIGHT)
+        add_text(s, x + Inches(0.2), y + Inches(1.2), card_w - Inches(0.4),
+                 Inches(0.5), cnt, size=20, bold=True, color=color,
+                 align=PP_ALIGN.CENTER, font=FONT_EN)
+        add_line(s, x + Inches(0.8), y + Inches(1.8),
+                 x + card_w - Inches(0.8), y + Inches(1.8),
+                 color=color, weight=1.5)
+        add_text(s, x + Inches(0.2), y + Inches(1.95), card_w - Inches(0.4),
+                 Inches(1.3), models, size=11, color=TEXT_DARK,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.TOP)
+        add_text(s, x + Inches(0.2), y + Inches(3.3), card_w - Inches(0.4),
+                 Inches(0.9), note, size=10, color=TEXT_MID,
+                 align=PP_ALIGN.CENTER, italic=True, anchor=MSO_ANCHOR.TOP)
+
+    # bottom summary
+    add_text(s, Inches(0.5), Inches(6.5), Inches(12.3), Inches(0.5),
+             "총 10개 현대 프로그램 공급 중 · 3대륙 동시 대응 체제 구축",
+             size=13, bold=True, color=TEAL_DEEP, align=PP_ALIGN.CENTER)
+    add_footer(s, 11)
+
+
+# -------------------- S12: 4-2 China Project List --------------------
+def slide_china_project():
+    s = add_slide()
+    add_top_bar(s, 4, "테네코에서의 현대 공급 프로그램",
+                "4-2.  China Project List  |  중국 프로젝트 5종")
+
+    data = [
+        ["Project Code", "Vehicle", "SOP", "EOP", "비고"],
+        ["GC",           "IX25",             "2014.10", "2017.10", "1세대 CUV"],
+        ["GC PE",        "IX25 (PE)",        "2017.10", "2019.05", "Phase Enhancement"],
+        ["YC",           "Verna",            "2016.10", "2019.10", "B세그먼트 세단"],
+        ["YC FL",        "Verna (FL)", "2019.10", "2022.03", "Face-lift"],
+        ["ADC",          "Elantra 领动",     "2016.03", "2019.03", "6세대 세단"],
+        ["ADC PE",       "Elantra 领动 PE",  "2019.03", "2020.10", "Phase Enhancement"],
+        ["ADC PHEV",     "Elantra Hybrid",   "2019.05", "–",       "하이브리드"],
+        ["CN7c",         "Elantra 7th",      "2020.10", "2023",    "7세대 현행"],
+    ]
+    make_table(s, Inches(0.6), Inches(1.75), Inches(12.1), Inches(4.7),
+               data, col_widths=[1.4, 2.4, 1.5, 1.5, 3.0],
+               font_size=12, header_size=12,
+               first_col_fill=BG_SOFT, first_col_color=TEAL_DEEP)
+
+    # note
+    add_rect(s, Inches(0.6), Inches(6.55), Inches(12.1), Inches(0.45),
+             fill=BG_SOFT)
+    add_text(s, Inches(0.8), Inches(6.55), Inches(12), Inches(0.45),
+             "중국은 Tenneco의 현대 공급 베이스가 가장 두터운 지역. 2014년부터 연속 세대 공급 이어옴.",
+             size=11, color=TEAL_DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    add_footer(s, 12)
+
+
+# -------------------- S13: 4-3 India & Brazil Project List --------------------
+def slide_india_brazil_project():
+    s = add_slide()
+    add_top_bar(s, 4, "테네코에서의 현대 공급 프로그램",
+                "4-3.  India & Brazil Project List")
+
+    # India section
+    add_rect(s, Inches(0.6), Inches(1.75), Inches(5.95), Inches(0.45),
+             fill=TEAL)
+    add_text(s, Inches(0.8), Inches(1.75), Inches(5.95), Inches(0.45),
+             "INDIA  |  인도 — 2개 프로젝트",
+             size=13, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE,
+             font=FONT_EN)
+    india_data = [
+        ["Code", "Vehicle", "SOP", "비고"],
+        ["QXI",  "Venue",   "2019.05", "소형 SUV"],
+        ["BI3",  "Elite i20", "2020.10", "해치백"],
+    ]
+    make_table(s, Inches(0.6), Inches(2.25), Inches(5.95), Inches(2.0),
+               india_data, col_widths=[1.2, 2.5, 1.3, 2.0],
+               font_size=12, first_col_fill=BG_SOFT, first_col_color=TEAL_DEEP)
+
+    # Brazil section
+    add_rect(s, Inches(6.75), Inches(1.75), Inches(5.95), Inches(0.45),
+             fill=TEAL_DEEP)
+    add_text(s, Inches(6.95), Inches(1.75), Inches(5.95), Inches(0.45),
+             "BRAZIL  |  브라질 — 3개 프로젝트",
+             size=13, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE,
+             font=FONT_EN)
+    brazil_data = [
+        ["Code",    "Vehicle", "SOP",   "비고"],
+        ["BR2",     "HB20",    "2022.06", "해치백 (현지모델)"],
+        ["SU2b",    "Creta",   "2023~",  "소형 SUV"],
+        ["SU2b PE", "Creta PE", "2024.12", "Phase Enhancement"],
+        ["BC4b",    "–",       "2026~",  "개발중 (In development)"],
+    ]
+    make_table(s, Inches(6.75), Inches(2.25), Inches(5.95), Inches(3.0),
+               brazil_data, col_widths=[1.2, 2.2, 1.3, 2.3],
+               font_size=11, first_col_fill=BG_SOFT, first_col_color=TEAL_DEEP)
+
+    # Key insight
+    add_rect(s, Inches(0.6), Inches(5.8), Inches(12.1), Inches(1.2),
+             fill=BG_SOFT)
+    add_rect(s, Inches(0.6), Inches(5.8), Inches(0.12), Inches(1.2),
+             fill=LIME)
+    add_text(s, Inches(0.9), Inches(5.9), Inches(11.8), Inches(0.4),
+             "💡  Key Insight",
+             size=12, bold=True, color=TEAL_DEEP)
+    add_text(s, Inches(0.9), Inches(6.25), Inches(11.8), Inches(0.8),
+             "신흥시장 (인도·브라질) 중심으로 현대 현지 생산 모델 지속 수주 중.\n" +
+             "BC4b 2026년 양산 예정 → 브라질 공급량 추가 확대 전망.",
+             size=11, color=TEXT_DARK)
+    add_footer(s, 13)
+
+
+# -------------------- S14: 4-4 Program Vehicle Volume --------------------
+def slide_program_volume():
+    s = add_slide()
+    add_top_bar(s, 4, "테네코에서의 현대 공급 프로그램",
+                "4-4.  Program Vehicle Volume (2023–2027)")
+
+    data = [
+        ["지역", "Project", "2023", "2024", "2025", "2026", "2027"],
+        ["India",  "BI3",   "81,600",  "80,450",  "80,710",  "6,860",  "–"],
+        ["India",  "Qxi",   "138,300", "116,370", "57,850",  "–",      "–"],
+        ["Brazil", "BR2",   "137,600", "148,800", "145,800", "30,500", "–"],
+        ["Brazil", "SU2b",  "–",       "–",       "70,200",  "73,000", "43,000"],
+        ["Brazil", "BC4b",  "–",       "–",       "–",       "112,500","138,000"],
+    ]
+    make_table(s, Inches(0.6), Inches(1.8), Inches(12.1), Inches(3.5),
+               data, col_widths=[1.2, 1.5, 1.88, 1.88, 1.88, 1.88, 1.88],
+               font_size=12, header_size=12,
+               first_col_fill=BG_SOFT, first_col_color=TEAL_DEEP)
+
+    # totals
+    add_rect(s, Inches(0.6), Inches(5.55), Inches(12.1), Inches(0.45),
+             fill=TEAL)
+    add_text(s, Inches(0.8), Inches(5.55), Inches(12), Inches(0.45),
+             "합계 (추정)         357,500           345,620           354,560           222,860           181,000",
+             size=12, bold=True, color=WHITE, font=FONT_EN,
+             anchor=MSO_ANCHOR.MIDDLE)
+
+    # takeaways
+    takeaways = [
+        "2023~2025: 인도 BI3/Qxi + 브라질 BR2 → 안정적 35만 대/년 수준",
+        "2026~2027: Creta(SU2b) + BC4b 신규 양산으로 브라질 Shift 가속",
+        "인도 Qxi 감소분 상쇄 + BC4b 풀가동 시 연 30만 대 이상 재회복 기대",
+    ]
+    y0 = Inches(6.1)
+    for i, t in enumerate(takeaways):
+        add_rect(s, Inches(0.6), y0 + Inches(0.32*i), Inches(0.25),
+                 Inches(0.25), fill=LIME)
+        add_text(s, Inches(0.95), y0 + Inches(0.32*i) - Inches(0.02),
+                 Inches(11.8), Inches(0.3),
+                 t, size=11, color=TEXT_DARK)
+    add_footer(s, 14)
+
+
+# -------------------- S15: 4-5 China Part Spec 1 --------------------
+def slide_partspec_china1():
+    s = add_slide()
+    add_top_bar(s, 4, "테네코에서의 현대 공급 프로그램",
+                "4-5.  China 부품 사양 ①  |  GC · YC FL · ADc")
+
+    data = [
+        ["Project", "F/R", "Rod OD", "Inner Tube", "Outer Tube", "Valve", "Part No."],
+        ["GC",      "Front", "Ø22",       "Ø32×1.03T", "Ø51×2.5T",  "MTV",    "MEM184501/601"],
+        ["GC",      "Rear",  "Ø12.4",     "Ø30×1.03T", "Ø45.3×1.27T","MTV",   "MEM184101/201"],
+        ["YC FL",   "Front", "Ø20",       "Ø30×1.03T", "Ø48.6×2.5T","MTV",    "MET1W1101/1001"],
+        ["YC FL",   "Rear",  "Ø12.4",     "Ø25.4×1.18T","Ø38.5×1.27T","MTV",  "MET1W0901"],
+        ["ADc",     "Front", "Ø22 (hollow)","Ø32×1.03T","Ø50×2.5T",  "MTV CL", "MEM261601/701"],
+        ["ADc",     "Rear",  "Ø12.4",     "Ø25.4×1.18T","Ø38.5×1.27T","MTV CL","MEM261901"],
+    ]
+    make_table(s, Inches(0.5), Inches(1.75), Inches(12.3), Inches(4.2),
+               data, col_widths=[1.3, 0.9, 1.5, 2.0, 2.3, 1.3, 3.0],
+               font_size=11, header_size=11,
+               first_col_fill=BG_SOFT, first_col_color=TEAL_DEEP)
+
+    # legend
+    add_rect(s, Inches(0.5), Inches(6.2), Inches(12.3), Inches(0.8),
+             fill=BG_SOFT)
+    add_text(s, Inches(0.7), Inches(6.25), Inches(12), Inches(0.35),
+             "MTV : Mechanically Tuned Valve       MTV CL : MTV Closed-loop       OD : Outer Diameter       T : Thickness",
+             size=10, bold=True, color=TEAL_DEEP, font=FONT_EN)
+    add_text(s, Inches(0.7), Inches(6.6), Inches(12), Inches(0.35),
+             "주요 사양: Front Ø22 / Rear Ø12.4 Rod · 2.5T 외경 튜브 · MTV 계열 밸브 (중국 표준)",
+             size=10, color=TEXT_MID, italic=True)
+    add_footer(s, 15)
+
+
+# -------------------- S16: 4-6 China Part Spec 2 --------------------
+def slide_partspec_china2():
+    s = add_slide()
+    add_top_bar(s, 4, "테네코에서의 현대 공급 프로그램",
+                "4-6.  China 부품 사양 ②  |  CN7c · ADc PHEV · NU2")
+
+    data = [
+        ["Project", "F/R", "Rod OD", "Inner Tube", "Outer Tube", "Valve", "Part No."],
+        ["CN7c",      "Front", "Ø22 (hollow)", "Ø32×1.03T", "Ø50×2.5T",   "MTV CL", "MEM548001/549001"],
+        ["CN7c",      "Rear",  "Ø12.4",        "Ø25.4×1.18T","Ø38.5×1.27T","MTV CL", "MEM585801"],
+        ["ADc PHEV",  "Front", "Ø22 (hollow)", "Ø32×1.03T", "Ø50×2.5T",   "MTV CL", "MET1P7901/8001"],
+        ["ADc PHEV",  "Rear",  "Ø12.4",        "Ø30×1.03T", "Ø45.3×1.27T","MTV CL", "MET1P8101"],
+        ["NU2",       "Front", "Ø22",          "Ø35×1.03T", "Ø52×2.5T",   "MTV CL", "MX5197F26/F31"],
+        ["NU2",       "Rear",  "Ø12.4",        "Ø30×1.03T", "Ø45.3×1.27T","MTV CL", "MX5198F07"],
+    ]
+    make_table(s, Inches(0.5), Inches(1.75), Inches(12.3), Inches(4.0),
+               data, col_widths=[1.3, 0.9, 1.6, 2.0, 2.3, 1.3, 2.9],
+               font_size=11, header_size=11,
+               first_col_fill=BG_SOFT, first_col_color=TEAL_DEEP)
+
+    # highlight
+    add_rect(s, Inches(0.5), Inches(6.0), Inches(12.3), Inches(1.0),
+             fill=BG_SOFT)
+    add_rect(s, Inches(0.5), Inches(6.0), Inches(0.12), Inches(1.0),
+             fill=LIME)
+    add_text(s, Inches(0.8), Inches(6.1), Inches(12), Inches(0.35),
+             "📌  7세대 Elantra(CN7c) 이후 프로젝트 공통 특징",
+             size=12, bold=True, color=TEAL_DEEP)
+    add_text(s, Inches(0.8), Inches(6.45), Inches(12), Inches(0.5),
+             "전량 MTV CL(Closed-Loop) 밸브로 전환 · Front Ø22 hollow rod 표준화 · Rear Ø45.3×1.27T 공용 플랫폼",
+             size=11, color=TEXT_DARK)
+    add_footer(s, 16)
+
+
+# -------------------- S17: 4-7 India Part Spec --------------------
+def slide_partspec_india():
+    s = add_slide()
+    add_top_bar(s, 4, "테네코에서의 현대 공급 프로그램",
+                "4-7.  India 부품 사양  |  QXI · BI3")
+
+    data = [
+        ["Project", "F/R", "Rod OD", "Inner Tube", "Outer Tube", "Valve", "Part No."],
+        ["QXI",        "Front",  "Ø20",   "Ø30×1.03T",  "Ø48.6×2.5T", "MTV", "MET1L1801"],
+        ["QXI",        "Rear",   "Ø12.4", "Ø25.4×1.18T","Ø38.5×1.27T","MTV", "MET1L1801"],
+        ["BI3 (Type1)","Front",  "Ø18",   "Ø30×1.03T",  "Ø45×2.5T",   "MTV", "MEM501701/801"],
+        ["BI3 (Type2)","Front",  "Ø20",   "Ø30×1.03T",  "Ø45×2.5T",   "MTV", "MEM501901/502001"],
+        ["BI3",        "Rear",   "Ø12.4", "Ø25.4×1.18T","Ø38.5×1.27T","MTV", "MEM503101"],
+    ]
+    make_table(s, Inches(0.5), Inches(1.75), Inches(12.3), Inches(3.3),
+               data, col_widths=[1.7, 0.9, 1.5, 2.0, 2.2, 1.2, 2.8],
+               font_size=11, header_size=11,
+               first_col_fill=BG_SOFT, first_col_color=TEAL_DEEP)
+
+    # feature box
+    add_rect(s, Inches(0.5), Inches(5.3), Inches(6.0), Inches(1.7),
+             fill=BG_LIGHT)
+    add_text(s, Inches(0.7), Inches(5.4), Inches(5.8), Inches(0.4),
+             "🇮🇳  인도 사양 특징",
+             size=13, bold=True, color=TEAL_DEEP)
+    add_text(s, Inches(0.7), Inches(5.8), Inches(5.8), Inches(1.1),
+             "• Rod 직경 Ø18 · Ø20 두 타입 운영 (BI3 Dual-spec)\n" +
+             "• Outer Tube Ø45~48.6 · 중국 대비 경량화 설계\n" +
+             "• 전 사양 MTV 밸브 (보급형 튜닝)",
+             size=11, color=TEXT_DARK)
+
+    add_rect(s, Inches(6.7), Inches(5.3), Inches(6.1), Inches(1.7),
+             fill=TEAL)
+    add_text(s, Inches(6.9), Inches(5.4), Inches(5.9), Inches(0.4),
+             "💡  차별화 포인트",
+             size=13, bold=True, color=LIME)
+    add_text(s, Inches(6.9), Inches(5.8), Inches(5.9), Inches(1.1),
+             "• Venue (QXI): 소형 SUV 전용 최경량 사양\n" +
+             "• Elite (BI3): 해치백 Dual-spec 대응력 입증\n" +
+             "• 향후 Creta India 확대 시 플랫폼 공용 가능",
+             size=11, color=WHITE)
+    add_footer(s, 17)
+
+
+# -------------------- S18: 4-8 Brazil Part Spec --------------------
+def slide_partspec_brazil():
+    s = add_slide()
+    add_top_bar(s, 4, "테네코에서의 현대 공급 프로그램",
+                "4-8.  Brazil 부품 사양  |  BR2 · SU2")
+
+    data = [
+        ["Project", "F/R", "Rod OD", "Inner Tube", "Outer Tube", "Valve", "Part No."],
+        ["BR2 (HB20)",   "Front", "Ø20",    "Ø30×1.27T", "Ø45×2.5T",  "MTV", "MEM702301"],
+        ["BR2 (HB20)",   "Rear",  "Ø12.4",  "Ø25.4×1.2T","Ø38.1×1.2T","RV+", "MEM702501"],
+        ["SU2 (Creta)",  "Front", "Ø20",    "Ø30×1.27T", "Ø48.6×2.5T","MTV", "ME3579301/F401/F501/F601"],
+        ["SU2 (Creta)",  "Rear",  "Ø12.4",  "Ø30×1.27T", "Ø45.3×1.2T","RV+", "MEM966301/966401"],
+    ]
+    make_table(s, Inches(0.5), Inches(1.75), Inches(12.3), Inches(2.8),
+               data, col_widths=[1.7, 0.9, 1.4, 2.0, 2.2, 1.2, 2.9],
+               font_size=11, header_size=11,
+               first_col_fill=BG_SOFT, first_col_color=TEAL_DEEP)
+
+    # key finding
+    add_rect(s, Inches(0.5), Inches(4.85), Inches(12.3), Inches(0.5),
+             fill=ACCENT)
+    add_text(s, Inches(0.7), Inches(4.85), Inches(12), Inches(0.5),
+             "🟠  브라질 전용: Rear에 RV+ 밸브 채택 → 남미 도로환경 맞춤 튜닝 (중국·인도와 차별화)",
+             size=12, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
+
+    # 3 insight cards
+    cards = [
+        ("내경 튜브 두께 ↑", "Ø30×1.27T",
+         "Inner tube 두께 1.03T → 1.27T 상향\n남미 노면 대응 내구성 강화"),
+        ("RV+ 밸브 채용", "Rear 사양",
+         "Ride Valve Plus\n중속 감쇠력 민감도 개선"),
+        ("Part No. 다중화", "4개 변종",
+         "SU2 Front ME3579301/F401\nF501/F601 동시 운영"),
+    ]
+    y = Inches(5.55)
+    card_w = Inches(3.98)
+    for i, (title, val, note) in enumerate(cards):
+        x = Inches(0.5) + (card_w + Inches(0.12)) * i
+        add_rect(s, x, y, card_w, Inches(1.45), fill=BG_LIGHT)
+        add_rect(s, x, y, Inches(0.1), Inches(1.45), fill=TEAL)
+        add_text(s, x + Inches(0.25), y + Inches(0.08), card_w - Inches(0.3),
+                 Inches(0.3), title, size=12, bold=True, color=TEAL_DEEP)
+        add_text(s, x + Inches(0.25), y + Inches(0.38), card_w - Inches(0.3),
+                 Inches(0.4), val, size=16, bold=True, color=TEAL,
+                 font=FONT_EN)
+        add_text(s, x + Inches(0.25), y + Inches(0.82), card_w - Inches(0.3),
+                 Inches(0.6), note, size=10, color=TEXT_MID)
+    add_footer(s, 18)
+
+
+# -------------------- S19: Section 5 divider --------------------
+def slide_section5():
+    s = add_slide()
+    add_section_divider(s, 5, "경쟁사 비교 내용",
+                        "Competitor Analysis  |  ZF · Mando · Bilstein vs. Tenneco", 19)
+
+
+# -------------------- S20: 5-1 Competitor Overview --------------------
+def slide_competitor_overview():
+    s = add_slide()
+    add_top_bar(s, 5, "경쟁사 비교 내용",
+                "5-1.  경쟁사 개요  |  4대 주요 공급사 프로파일")
+
+    comps = [
+        ("MANDO", "만도",
+         "Korea", "한국 현지 Tier-1",
+         "현대/기아 메인 공급사. 가격 경쟁력 · 즉시 대응력 우위. 2-valve 등 신기술 대응 어려움.",
+         TEAL, WHITE),
+        ("ZF",  "ZF Friedrichshafen",
+         "Germany", "글로벌 Tier-1",
+         "Ioniq6·Genesis Entry ECS 공급. 고성능 라인 인지도 최상위. 가격 高, Air Shock 미지원.",
+         TEAL_DARK, WHITE),
+        ("BILSTEIN", "Bilstein (thyssenkrupp)",
+         "Germany", "프리미엄 서스펜션 전문",
+         "Genesis High-end (Air Shock+ECS) 공급. 고성능 브랜드 이미지. 2-valve MacPherson 부재.",
+         TEAL_DEEP, WHITE),
+        ("TENNECO", "Tenneco (Monroe)",
+         "USA", "CES Business Hyundai",
+         "2-valve MacPherson·Double Wishbone 대응. 가격 합리적. 현대 고성능 실적 확보 필요.",
+         LIME, TEAL_DEEP),
+    ]
+    y0 = Inches(1.85)
+    card_h = Inches(2.55)
+    card_w = Inches(6.1)
+    for i, (en, full, country, tier, desc, bg, textc) in enumerate(comps):
+        col = i % 2
+        row = i // 2
+        x = Inches(0.5) + (card_w + Inches(0.1)) * col
+        y = y0 + (card_h + Inches(0.12)) * row
+        # card
+        add_rect(s, x, y, card_w, card_h, fill=BG_LIGHT)
+        # colored header bar
+        add_rect(s, x, y, card_w, Inches(0.7), fill=bg)
+        add_text(s, x + Inches(0.25), y + Inches(0.05), Inches(3), Inches(0.35),
+                 en, size=18, bold=True, color=textc, font=FONT_EN)
+        add_text(s, x + Inches(0.25), y + Inches(0.38), Inches(3), Inches(0.3),
+                 full, size=10, color=textc, italic=True)
+        # country badge
+        add_text(s, x + card_w - Inches(1.7), y + Inches(0.2),
+                 Inches(1.5), Inches(0.3), country,
+                 size=11, bold=True, color=textc, align=PP_ALIGN.RIGHT,
+                 font=FONT_EN)
+        # tier
+        add_text(s, x + Inches(0.25), y + Inches(0.85),
+                 card_w - Inches(0.4), Inches(0.35),
+                 f"포지션  |  {tier}", size=11, bold=True, color=TEAL_DEEP)
+        # desc
+        add_text(s, x + Inches(0.25), y + Inches(1.25),
+                 card_w - Inches(0.4), card_h - Inches(1.4),
+                 desc, size=11, color=TEXT_DARK)
+
+    add_footer(s, 20)
+
+
+# -------------------- S21: 5-2 Supplier Matrix --------------------
+def slide_competitor_matrix():
+    s = add_slide()
+    add_top_bar(s, 5, "경쟁사 비교 내용",
+                "5-2.  공급사 비교 매트릭스  |  HMC R&D 관점")
+
+    data = [
+        ["공급사", "Office\n(한국)", "Plant\n(한국)", "R&D\n(한국)", "강점 (Strength)", "약점 (Weakness)"],
+        ["Mando",   "○", "○", "○",
+         "빠른 대응력 · 가격 경쟁력",
+         "2-valve 등 신기술 부재 / 신규 차종 개발 대응 한계"],
+        ["ZF",      "○", "○", "○",
+         "고성능 라인 인지도 최상 · 개발 대응력 우수",
+         "상대적으로 높은 가격 · Air Shock + ECS 조합 제품 부재"],
+        ["Bilstein","○", "✕", "○",
+         "고성능 · 프리미엄 브랜드 이미지",
+         "상대적으로 높은 가격 · 2-valve MacPherson 부재"],
+        ["Tenneco", "○", "✕", "✕",
+         "가격 합리성 (vs ZF/Bilstein) · 2025.4 유럽 Golf 시승 호평",
+         "현대 고성능 프로젝트 개발 실적 없음"],
+    ]
+    tbl = make_table(s, Inches(0.5), Inches(1.75), Inches(12.3), Inches(4.2),
+                     data, col_widths=[1.3, 1.0, 1.0, 1.0, 4.0, 4.0],
+                     font_size=10, header_size=11,
+                     first_col_fill=TEAL_DEEP, first_col_color=WHITE)
+    # highlight Tenneco row
+    try:
+        last_row = tbl.rows[4]
+        for c in last_row.cells:
+            c.fill.solid()
+            c.fill.fore_color.rgb = RGBColor(0xFF, 0xF8, 0xDD)
+    except Exception:
+        pass
+
+    # bottom takeaway
+    add_rect(s, Inches(0.5), Inches(6.15), Inches(12.3), Inches(0.85),
+             fill=LIME)
+    add_text(s, Inches(0.7), Inches(6.2), Inches(12), Inches(0.4),
+             "💡  Tenneco 포지셔닝",
+             size=13, bold=True, color=TEAL_DEEP)
+    add_text(s, Inches(0.7), Inches(6.55), Inches(12), Inches(0.45),
+             "Plant/R&D 국내 부재 극복이 핵심 과제 → 공격 포인트: 기술 차별성(2-valve) + 가격 합리성 + 유럽 트랙레코드",
+             size=11, color=TEAL_DEEP)
+    add_footer(s, 21)
+
+
+# -------------------- S22: 5-3 N Brand ECS Status --------------------
+def slide_nbrand_ecs():
+    s = add_slide()
+    add_top_bar(s, 5, "경쟁사 비교 내용",
+                "5-3.  Hyundai N Brand ECS 공급 현황")
+
+    data = [
+        ["Eng", "Platform", "Model", "Damper Type", "Supplier", "핵심 사항"],
+        ["ICE","B/C 세단","i20 N",           "Conventional",      "Mando", "N.A."],
+        ["ICE","B/C 세단","i30 N / Veloster N","Semi-active",     "Mando", "Mando ECS 최대치 튜닝 → 추가 마진 부재"],
+        ["ICE","B/C 세단","Avante N",         "Semi-active",      "Mando", "Mando ECS — dual-valve 미지원 한계 드러남"],
+        ["EV", "EV GMP", "Ioniq 5",          "Semi-active",       "Mando", "Ioniq 6 개발 단계에서 한계 표면화"],
+        ["EV", "EV GMP", "Ioniq 6",          "Semi-active",       "ZF",    "Mando 대체 채택 · HMC 유럽 공급사 편견 해소"],
+    ]
+    tbl = make_table(s, Inches(0.5), Inches(1.75), Inches(12.3), Inches(3.6),
+                     data, col_widths=[0.9, 1.6, 2.4, 1.8, 1.4, 4.2],
+                     font_size=11, header_size=11,
+                     first_col_fill=BG_SOFT, first_col_color=TEAL_DEEP)
+    # highlight Ioniq6 row (last)
+    try:
+        r = tbl.rows[5]
+        for c in r.cells:
+            c.fill.solid()
+            c.fill.fore_color.rgb = RGBColor(0xFF, 0xF8, 0xDD)
+    except Exception:
+        pass
+
+    # Takeaway
+    add_rect(s, Inches(0.5), Inches(5.55), Inches(12.3), Inches(1.5),
+             fill=BG_LIGHT)
+    add_rect(s, Inches(0.5), Inches(5.55), Inches(0.12), Inches(1.5),
+             fill=TEAL)
+    add_text(s, Inches(0.8), Inches(5.65), Inches(12), Inches(0.4),
+             "🎯  시사점  |  Mando 독점 체제의 균열",
+             size=13, bold=True, color=TEAL_DEEP)
+    add_text(s, Inches(0.8), Inches(6.05), Inches(12), Inches(1.0),
+             "• Ioniq 6 ZF 채택은 2-valve 기술 확보 + 유럽계 공급사 수용성 확대의 이중 시그널\n" +
+             "• Tenneco CVSA2 (2-valve + MacPherson 대응)는 Mando가 막지 못한 영역을 정확히 공략\n" +
+             "• N Brand에서 입증된 기술은 Genesis 브랜드로 수직 확산되는 HMC 개발 프로세스 존재",
+             size=11, color=TEXT_DARK)
+    add_footer(s, 22)
+
+
+# -------------------- S23: 5-4 Genesis Brand ECS Status --------------------
+def slide_genesis_ecs():
+    s = add_slide()
+    add_top_bar(s, 5, "경쟁사 비교 내용",
+                "5-4.  Hyundai Genesis Brand ECS 공급 현황")
+
+    data = [
+        ["Eng", "Platform", "Model", "Damper Type", "Supplier", "핵심 사항"],
+        ["ICE","Sedan","G70",        "Conventional", "Mando",                        "N.A."],
+        ["ICE","Sedan","G80 (ICE/EV)","Semi-active", "ZF (Entry) / Bilstein (High)", "Air Shock + ECS — 프리미엄 전략"],
+        ["ICE","Sedan","G90",         "Semi-active", "ZF (Entry) / Bilstein (High)", "High-end Bilstein Air Shock+ECS"],
+        ["ICE","SUV",  "GV70 (ICE/EV)","Semi-active","ZF (Entry) / Bilstein (High)", "Air Shock + ECS — SUV 프리미엄"],
+        ["ICE","SUV",  "GV80",         "Semi-active","ZF (Entry) / Bilstein (High)", "플래그십 SUV"],
+        ["EV", "EV GMP","GV60",        "Semi-active","Mando",                        "Ioniq 5 리소스 공용"],
+    ]
+    make_table(s, Inches(0.5), Inches(1.75), Inches(12.3), Inches(3.9),
+               data, col_widths=[0.9, 1.2, 2.0, 1.5, 2.4, 4.3],
+               font_size=11, header_size=11,
+               first_col_fill=BG_SOFT, first_col_color=TEAL_DEEP)
+
+    # Strategy note
+    add_rect(s, Inches(0.5), Inches(5.85), Inches(12.3), Inches(1.2),
+             fill=TEAL)
+    add_text(s, Inches(0.7), Inches(5.92), Inches(12), Inches(0.4),
+             "🏆  HMC 프리미엄 전략",
+             size=13, bold=True, color=LIME)
+    add_text(s, Inches(0.7), Inches(6.3), Inches(12), Inches(0.8),
+             "BMW/Benz/Bentley 대응 목적의 Air Suspension 도입 → 공급가 아닌 품질 우선으로 ZF·Bilstein 선택.\n" +
+             "Tenneco가 CVSA2 기술 + 프리미엄 사양 확보 시 G80/GV70 Entry-Level ZF 대체 가능성 존재.",
+             size=11, color=WHITE)
+    add_footer(s, 23)
+
+
+# -------------------- S24: 5-5 N.America Competitor Plants --------------------
+def slide_na_plants():
+    s = add_slide()
+    add_top_bar(s, 5, "경쟁사 비교 내용",
+                "5-5.  북미 경쟁사 Plant 분포")
+
+    # placeholder map on left
+    add_placeholder(s, Inches(0.5), Inches(1.8), Inches(7.0), Inches(4.8),
+                    label="북미 지도 이미지 삽입 자리\n(ZF · Mando 주요 공장 위치 표시)")
+
+    # Table on right
+    add_rect(s, Inches(7.7), Inches(1.8), Inches(5.1), Inches(0.5),
+             fill=TEAL_DEEP)
+    add_text(s, Inches(7.9), Inches(1.8), Inches(5), Inches(0.5),
+             "주요 북미 거점 (ZF · Mando)",
+             size=13, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
+
+    plants = [
+        ("ZF", "Detroit, MI (USA)", "Powertrain/Chassis HQ"),
+        ("ZF", "Gainesville, GA",   "Chassis / Suspension"),
+        ("ZF", "Mexico Cluster",    "Arteaga / Juarez"),
+        ("Mando","Opelika, AL",     "Shock Absorber Plant"),
+        ("Mando","Monterrey, MX",   "Arteaga — Shock Absorber"),
+        ("Tenneco","Michigan, USA", "R&D + HQ (참고)"),
+    ]
+    y = Inches(2.45)
+    for i, (brand, loc, role) in enumerate(plants):
+        yy = y + Inches(0.55*i)
+        # brand tag
+        add_rect(s, Inches(7.7), yy, Inches(1.0), Inches(0.45),
+                 fill=(LIME if brand == "Tenneco" else TEAL))
+        add_text(s, Inches(7.7), yy, Inches(1.0), Inches(0.45),
+                 brand, size=11, bold=True,
+                 color=(TEAL_DEEP if brand == "Tenneco" else WHITE),
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                 font=FONT_EN)
+        add_text(s, Inches(8.8), yy, Inches(4.0), Inches(0.22),
+                 loc, size=11, bold=True, color=TEAL_DEEP)
+        add_text(s, Inches(8.8), yy + Inches(0.22), Inches(4.0), Inches(0.22),
+                 role, size=10, color=TEXT_MID)
+
+    add_footer(s, 24)
+
+
+# -------------------- S25: 5-6 S.America Competitor Plants --------------------
+def slide_sa_plants():
+    s = add_slide()
+    add_top_bar(s, 5, "경쟁사 비교 내용",
+                "5-6.  남미 경쟁사 Plant 분포")
+
+    add_placeholder(s, Inches(0.5), Inches(1.8), Inches(7.0), Inches(4.8),
+                    label="남미 (Central & South America) 지도 이미지 삽입 자리\n" +
+                          "(ZF Brazil · Mando Brazil · ZF Argentina 등)")
+
+    add_rect(s, Inches(7.7), Inches(1.8), Inches(5.1), Inches(0.5),
+             fill=TEAL_DEEP)
+    add_text(s, Inches(7.9), Inches(1.8), Inches(5), Inches(0.5),
+             "주요 남미 거점",
+             size=13, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
+
+    plants = [
+        ("ZF",    "Brazil — São Bernardo",   "HQ / Production"),
+        ("ZF",    "Sorocaba / Araraquara",   "Chassis / 전장"),
+        ("Mando", "Limeira, Brazil",         "Shock Absorber"),
+        ("ZF",    "San Francisco, Argentina","Chassis / Driveline"),
+        ("참고",   "Tenneco Brazil Cotia",    "현지 거점 (참고)"),
+    ]
+    y = Inches(2.45)
+    for i, (brand, loc, role) in enumerate(plants):
+        yy = y + Inches(0.55*i)
+        add_rect(s, Inches(7.7), yy, Inches(1.0), Inches(0.45),
+                 fill=(LIME if brand == "참고" else TEAL))
+        add_text(s, Inches(7.7), yy, Inches(1.0), Inches(0.45),
+                 brand, size=11, bold=True,
+                 color=(TEAL_DEEP if brand == "참고" else WHITE),
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                 font=FONT_EN)
+        add_text(s, Inches(8.8), yy, Inches(4.0), Inches(0.22),
+                 loc, size=11, bold=True, color=TEAL_DEEP)
+        add_text(s, Inches(8.8), yy + Inches(0.22), Inches(4.0), Inches(0.22),
+                 role, size=10, color=TEXT_MID)
+
+    # bottom note
+    add_rect(s, Inches(0.5), Inches(6.8), Inches(12.3), Inches(0.25),
+             fill=BG_SOFT)
+    add_text(s, Inches(0.7), Inches(6.78), Inches(12), Inches(0.3),
+             "※ 실제 발표 시 각 Plant 아이콘 표시된 남미 지도 이미지 삽입 필요",
+             size=9, color=TEXT_MID, italic=True, anchor=MSO_ANCHOR.MIDDLE)
+    add_footer(s, 25)
+
+
+# -------------------- S26: Section 6 divider --------------------
+def slide_section6():
+    s = add_slide()
+    add_section_divider(s, 6, "CVSA2 프로그램",
+                        "CVSA2 Program  |  Next-Gen 2-Valve Damper for Hyundai", 26)
+
+
+# -------------------- S27: 6-1 CVSA2 Background --------------------
+def slide_cvsa2_background():
+    s = add_slide()
+    add_top_bar(s, 6, "CVSA2 프로그램",
+                "6-1.  CVSA2 프로그램 배경")
+
+    # Left: What
+    add_rect(s, Inches(0.5), Inches(1.8), Inches(6.0), Inches(4.2),
+             fill=BG_LIGHT)
+    add_rect(s, Inches(0.5), Inches(1.8), Inches(6.0), Inches(0.55),
+             fill=TEAL)
+    add_text(s, Inches(0.7), Inches(1.8), Inches(5.8), Inches(0.55),
+             "CVSA2 란?", size=14, bold=True, color=WHITE,
+             anchor=MSO_ANCHOR.MIDDLE)
+    add_text(s, Inches(0.7), Inches(2.5), Inches(5.6), Inches(3.4),
+             "Continuously Variable Semi-Active 2nd Gen\n\n" +
+             "• Tenneco 2세대 반능동형 감쇠 제어 쇼크업소버\n" +
+             "• 2-Valve (Dual Valve) 시스템 채택\n" +
+             "• MacPherson Strut · Double Wishbone 양방 대응\n" +
+             "• 차량 주행 상태에 따른 감쇠력 실시간 가변\n" +
+             "• ZF · Mando 1-valve 대비 응답성/승차감 우위",
+             size=12, color=TEXT_DARK)
+
+    # Right: Why Hyundai needs it
+    add_rect(s, Inches(6.7), Inches(1.8), Inches(6.1), Inches(4.2),
+             fill=TEAL_DEEP)
+    add_text(s, Inches(6.9), Inches(1.95), Inches(5.8), Inches(0.4),
+             "왜 현대에 필요한가?", size=14, bold=True, color=LIME)
+    bullets = [
+        "Mando 1-valve: 감쇠 세팅 한계 — Ioniq 6에서 ZF로 전환된 이유",
+        "차세대 HMC N·Genesis 라인업은 2-valve 필수 요구",
+        "ZF 2-valve: 가격 高 · Air Shock 조합 부재",
+        "Bilstein 2-valve: MacPherson 대응 제품 없음",
+        "→  Tenneco CVSA2가 4사 중 유일하게 모든 조건 충족",
+    ]
+    y = Inches(2.5)
+    for i, b in enumerate(bullets):
+        yy = y + Inches(0.62*i)
+        add_rect(s, Inches(6.9), yy + Inches(0.08),
+                 Inches(0.18), Inches(0.18), fill=LIME)
+        add_text(s, Inches(7.2), yy, Inches(5.5), Inches(0.6),
+                 b, size=11, color=WHITE, anchor=MSO_ANCHOR.TOP)
+
+    # bottom summary
+    add_rect(s, Inches(0.5), Inches(6.3), Inches(12.3), Inches(0.7),
+             fill=LIME)
+    add_text(s, Inches(0.7), Inches(6.35), Inches(12), Inches(0.3),
+             "🎯  CVSA2 = Hyundai 차세대 Chassis의 '미싱 퍼즐'",
+             size=13, bold=True, color=TEAL_DEEP)
+    add_text(s, Inches(0.7), Inches(6.65), Inches(12), Inches(0.3),
+             "기술 우위 + 가격 합리성 + 플랫폼 범용성 — 3대 요건을 동시 만족하는 유일한 솔루션",
+             size=11, color=TEAL_DEEP)
+    add_footer(s, 27)
+
+
+# -------------------- S28: 6-2 CVSA2 Technical Strength --------------------
+def slide_cvsa2_technical():
+    s = add_slide()
+    add_top_bar(s, 6, "CVSA2 프로그램",
+                "6-2.  CVSA2 기술적 차별화  |  2-Valve System")
+
+    # three comparison columns
+    cols = [
+        ("Mando 1-Valve", "기존",
+         ["Single valve 구조",
+          "저속/고속 감쇠 트레이드오프",
+          "Ioniq 6에서 한계 드러남",
+          "Mando ECS 성능 상한",
+          "추가 마진 확보 어려움"],
+         GRAY_LIGHT, TEXT_DARK),
+        ("ZF 2-Valve", "경쟁",
+         ["Dual valve 채용",
+          "감쇠 분리 제어 가능",
+          "Genesis/Ioniq 6 채택",
+          "높은 공급 단가",
+          "Air Shock 조합 불가"],
+         TEAL_DARK, WHITE),
+        ("Tenneco CVSA2", "우리",
+         ["Dual valve (2-Valve)",
+          "MacPherson + Double Wishbone",
+          "가격 합리 (vs ZF/Bilstein)",
+          "유럽 시승 호평 (2025.4)",
+          "N Brand → Genesis 확산 가능"],
+         LIME, TEAL_DEEP),
+    ]
+
+    col_w = Inches(4.0)
+    col_h = Inches(5.0)
+    y = Inches(1.8)
+    for i, (name, tag, items, bg, textc) in enumerate(cols):
+        x = Inches(0.5) + (col_w + Inches(0.2)) * i
+        # card
+        add_rect(s, x, y, col_w, col_h, fill=BG_LIGHT)
+        # header
+        add_rect(s, x, y, col_w, Inches(1.1), fill=bg)
+        add_text(s, x, y + Inches(0.1), col_w, Inches(0.3),
+                 f"[ {tag} ]", size=10, bold=True, color=textc,
+                 align=PP_ALIGN.CENTER, font=FONT_EN)
+        add_text(s, x, y + Inches(0.38), col_w, Inches(0.6),
+                 name, size=18, bold=True, color=textc,
+                 align=PP_ALIGN.CENTER, font=FONT_EN,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        # items
+        for j, it in enumerate(items):
+            yy = y + Inches(1.35) + Inches(0.65*j)
+            # check icon
+            mark = "✗" if i == 0 else ("△" if i == 1 else "✓")
+            mcol = RED if i == 0 else (ACCENT if i == 1 else GREEN)
+            add_text(s, x + Inches(0.2), yy, Inches(0.35), Inches(0.4),
+                     mark, size=16, bold=True, color=mcol,
+                     align=PP_ALIGN.CENTER)
+            add_text(s, x + Inches(0.55), yy + Inches(0.02),
+                     col_w - Inches(0.6), Inches(0.6),
+                     it, size=11, color=TEXT_DARK)
+
+    # bottom tag
+    add_rect(s, Inches(0.5), Inches(6.95), Inches(12.3), Inches(0.08),
+             fill=LIME)
+    add_footer(s, 28)
+
+
+# -------------------- S29: 6-3 Demo Car Status --------------------
+def slide_demo_car_status():
+    s = add_slide()
+    add_top_bar(s, 6, "CVSA2 프로그램",
+                "6-3.  Demo Car 검증 현황  |  Target: Ioniq 6 N")
+
+    # Target box
+    add_rect(s, Inches(0.5), Inches(1.8), Inches(5.9), Inches(2.6),
+             fill=TEAL_DEEP)
+    add_text(s, Inches(0.7), Inches(1.9), Inches(5.5), Inches(0.4),
+             "🎯  Target Vehicle", size=12, bold=True, color=LIME)
+    add_text(s, Inches(0.7), Inches(2.35), Inches(5.5), Inches(0.7),
+             "Ioniq 6 N",
+             size=32, bold=True, color=WHITE, font=FONT_EN)
+    add_text(s, Inches(0.7), Inches(3.2), Inches(5.5), Inches(0.4),
+             "EV GMP Platform · High-Performance EV Sedan",
+             size=11, color=LIME, italic=True)
+    add_text(s, Inches(0.7), Inches(3.65), Inches(5.5), Inches(0.7),
+             "HMC가 Ioniq 5에서 드러난 Mando ECS 한계를\n" +
+             "가장 명확히 확인할 수 있는 고성능 N 브랜드 차량",
+             size=11, color=WHITE)
+
+    # Benchmark box (right)
+    add_rect(s, Inches(6.6), Inches(1.8), Inches(6.2), Inches(2.6),
+             fill=BG_LIGHT)
+    add_text(s, Inches(6.8), Inches(1.9), Inches(6), Inches(0.4),
+             "🧪  Benchmark 구성",
+             size=12, bold=True, color=TEAL_DEEP)
+    benches = [
+        ("Base",  "ZF, 1-valve",      "현재 Ioniq 6 양산 사양",   TEAL_DARK),
+        ("Test 1","Mando, 1-valve",   "현재 Ioniq 5 양산 사양",   ACCENT),
+        ("Test 2","Tenneco, CVSA2",   "Tenneco 제안 신규 사양",    LIME),
+    ]
+    yy = Inches(2.4)
+    for i, (label, spec, note, c) in enumerate(benches):
+        y2 = yy + Inches(0.6*i)
+        add_rect(s, Inches(6.8), y2, Inches(1.2), Inches(0.45), fill=c)
+        add_text(s, Inches(6.8), y2, Inches(1.2), Inches(0.45),
+                 label, size=11, bold=True,
+                 color=(TEAL_DEEP if c == LIME else WHITE),
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                 font=FONT_EN)
+        add_text(s, Inches(8.1), y2, Inches(2.5), Inches(0.22),
+                 spec, size=11, bold=True, color=TEAL_DEEP, font=FONT_EN)
+        add_text(s, Inches(8.1), y2 + Inches(0.22), Inches(4.5), Inches(0.22),
+                 note, size=10, color=TEXT_MID)
+
+    # Tenneco Strength in HMC view
+    add_rect(s, Inches(0.5), Inches(4.6), Inches(12.3), Inches(2.4),
+             fill=BG_SOFT)
+    add_rect(s, Inches(0.5), Inches(4.6), Inches(0.12), Inches(2.4),
+             fill=LIME)
+    add_text(s, Inches(0.8), Inches(4.7), Inches(12), Inches(0.4),
+             "💪  HMC가 본 Tenneco 강점",
+             size=13, bold=True, color=TEAL_DEEP)
+    pts = [
+        "CVSA2 2-valve는 MacPherson 및 Double Wishbone 양쪽 적용 가능 (특히 MacPherson에 강점)",
+        "경쟁사 대비 합리적 공급가격 (HMC 내부 평가)",
+        "유럽 현지 Golf 시승 이후 HMC 엔지니어 긍정 피드백 확보",
+        "현 Mando 1-valve의 성능 한계를 HMC R&D도 인지",
+        "Demo Car 테스트는 RFQ 검증 과정 — ZF와 동등 성능 확인 시 우위 확보 가능",
+    ]
+    for i, p in enumerate(pts):
+        yy = Inches(5.15) + Inches(0.35*i)
+        add_rect(s, Inches(0.9), yy + Inches(0.08),
+                 Inches(0.18), Inches(0.18), fill=LIME)
+        add_text(s, Inches(1.2), yy, Inches(11.5), Inches(0.4),
+                 p, size=10, color=TEXT_DARK)
+    add_footer(s, 29)
+
+
+# -------------------- S30: 6-4 Demo Car Schedule --------------------
+def slide_demo_car_schedule():
+    s = add_slide()
+    add_top_bar(s, 6, "CVSA2 프로그램",
+                "6-4.  Demo Car 검증 일정  |  Namyang R&D")
+
+    # timeline steps
+    steps = [
+        ("CW42", "Oct. 13~19", "샘플 선적",
+         "Sample Shipment to HMC Namyang"),
+        ("CW46", "Nov. 11~16", "전장 설치·커미셔닝",
+         "Electric System Installation & Commissioning"),
+        ("CW47~49","Nov. 17~Dec. 7","Demo-Car HW/SW 튜닝",
+         "Performance Tuning & Verification"),
+        ("End of\nJune 2026","By End of June 2026","개선안 수립",
+         "Develop Improvement Plan → RFQ 준비"),
+    ]
+    box_w = Inches(2.95)
+    box_h = Inches(3.5)
+    y = Inches(1.9)
+    for i, (cw, date, title, desc) in enumerate(steps):
+        x = Inches(0.5) + (box_w + Inches(0.15)) * i
+        # timeline card
+        add_rect(s, x, y, box_w, box_h, fill=BG_LIGHT)
+        # week tag
+        add_rect(s, x, y, box_w, Inches(1.0), fill=TEAL_DEEP)
+        add_text(s, x, y + Inches(0.1), box_w, Inches(0.55),
+                 cw, size=20, bold=True, color=LIME,
+                 align=PP_ALIGN.CENTER, font=FONT_EN,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        add_text(s, x, y + Inches(0.65), box_w, Inches(0.3),
+                 date, size=10, color=WHITE,
+                 align=PP_ALIGN.CENTER, font=FONT_EN)
+        # step num
+        num = add_rect(s, x + box_w - Inches(0.6), y + Inches(1.1),
+                       Inches(0.5), Inches(0.5), fill=LIME)
+        add_text(s, x + box_w - Inches(0.6), y + Inches(1.1),
+                 Inches(0.5), Inches(0.5),
+                 f"{i+1:02d}", size=14, bold=True, color=TEAL_DEEP,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                 font=FONT_EN)
+        # content
+        add_text(s, x + Inches(0.2), y + Inches(1.4),
+                 box_w - Inches(0.4), Inches(0.8),
+                 title, size=13, bold=True, color=TEAL_DEEP)
+        add_text(s, x + Inches(0.2), y + Inches(2.3),
+                 box_w - Inches(0.4), Inches(1.0),
+                 desc, size=10, color=TEXT_MID, italic=True)
+
+    # Arrow-like bottom bar
+    add_rect(s, Inches(0.5), Inches(5.6), Inches(12.3), Inches(0.1),
+             fill=LIME)
+
+    # Bottom: location
+    add_rect(s, Inches(0.5), Inches(5.85), Inches(12.3), Inches(1.15),
+             fill=BG_SOFT)
+    add_text(s, Inches(0.7), Inches(5.95), Inches(12), Inches(0.4),
+             "📍  검증 장소 및 체계",
+             size=13, bold=True, color=TEAL_DEEP)
+    add_text(s, Inches(0.7), Inches(6.32), Inches(12), Inches(0.4),
+             "• 샘플 선적지: 남양 HMC R&D (Korea)",
+             size=11, color=TEXT_DARK)
+    add_text(s, Inches(0.7), Inches(6.6), Inches(12), Inches(0.4),
+             "• 전담 조직: High Performance Vehicle Engineering Design Team · Chassis Parts Purchasing Team 1",
+             size=11, color=TEXT_DARK)
+    add_footer(s, 30)
+
+
+# -------------------- S31: 6-5 CVSA2 Expansion Plan --------------------
+def slide_cvsa2_expansion():
+    s = add_slide()
+    add_top_bar(s, 6, "CVSA2 프로그램",
+                "6-5.  현대에서의 CVSA2 확대 방안")
+
+    # 3-stage roadmap
+    stages = [
+        ("STAGE 1", "진입 / Foothold",
+         "Ioniq 6 N (Demo 차량)",
+         ["Demo Car 검증 및 RFQ 수주",
+          "ZF 1-valve 성능 동등 + 2-valve 우위 입증",
+          "N Brand 내 최초 Tenneco 수주 확보"],
+         TEAL),
+        ("STAGE 2", "확장 / Expansion",
+         "N Brand 추가 모델 + Genesis Entry",
+         ["Ioniq 5 N 후속 · Avante N FL",
+          "G80 · GV70 Entry Level ECS 공급",
+          "N Brand → Genesis 수직 확산"],
+         TEAL_DARK),
+        ("STAGE 3", "주류 / Mainstream",
+         "Genesis High-end + HMC 일반 라인업",
+         ["G90 · GV80 High-end Air Shock + CVSA2",
+          "HMC 대량 모델 (Ioniq 시리즈) 점진 채택",
+          "Tenneco Korea HMC 주력 공급사 포지셔닝"],
+         TEAL_DEEP),
+    ]
+    y = Inches(1.85)
+    stage_w = Inches(4.0)
+    stage_h = Inches(4.65)
+    for i, (num, kr, target, items, bg) in enumerate(stages):
+        x = Inches(0.5) + (stage_w + Inches(0.15)) * i
+        add_rect(s, x, y, stage_w, stage_h, fill=BG_LIGHT)
+        # header
+        add_rect(s, x, y, stage_w, Inches(1.1), fill=bg)
+        add_text(s, x + Inches(0.25), y + Inches(0.12),
+                 stage_w - Inches(0.3), Inches(0.35),
+                 num, size=11, bold=True, color=LIME, font=FONT_EN)
+        add_text(s, x + Inches(0.25), y + Inches(0.45),
+                 stage_w - Inches(0.3), Inches(0.55),
+                 kr, size=18, bold=True, color=WHITE)
+        # target row
+        add_rect(s, x, y + Inches(1.1), stage_w, Inches(0.6), fill=BG_SOFT)
+        add_text(s, x + Inches(0.25), y + Inches(1.15),
+                 stage_w - Inches(0.3), Inches(0.22),
+                 "Target", size=9, bold=True, color=TEAL_DEEP,
+                 font=FONT_EN)
+        add_text(s, x + Inches(0.25), y + Inches(1.37),
+                 stage_w - Inches(0.3), Inches(0.3),
+                 target, size=11, bold=True, color=TEAL_DEEP)
+        # items
+        for j, it in enumerate(items):
+            yy = y + Inches(1.85) + Inches(0.75*j)
+            add_rect(s, x + Inches(0.25), yy + Inches(0.1),
+                     Inches(0.15), Inches(0.15), fill=bg)
+            add_text(s, x + Inches(0.5), yy,
+                     stage_w - Inches(0.7), Inches(0.8),
+                     it, size=10, color=TEXT_DARK)
+
+    # bottom arrow
+    add_rect(s, Inches(0.5), Inches(6.7), Inches(12.3), Inches(0.3),
+             fill=LIME)
+    add_text(s, Inches(0.7), Inches(6.7), Inches(12), Inches(0.3),
+             "2026 (진입) → 2027~2028 (확장) → 2029~ (주류화)",
+             size=11, bold=True, color=TEAL_DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    add_footer(s, 31)
+
+
+# -------------------- S32: Section 7 divider --------------------
+def slide_section7():
+    s = add_slide()
+    add_section_divider(s, 7, "현대 공략 방법",
+                        "Hyundai Attack Strategy  |  Technology × Relationship × Execution", 32)
+
+
+# -------------------- S33: 7-1 Launching Process --------------------
+def slide_launching_process():
+    s = add_slide()
+    add_top_bar(s, 7, "현대 공략 방법",
+                "7-1.  Hyundai ECS Launching Process  |  3-Stage Gate")
+
+    # 3 stages
+    stages = [
+        ("01", "Technology\nShowcase",
+         "유럽 (독일·벨기에)\nTenneco ↔ Hyundai",
+         "Vehicle driving\nTechnical exchange",
+         "차량 시승 및 기술 교류\n고성능 브랜드 선호 VP 대응"),
+        ("02", "Engineering\n& Development",
+         "HKMC R&D (Korea, 화성)",
+         "Demo car build\nPerformance test\nInternal validation",
+         "High Performance Vehicle\nEngineering Design Team"),
+        ("03", "Purchasing",
+         "HKMC HQ (Korea, 서울)",
+         "RFQ / RFI\nQuotation",
+         "Chassis Parts\nPurchasing Team 1"),
+    ]
+    box_w = Inches(3.9)
+    box_h = Inches(4.6)
+    y = Inches(1.85)
+    for i, (num, title, loc, activities, team) in enumerate(stages):
+        x = Inches(0.5) + (box_w + Inches(0.25)) * i
+        # body
+        add_rect(s, x, y, box_w, box_h, fill=BG_LIGHT)
+        # big number on top
+        add_rect(s, x, y, box_w, Inches(1.1), fill=TEAL_DEEP)
+        add_text(s, x + Inches(0.3), y + Inches(0.15), Inches(1),
+                 Inches(0.8),
+                 num, size=44, bold=True, color=LIME, font=FONT_EN,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        add_text(s, x + Inches(1.3), y + Inches(0.2),
+                 box_w - Inches(1.5), Inches(0.8),
+                 title, size=15, bold=True, color=WHITE,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        # location
+        add_rect(s, x, y + Inches(1.1), box_w, Inches(0.6), fill=LIME)
+        add_text(s, x + Inches(0.2), y + Inches(1.15),
+                 box_w - Inches(0.3), Inches(0.55),
+                 loc, size=10, bold=True, color=TEAL_DEEP,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        # activities
+        add_text(s, x + Inches(0.3), y + Inches(1.9),
+                 box_w - Inches(0.6), Inches(0.4),
+                 "Activities", size=10, bold=True, color=TEAL_DEEP,
+                 font=FONT_EN)
+        add_text(s, x + Inches(0.3), y + Inches(2.25),
+                 box_w - Inches(0.6), Inches(1.4),
+                 activities, size=11, color=TEXT_DARK)
+        # team
+        add_line(s, x + Inches(0.3), y + Inches(3.65),
+                 x + box_w - Inches(0.3), y + Inches(3.65),
+                 color=GRAY_LINE)
+        add_text(s, x + Inches(0.3), y + Inches(3.75),
+                 box_w - Inches(0.6), Inches(0.3),
+                 "Counterpart", size=10, bold=True, color=TEAL_DEEP,
+                 font=FONT_EN)
+        add_text(s, x + Inches(0.3), y + Inches(4.0),
+                 box_w - Inches(0.6), Inches(0.6),
+                 team, size=10, color=TEXT_MID, italic=True)
+
+    # bottom flow note
+    add_rect(s, Inches(0.5), Inches(6.6), Inches(12.3), Inches(0.4),
+             fill=LIME)
+    add_text(s, Inches(0.7), Inches(6.6), Inches(12), Inches(0.4),
+             "Validation stage (N Performance) → Sourcing stage (Top-Down to Genesis) — N Brand 검증 제품은 Genesis로 수직 확산",
+             size=11, bold=True, color=TEAL_DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    add_footer(s, 33)
+
+
+# -------------------- S34: 7-2 공략 Framework --------------------
+def slide_attack_framework():
+    s = add_slide()
+    add_top_bar(s, 7, "현대 공략 방법",
+                "7-2.  공략 Framework  |  3-Axis Strategy")
+
+    axes = [
+        ("기술 (Technology)",
+         "2-Valve CVSA2 기술 우위 확정",
+         ["MacPherson·Double Wishbone 양 플랫폼 대응",
+          "경쟁사 대비 dual-valve 유일성 입증",
+          "Air Shock + ECS 통합 솔루션 로드맵"],
+         TEAL),
+        ("관계 (Relationship)",
+         "HMC 핵심 인물 공략",
+         ["VP Manfred Harrer : 유럽계 선호 적극 활용",
+          "Porsche 레퍼런스 강조 (HMC 긍정 인식)",
+          "남양 R&D 엔지니어 유럽 초청 · 시승 프로그램 확대"],
+         TEAL_DARK),
+        ("실행 (Execution)",
+         "N Brand → Genesis 확산 경로",
+         ["Ioniq 6 N RFQ 수주 (Stage 1)",
+          "2026 Demo Car 개선안 6월 확정 → 2027 양산",
+          "Tenneco Korea Plant/R&D 단계별 구축"],
+         TEAL_DEEP),
+    ]
+    y = Inches(1.9)
+    card_w = Inches(4.0)
+    card_h = Inches(4.8)
+    for i, (title, tagline, items, bg) in enumerate(axes):
+        x = Inches(0.5) + (card_w + Inches(0.15)) * i
+        # body
+        add_rect(s, x, y, card_w, card_h, fill=BG_LIGHT)
+        # header
+        add_rect(s, x, y, card_w, Inches(1.2), fill=bg)
+        add_text(s, x + Inches(0.3), y + Inches(0.15),
+                 card_w - Inches(0.4), Inches(0.45),
+                 f"AXIS {i+1:02d}", size=10, bold=True,
+                 color=LIME, font=FONT_EN)
+        add_text(s, x + Inches(0.3), y + Inches(0.45),
+                 card_w - Inches(0.4), Inches(0.7),
+                 title, size=18, bold=True, color=WHITE)
+        # tagline
+        add_rect(s, x, y + Inches(1.2), card_w, Inches(0.65), fill=BG_SOFT)
+        add_text(s, x + Inches(0.3), y + Inches(1.22),
+                 card_w - Inches(0.4), Inches(0.63),
+                 tagline, size=12, bold=True, color=TEAL_DEEP,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        # items
+        for j, it in enumerate(items):
+            yy = y + Inches(2.05) + Inches(0.85*j)
+            add_rect(s, x + Inches(0.3), yy + Inches(0.08),
+                     Inches(0.18), Inches(0.18), fill=bg)
+            add_text(s, x + Inches(0.6), yy,
+                     card_w - Inches(0.8), Inches(0.9),
+                     it, size=11, color=TEXT_DARK)
+    add_footer(s, 34)
+
+
+# -------------------- S35: 7-3 Key Action Items --------------------
+def slide_key_actions():
+    s = add_slide()
+    add_top_bar(s, 7, "현대 공략 방법",
+                "7-3.  Key Action Items  |  즉시 실행 과제")
+
+    # Table of actions
+    data = [
+        ["#", "과제", "세부 내용", "Owner", "Timeline"],
+        ["1", "Ioniq 6 N Demo Car RFQ 수주",
+         "CW47~49 HW/SW 튜닝 → 2026.6 개선안 → RFQ 제출",
+         "Tenneco Korea + CES Engineering", "2026 Q1~Q2"],
+        ["2", "유럽 Technology Showcase 확대",
+         "남양 엔지니어/HMC 매니저 유럽 초청 시승 (Golf/Porsche 포함)",
+         "Tenneco EU + Sales", "2026 Q2~Q3"],
+        ["3", "VP Manfred Harrer 전담 커뮤니케이션",
+         "Porsche 레퍼런스 중심 Executive Meeting 분기 1회",
+         "Tenneco NA HQ Exec", "상시"],
+        ["4", "N Brand → Genesis 확산 로드맵 제안",
+         "Genesis G80/GV70 Entry ECS 2027 전환 시나리오 제시",
+         "Tenneco CES Product Planning", "2026 Q3"],
+        ["5", "Tenneco Korea 체제 구축",
+         "Plant·R&D 부재 극복 — 단계별 현지화 계획 수립",
+         "Tenneco Korea 경영진", "2026~2028"],
+    ]
+    make_table(s, Inches(0.5), Inches(1.75), Inches(12.3), Inches(4.5),
+               data, col_widths=[0.5, 2.7, 4.6, 2.5, 2.0],
+               font_size=10, header_size=11,
+               first_col_fill=TEAL_DEEP, first_col_color=WHITE)
+
+    # Success metric
+    add_rect(s, Inches(0.5), Inches(6.4), Inches(12.3), Inches(0.6),
+             fill=LIME)
+    add_text(s, Inches(0.7), Inches(6.4), Inches(12), Inches(0.6),
+             "🏁  Success Metric  |  2026년 말 Ioniq 6 N CVSA2 수주 확정 → 2027년 SOP → 2028 Genesis Entry 확대",
+             size=12, bold=True, color=TEAL_DEEP, anchor=MSO_ANCHOR.MIDDLE)
+    add_footer(s, 35)
+
+
+# -------------------- S36: Section 8 divider --------------------
+def slide_section8():
+    s = add_slide()
+    add_section_divider(s, 8, "Tenneco Korea의 단계별 운영 방안",
+                        "Tenneco Korea Operation Roadmap  |  Phase 1 · 2 · 3", 36)
+
+
+# -------------------- S37: 8-1 Phased Operation Roadmap --------------------
+def slide_phased_roadmap():
+    s = add_slide()
+    add_top_bar(s, 8, "Tenneco Korea 단계별 운영 방안",
+                "8-1.  단계별 운영 로드맵  |  Korea Local Capability")
+
+    phases = [
+        ("PHASE 1", "기반 확보", "2026",
+         "Sales · Engineering 인력 보강",
+         ["CES 영업 전담팀 + Technical Sales 인력 확충",
+          "HMC 남양 R&D 상주 엔지니어 배치",
+          "유럽 시승 및 기술 교류 운영 채널 가동"]),
+        ("PHASE 2", "실행 확장", "2027~2028",
+         "Local Engineering Center 설립",
+         ["Tenneco Korea Engineering Center 개소 (위치 협의)",
+          "Ioniq 6 N SOP 지원 및 차종 확장 대응",
+          "Genesis Entry Level 사전 대응 R&D 수행"]),
+        ("PHASE 3", "현지화 완성", "2029~",
+         "Local Plant + R&D 운영",
+         ["현대/기아 신차 개발 초기부터 Tier-1 참여",
+          "국내 공장·R&D 동시 운영으로 Mando 수준 대응력 확보",
+          "연간 5개 이상 HMC 프로그램 동시 공급 체제"]),
+    ]
+    y = Inches(1.85)
+    card_w = Inches(4.0)
+    card_h = Inches(4.7)
+    for i, (ph, kr, yr, tagline, items) in enumerate(phases):
+        x = Inches(0.5) + (card_w + Inches(0.15)) * i
+        bg = [TEAL, TEAL_DARK, TEAL_DEEP][i]
+        # body
+        add_rect(s, x, y, card_w, card_h, fill=BG_LIGHT)
+        # header
+        add_rect(s, x, y, card_w, Inches(1.4), fill=bg)
+        add_text(s, x + Inches(0.25), y + Inches(0.1),
+                 card_w - Inches(0.4), Inches(0.3),
+                 ph, size=11, bold=True, color=LIME, font=FONT_EN)
+        add_text(s, x + Inches(0.25), y + Inches(0.4),
+                 card_w - Inches(0.4), Inches(0.55),
+                 kr, size=20, bold=True, color=WHITE)
+        add_text(s, x + Inches(0.25), y + Inches(0.95),
+                 card_w - Inches(0.4), Inches(0.4),
+                 yr, size=12, bold=True, color=LIME, font=FONT_EN)
+        # tagline
+        add_rect(s, x, y + Inches(1.4), card_w, Inches(0.55), fill=BG_SOFT)
+        add_text(s, x + Inches(0.25), y + Inches(1.4),
+                 card_w - Inches(0.4), Inches(0.55),
+                 tagline, size=12, bold=True, color=TEAL_DEEP,
+                 anchor=MSO_ANCHOR.MIDDLE)
+        # items
+        for j, it in enumerate(items):
+            yy = y + Inches(2.15) + Inches(0.8*j)
+            add_rect(s, x + Inches(0.3), yy + Inches(0.08),
+                     Inches(0.15), Inches(0.15), fill=bg)
+            add_text(s, x + Inches(0.55), yy,
+                     card_w - Inches(0.7), Inches(0.85),
+                     it, size=10, color=TEXT_DARK)
+    # timeline arrow at bottom
+    add_rect(s, Inches(0.5), Inches(6.75), Inches(12.3), Inches(0.25),
+             fill=LIME)
+    add_footer(s, 37)
+
+
+# -------------------- S38: 8-2 Organization & Resource --------------------
+def slide_org_resource():
+    s = add_slide()
+    add_top_bar(s, 8, "Tenneco Korea 단계별 운영 방안",
+                "8-2.  조직 · 리소스 · 투자 계획")
+
+    # Left: Organization
+    add_rect(s, Inches(0.5), Inches(1.8), Inches(6.2), Inches(5.2),
+             fill=BG_LIGHT)
+    add_rect(s, Inches(0.5), Inches(1.8), Inches(6.2), Inches(0.5),
+             fill=TEAL)
+    add_text(s, Inches(0.7), Inches(1.8), Inches(6), Inches(0.5),
+             "🏢  조직 구성 (Target 2027)",
+             size=13, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
+    # org nodes
+    org_items = [
+        ("Korea Country Head", "총괄 · HMC Key Account",     "1명"),
+        ("CES Sales & Marketing","영업·MKT·Technical Sales",   "6명"),
+        ("Engineering Center", "남양 상주 + 자체 Lab",         "12명"),
+        ("Program Mgmt (PMO)", "5개 HMC 프로젝트 동시 관리", "4명"),
+        ("Quality & SQA",      "HMC 품질 기준 대응",           "3명"),
+        ("Local Plant (Phase3)","브라질·중국 플랜트 Mirror",   "TBD"),
+    ]
+    y = Inches(2.4)
+    for i, (role, detail, num) in enumerate(org_items):
+        yy = y + Inches(0.68*i)
+        add_rect(s, Inches(0.7), yy, Inches(0.1), Inches(0.55), fill=TEAL)
+        add_text(s, Inches(0.95), yy, Inches(3.8), Inches(0.3),
+                 role, size=12, bold=True, color=TEAL_DEEP)
+        add_text(s, Inches(0.95), yy + Inches(0.28), Inches(3.8), Inches(0.3),
+                 detail, size=10, color=TEXT_MID)
+        add_rect(s, Inches(5.3), yy + Inches(0.08), Inches(1.2),
+                 Inches(0.4), fill=LIME)
+        add_text(s, Inches(5.3), yy + Inches(0.08), Inches(1.2),
+                 Inches(0.4),
+                 num, size=11, bold=True, color=TEAL_DEEP,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                 font=FONT_EN)
+
+    # Right: Investment & KPI
+    add_rect(s, Inches(6.9), Inches(1.8), Inches(5.9), Inches(2.5),
+             fill=TEAL_DEEP)
+    add_text(s, Inches(7.1), Inches(1.9), Inches(5.7), Inches(0.4),
+             "💰  투자 우선순위",
+             size=13, bold=True, color=LIME)
+    invest = [
+        "[1] HMC 남양 상주 Engineering — 2026 Q1",
+        "[2] Korea Technical Office (강남/판교) — 2026 Q2",
+        "[3] CVSA2 시험/분석 장비 — 2026 Q3",
+        "[4] Local Engineering Center — 2027 H1",
+        "[5] Local Plant Feasibility — 2028",
+    ]
+    for i, v in enumerate(invest):
+        yy = Inches(2.4) + Inches(0.34*i)
+        add_rect(s, Inches(7.1), yy + Inches(0.08), Inches(0.15),
+                 Inches(0.15), fill=LIME)
+        add_text(s, Inches(7.35), yy, Inches(5.5), Inches(0.3),
+                 v, size=10, color=WHITE)
+
+    # KPI box
+    add_rect(s, Inches(6.9), Inches(4.45), Inches(5.9), Inches(2.55),
+             fill=LIME)
+    add_text(s, Inches(7.1), Inches(4.55), Inches(5.7), Inches(0.4),
+             "📊  핵심 KPI",
+             size=13, bold=True, color=TEAL_DEEP)
+    kpis = [
+        ("2026",  "Ioniq 6 N RFQ 수주 · Demo 검증 완료"),
+        ("2027",  "Genesis Entry ECS 1~2개 모델 수주"),
+        ("2028",  "HMC 연매출 USD 100M 돌파"),
+        ("2029",  "HMC Top-3 Chassis 공급사 진입"),
+    ]
+    for i, (yr, kp) in enumerate(kpis):
+        yy = Inches(5.0) + Inches(0.48*i)
+        add_rect(s, Inches(7.1), yy, Inches(0.9), Inches(0.4), fill=TEAL_DEEP)
+        add_text(s, Inches(7.1), yy, Inches(0.9), Inches(0.4),
+                 yr, size=11, bold=True, color=LIME,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                 font=FONT_EN)
+        add_text(s, Inches(8.1), yy + Inches(0.05), Inches(4.6),
+                 Inches(0.35),
+                 kp, size=10, color=TEAL_DEEP, bold=True)
+    add_footer(s, 38)
+
+
+# -------------------- S39: Section 9 divider --------------------
+def slide_section9():
+    s = add_slide()
+    add_section_divider(s, 9, "Q & A",
+                        "Questions & Discussion", 39)
+
+
+# -------------------- S40: Closing / Thank You --------------------
+def slide_closing():
+    s = add_slide()
+    # BG
+    add_rect(s, 0, 0, SW, SH, fill=TEAL_DEEP)
+    # lime accent
+    add_rect(s, 0, Inches(2.8), SW, Inches(0.08), fill=LIME)
+
+    add_text(s, 0, Inches(1.7), SW, Inches(1.2),
+             "THANK YOU", size=80, bold=True, color=LIME,
+             align=PP_ALIGN.CENTER, font=FONT_EN, anchor=MSO_ANCHOR.MIDDLE)
+    add_text(s, 0, Inches(3.1), SW, Inches(0.6),
+             "감사합니다", size=30, bold=True, color=WHITE,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    add_text(s, 0, Inches(3.9), SW, Inches(0.5),
+             "Tenneco × Hyundai Motor Group",
+             size=16, color=LIME, italic=True,
+             align=PP_ALIGN.CENTER, font=FONT_EN)
+    add_text(s, 0, Inches(4.5), SW, Inches(0.4),
+             "Next-Gen Chassis Partnership · 2026 →",
+             size=12, color=WHITE,
+             align=PP_ALIGN.CENTER, font=FONT_EN)
+
+    # bottom ribbon
+    add_rect(s, 0, Inches(6.6), SW, Inches(0.3), fill=LIME)
+    add_text(s, 0, Inches(6.6), SW, Inches(0.3),
+             "TENNECO — RIDE ENGINEERED FOR HYUNDAI",
+             size=11, bold=True, color=TEAL_DEEP,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+             font=FONT_EN)
+    add_text(s, Inches(0.3), Inches(7.1), Inches(10), Inches(0.3),
+             "General Business – Tenneco Confidential",
+             size=9, color=TEXT_LIGHT, italic=True)
+    add_text(s, Inches(12.7), Inches(7.1), Inches(0.55), Inches(0.3),
+             "40", size=9, color=TEXT_LIGHT,
+             align=PP_ALIGN.RIGHT, font=FONT_EN)
+
+
 # ===== Run =====
 if __name__ == "__main__":
     slide_cover()                       # 1
@@ -718,10 +2056,41 @@ if __name__ == "__main__":
     slide_america_vs_competitor()       # 7
     slide_section3()                    # 8
     slide_tenneco_share()               # 9
+    slide_section4()                    # 10
+    slide_supply_overview()             # 11
+    slide_china_project()               # 12
+    slide_india_brazil_project()        # 13
+    slide_program_volume()              # 14
+    slide_partspec_china1()             # 15
+    slide_partspec_china2()             # 16
+    slide_partspec_india()              # 17
+    slide_partspec_brazil()             # 18
+    slide_section5()                    # 19
+    slide_competitor_overview()         # 20
+    slide_competitor_matrix()           # 21
+    slide_nbrand_ecs()                  # 22
+    slide_genesis_ecs()                 # 23
+    slide_na_plants()                   # 24
+    slide_sa_plants()                   # 25
+    slide_section6()                    # 26
+    slide_cvsa2_background()            # 27
+    slide_cvsa2_technical()             # 28
+    slide_demo_car_status()             # 29
+    slide_demo_car_schedule()           # 30
+    slide_cvsa2_expansion()             # 31
+    slide_section7()                    # 32
+    slide_launching_process()           # 33
+    slide_attack_framework()            # 34
+    slide_key_actions()                 # 35
+    slide_section8()                    # 36
+    slide_phased_roadmap()              # 37
+    slide_org_resource()                # 38
+    slide_section9()                    # 39
+    slide_closing()                     # 40
 
     import os
     out_dir = os.path.dirname(os.path.abspath(__file__))
-    out_path = os.path.join(out_dir, "Tenneco_Hyundai_KR_preview.pptx")
+    out_path = os.path.join(out_dir, "Tenneco_Hyundai_Presentation_KR.pptx")
     prs.save(out_path)
     print(f"Saved: {out_path}  ({len(prs.slides)} slides)")
 
