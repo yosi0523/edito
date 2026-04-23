@@ -622,21 +622,15 @@ body {
     flex: 1;
     border: none;
     color: white;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 700;
     cursor: pointer;
     padding: 0 4px;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2px;
     font-family: inherit;
     letter-spacing: 0.3px;
-}
-.cl-swipe-actions button .cl-btn-icon {
-    font-size: 18px;
-    line-height: 1;
 }
 .cl-btn-postpone { background: #F39C12; }
 .cl-btn-postpone:active { background: #D68910; }
@@ -3666,12 +3660,8 @@ function renderTodayChecklist(dateStr) {
     const itemsHtml = allItems.map((item, flatIdx) => `
         <div class="cl-swipe-wrap" data-cl-id="${item.clId}" data-item-idx="${item.idx}">
             <div class="cl-swipe-actions">
-                <button type="button" class="cl-btn-postpone" data-action="postpone">
-                    <span class="cl-btn-icon">⏭</span><span>미루기</span>
-                </button>
-                <button type="button" class="cl-btn-delete" data-action="delete">
-                    <span class="cl-btn-icon">🗑</span><span>삭제</span>
-                </button>
+                <button type="button" class="cl-btn-postpone" data-action="postpone">미루기</button>
+                <button type="button" class="cl-btn-delete" data-action="delete">삭제</button>
             </div>
             <div class="today-cl-item cl-swipe-content" data-flat-idx="${flatIdx}">
                 <input type="checkbox" ${item.checked ? 'checked' : ''}>
