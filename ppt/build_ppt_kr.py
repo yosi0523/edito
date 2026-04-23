@@ -304,6 +304,234 @@ def add_section_divider(slide, section_num, section_kr, section_en, page):
              f"— {page} —", size=10, color=LIME, font=FONT_EN)
 
 
+# ===== Flag / Map helpers =====
+# Flag colors (RGB tuples) used as stacked colored bars to represent country flag
+FLAGS = {
+    "CN": [RGBColor(0xDE, 0x28, 0x10)],                                   # China — red (simplified)
+    "IN": [RGBColor(0xFF, 0x99, 0x33), RGBColor(0xFF, 0xFF, 0xFF),
+           RGBColor(0x13, 0x88, 0x08)],                                   # India (tricolor horizontal)
+    "BR": [RGBColor(0x00, 0x9C, 0x3B), RGBColor(0xFE, 0xDF, 0x00)],       # Brazil (green/yellow)
+    "KR": [RGBColor(0xFF, 0xFF, 0xFF), RGBColor(0x00, 0x20, 0x71)],       # Korea (white/blue)
+    "US": [RGBColor(0xB2, 0x22, 0x34), RGBColor(0xFF, 0xFF, 0xFF),
+           RGBColor(0x3C, 0x3B, 0x6E)],                                   # USA
+    "DE": [RGBColor(0x00, 0x00, 0x00), RGBColor(0xDD, 0x00, 0x00),
+           RGBColor(0xFF, 0xCE, 0x00)],                                   # Germany
+    "MX": [RGBColor(0x00, 0x69, 0x33), RGBColor(0xFF, 0xFF, 0xFF),
+           RGBColor(0xCE, 0x11, 0x26)],                                   # Mexico
+    "AR": [RGBColor(0x74, 0xAC, 0xDF), RGBColor(0xFF, 0xFF, 0xFF),
+           RGBColor(0x74, 0xAC, 0xDF)],                                   # Argentina
+    "CA": [RGBColor(0xFF, 0x00, 0x00), RGBColor(0xFF, 0xFF, 0xFF),
+           RGBColor(0xFF, 0x00, 0x00)],                                   # Canada (simplified red-white-red)
+}
+
+def add_flag(slide, x, y, w, h, code):
+    """Draw a simplified horizontal-stripe flag for the given country code."""
+    colors = FLAGS.get(code)
+    if not colors:
+        return
+    # outer border
+    border = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, x, y, w, h)
+    border.shadow.inherit = False
+    border.fill.background()
+    border.line.color.rgb = RGBColor(0x88, 0x88, 0x88)
+    border.line.width = Pt(0.5)
+    n = len(colors)
+    stripe_h = Emu(int(h / n))
+    for i, c in enumerate(colors):
+        shp = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, x,
+                                     y + Emu(int(h * i / n)), w, stripe_h)
+        shp.shadow.inherit = False
+        shp.fill.solid()
+        shp.fill.fore_color.rgb = c
+        shp.line.fill.background()
+
+
+def add_world_map_base(slide, x, y, w, h, fill=BG_SOFT, outline=TEAL):
+    """Draw a very stylized world map base using rectangles for continents.
+       This is a schematic, not geographically accurate."""
+    # background
+    bg = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, x, y, w, h)
+    bg.shadow.inherit = False
+    bg.fill.solid()
+    bg.fill.fore_color.rgb = fill
+    bg.line.fill.background()
+
+    # rough continent blobs (normalized coordinates relative to x, y, w, h)
+    # (cx_ratio, cy_ratio, w_ratio, h_ratio, name)
+    continents = [
+        # Americas
+        (0.12, 0.32, 0.11, 0.22, "N.America"),
+        (0.18, 0.68, 0.07, 0.28, "S.America"),
+        # Europe
+        (0.48, 0.26, 0.09, 0.16, "Europe"),
+        # Africa
+        (0.52, 0.55, 0.10, 0.30, "Africa"),
+        # Asia
+        (0.72, 0.32, 0.20, 0.30, "Asia"),
+        # Oceania
+        (0.86, 0.78, 0.10, 0.12, "Oceania"),
+    ]
+    for cxr, cyr, wr, hr, _ in continents:
+        cx = x + Emu(int(w * cxr))
+        cy = y + Emu(int(h * cyr))
+        cw = Emu(int(w * wr))
+        ch = Emu(int(h * hr))
+        cont = slide.shapes.add_shape(MSO_SHAPE.OVAL,
+                                      cx - Emu(int(cw/2)),
+                                      cy - Emu(int(ch/2)),
+                                      cw, ch)
+        cont.shadow.inherit = False
+        cont.fill.solid()
+        cont.fill.fore_color.rgb = RGBColor(0xC0, 0xD4, 0xDC)
+        cont.line.color.rgb = outline
+        cont.line.width = Pt(0.75)
+
+
+def add_map_marker(slide, x, y, num=None, label=None, color=None,
+                   size=0.32, text_color=None):
+    """Draw a numbered/lettered circular marker on the map at (x,y).
+       x, y are the CENTER of the marker."""
+    if color is None:
+        color = TEAL
+    if text_color is None:
+        text_color = WHITE
+    r = Inches(size / 2)
+    mk = slide.shapes.add_shape(MSO_SHAPE.OVAL,
+                                x - r, y - r,
+                                Inches(size), Inches(size))
+    mk.shadow.inherit = False
+    mk.fill.solid()
+    mk.fill.fore_color.rgb = color
+    mk.line.color.rgb = WHITE
+    mk.line.width = Pt(1.5)
+    if num is not None:
+        add_text(slide, x - r, y - r, Inches(size), Inches(size),
+                 str(num), size=10, bold=True, color=text_color,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                 font=FONT_EN)
+    if label is not None:
+        # small label to the right
+        add_text(slide, x + r + Inches(0.05), y - Inches(0.13),
+                 Inches(1.3), Inches(0.26),
+                 label, size=9, bold=True, color=TEAL_DEEP, font=FONT_EN)
+
+
+def add_na_map(slide, x, y, w, h, fill=BG_SOFT):
+    """Draw a stylized North America outline (US + Canada + Mexico)."""
+    bg = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, x, y, w, h)
+    bg.shadow.inherit = False
+    bg.fill.solid()
+    bg.fill.fore_color.rgb = fill
+    bg.line.fill.background()
+
+    # Canada (top wide)
+    ca = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+                                x + Emu(int(w * 0.05)),
+                                y + Emu(int(h * 0.05)),
+                                Emu(int(w * 0.88)),
+                                Emu(int(h * 0.30)))
+    ca.shadow.inherit = False
+    ca.adjustments[0] = 0.2
+    ca.fill.solid()
+    ca.fill.fore_color.rgb = RGBColor(0xC0, 0xD4, 0xDC)
+    ca.line.color.rgb = TEAL
+    ca.line.width = Pt(0.75)
+    add_text(slide, x + Emu(int(w * 0.05)), y + Emu(int(h * 0.12)),
+             Emu(int(w * 0.88)), Inches(0.3),
+             "CANADA", size=10, bold=True, color=TEAL_DEEP,
+             align=PP_ALIGN.CENTER, font=FONT_EN)
+
+    # USA (middle)
+    us = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+                                x + Emu(int(w * 0.08)),
+                                y + Emu(int(h * 0.38)),
+                                Emu(int(w * 0.82)),
+                                Emu(int(h * 0.32)))
+    us.shadow.inherit = False
+    us.adjustments[0] = 0.15
+    us.fill.solid()
+    us.fill.fore_color.rgb = RGBColor(0xA8, 0xC2, 0xCC)
+    us.line.color.rgb = TEAL
+    us.line.width = Pt(0.75)
+    add_text(slide, x + Emu(int(w * 0.08)), y + Emu(int(h * 0.43)),
+             Emu(int(w * 0.82)), Inches(0.3),
+             "UNITED STATES", size=11, bold=True, color=TEAL_DEEP,
+             align=PP_ALIGN.CENTER, font=FONT_EN)
+
+    # Mexico (bottom)
+    mx = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+                                x + Emu(int(w * 0.18)),
+                                y + Emu(int(h * 0.73)),
+                                Emu(int(w * 0.55)),
+                                Emu(int(h * 0.22)))
+    mx.shadow.inherit = False
+    mx.adjustments[0] = 0.15
+    mx.fill.solid()
+    mx.fill.fore_color.rgb = RGBColor(0xC0, 0xD4, 0xDC)
+    mx.line.color.rgb = TEAL
+    mx.line.width = Pt(0.75)
+    add_text(slide, x + Emu(int(w * 0.18)), y + Emu(int(h * 0.78)),
+             Emu(int(w * 0.55)), Inches(0.3),
+             "MEXICO", size=10, bold=True, color=TEAL_DEEP,
+             align=PP_ALIGN.CENTER, font=FONT_EN)
+
+
+def add_sa_map(slide, x, y, w, h, fill=BG_SOFT):
+    """Stylized South America — Brazil + Argentina + surrounding."""
+    bg = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, x, y, w, h)
+    bg.shadow.inherit = False
+    bg.fill.solid()
+    bg.fill.fore_color.rgb = fill
+    bg.line.fill.background()
+
+    # Brazil (big, right side)
+    br = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+                                x + Emu(int(w * 0.42)),
+                                y + Emu(int(h * 0.12)),
+                                Emu(int(w * 0.50)),
+                                Emu(int(h * 0.55)))
+    br.shadow.inherit = False
+    br.adjustments[0] = 0.15
+    br.fill.solid()
+    br.fill.fore_color.rgb = RGBColor(0xA8, 0xC2, 0xCC)
+    br.line.color.rgb = TEAL
+    br.line.width = Pt(0.75)
+    add_text(slide, x + Emu(int(w * 0.42)), y + Emu(int(h * 0.32)),
+             Emu(int(w * 0.50)), Inches(0.3),
+             "BRAZIL", size=12, bold=True, color=TEAL_DEEP,
+             align=PP_ALIGN.CENTER, font=FONT_EN)
+
+    # Argentina (south, thin)
+    ar = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+                                x + Emu(int(w * 0.28)),
+                                y + Emu(int(h * 0.65)),
+                                Emu(int(w * 0.25)),
+                                Emu(int(h * 0.30)))
+    ar.shadow.inherit = False
+    ar.adjustments[0] = 0.2
+    ar.fill.solid()
+    ar.fill.fore_color.rgb = RGBColor(0xC0, 0xD4, 0xDC)
+    ar.line.color.rgb = TEAL
+    ar.line.width = Pt(0.75)
+    add_text(slide, x + Emu(int(w * 0.28)), y + Emu(int(h * 0.77)),
+             Emu(int(w * 0.25)), Inches(0.3),
+             "ARGENTINA", size=9, bold=True, color=TEAL_DEEP,
+             align=PP_ALIGN.CENTER, font=FONT_EN)
+
+    # Other (Chile/Peru - left)
+    other = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE,
+                                   x + Emu(int(w * 0.08)),
+                                   y + Emu(int(h * 0.18)),
+                                   Emu(int(w * 0.20)),
+                                   Emu(int(h * 0.55)))
+    other.shadow.inherit = False
+    other.adjustments[0] = 0.3
+    other.fill.solid()
+    other.fill.fore_color.rgb = RGBColor(0xC0, 0xD4, 0xDC)
+    other.line.color.rgb = TEAL
+    other.line.width = Pt(0.75)
+
+
 # =======================================================================
 #                           S L I D E S
 # =======================================================================
@@ -718,53 +946,127 @@ def slide_section4():
 def slide_supply_overview():
     s = add_slide()
     add_top_bar(s, 4, "테네코에서의 현대 공급 프로그램",
-                "4-1.  지역별 공급 프로그램 Overview")
+                "4-1.  지역별 프로젝트 카드  |  Country × Vehicle × Project")
 
-    # 3 region cards
-    regions = [
-        ("CHINA", "중국", "5개 프로젝트", "IX25 · Verna · Elantra 6th · Elantra PHEV · Elantra 7th",
-         "2014~2023 누적 공급 / Shock Absorber MTV·MTV CL", TEAL),
-        ("INDIA", "인도", "2개 프로젝트", "Venue (QXI 2019) · Elite (BI3 2020)",
-         "MTV 밸브 적용 / 인도 현지 수요 대응", TEAL_DARK),
-        ("BRAZIL", "브라질", "3개 프로젝트", "HB20 (BR2 2022) · Creta (SU2b 2023) · BC4b (개발중)",
-         "MTV + RV+ 듀얼 사양 / 남미 전용 튜닝", TEAL_DEEP),
+    # Project cards: (country code, flag name, project code, vehicle name, year, marker_num)
+    projects = [
+        ("CN", "CHINA",  "GC",       "IX25",           "2014", 1),
+        ("CN", "CHINA",  "YC FL",    "Verna",          "2019", 2),
+        ("CN", "CHINA",  "ADC",      "Elantra 6th",    "2016", 3),
+        ("CN", "CHINA",  "CN7c",     "Elantra 7th",    "2020", 4),
+        ("IN", "INDIA",  "QXI",      "Venue",          "2019", 5),
+        ("IN", "INDIA",  "BI3",      "Elite i20",      "2020", 6),
+        ("BR", "BRAZIL", "BR2",      "HB20",           "2022", 7),
+        ("BR", "BRAZIL", "SU2b",     "Creta",          "2023", 8),
+        ("BR", "BRAZIL", "BC4b",     "(개발중)",        "2026", 9),
     ]
-    card_w = Inches(4.0)
-    card_h = Inches(4.3)
-    gap = Inches(0.2)
+    # 3 rows x 3 cols of cards  (small, uniform)
+    card_w = Inches(1.95)
+    card_h = Inches(1.55)
+    gap_x = Inches(0.12)
+    gap_y = Inches(0.1)
     start_x = Inches(0.5)
-    y = Inches(1.9)
+    start_y = Inches(1.75)
 
-    for i, (en, kr, cnt, models, note, color) in enumerate(regions):
-        x = start_x + (card_w + gap) * i
-        # top band
-        add_rect(s, x, y, card_w, Inches(1.0), fill=color)
-        add_text(s, x, y + Inches(0.15), card_w, Inches(0.4),
-                 en, size=14, bold=True, color=LIME,
+    for i, (code, country, proj, veh, yr, num) in enumerate(projects):
+        col = i % 3
+        row = i // 3
+        x = start_x + (card_w + gap_x) * col
+        y = start_y + (card_h + gap_y) * row
+        # card body
+        add_rect(s, x, y, card_w, card_h, fill=BG_LIGHT, line=GRAY_LINE, line_w=0.5)
+        # flag + country (left top)
+        add_flag(s, x + Inches(0.12), y + Inches(0.12), Inches(0.32),
+                 Inches(0.2), code)
+        add_text(s, x + Inches(0.5), y + Inches(0.1), Inches(1),
+                 Inches(0.2),
+                 country, size=8, bold=True, color=TEAL_DEEP, font=FONT_EN)
+        # marker num (right top)
+        add_map_marker(s, x + card_w - Inches(0.25),
+                       y + Inches(0.22), num=num, color=TEAL, size=0.28)
+        # vehicle placeholder
+        add_rect(s, x + Inches(0.12), y + Inches(0.4),
+                 card_w - Inches(0.24), Inches(0.55),
+                 fill=BG_SOFT, line=TEAL, line_w=0.5)
+        add_text(s, x + Inches(0.12), y + Inches(0.4),
+                 card_w - Inches(0.24), Inches(0.55),
+                 "🚗  차량 사진", size=9, color=TEAL,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        # project code (big)
+        add_text(s, x + Inches(0.12), y + Inches(1.0),
+                 card_w - Inches(0.24), Inches(0.3),
+                 proj, size=13, bold=True, color=TEAL_DEEP,
+                 align=PP_ALIGN.LEFT, font=FONT_EN)
+        # vehicle & year (small)
+        add_text(s, x + Inches(0.12), y + Inches(1.28),
+                 card_w - Inches(0.24), Inches(0.2),
+                 f"{veh}  ·  SOP {yr}", size=8, color=TEXT_MID,
+                 align=PP_ALIGN.LEFT)
+
+    # Right side : mini world map with markers
+    map_x = Inches(6.95)
+    map_y = Inches(1.75)
+    map_w = Inches(5.85)
+    map_h = Inches(4.75)
+    add_world_map_base(s, map_x, map_y, map_w, map_h)
+    # Title on map
+    add_text(s, map_x, map_y + Inches(0.05), map_w, Inches(0.3),
+             "GLOBAL PROJECT MAP",
+             size=10, bold=True, color=TEAL_DEEP,
+             align=PP_ALIGN.CENTER, font=FONT_EN)
+    # Highlight markers (numbers at approximate country positions)
+    # normalized positions within map
+    positions = {
+        "CN": (0.78, 0.38),   # China - Asia east
+        "IN": (0.70, 0.48),   # India - South Asia
+        "BR": (0.23, 0.70),   # Brazil - S.America
+    }
+    # Numbers grouped per country
+    groups = {"CN": [1, 2, 3, 4], "IN": [5, 6], "BR": [7, 8, 9]}
+    colors_per = {"CN": TEAL, "IN": TEAL_DARK, "BR": TEAL_DEEP}
+    for code, (rx, ry) in positions.items():
+        cx = map_x + Emu(int(map_w * rx))
+        cy = map_y + Emu(int(map_h * ry))
+        # country ring
+        big = s.shapes.add_shape(MSO_SHAPE.OVAL,
+                                 cx - Inches(0.45), cy - Inches(0.45),
+                                 Inches(0.9), Inches(0.9))
+        big.shadow.inherit = False
+        big.fill.solid()
+        big.fill.fore_color.rgb = LIME
+        big.line.color.rgb = colors_per[code]
+        big.line.width = Pt(2)
+        # country label
+        add_text(s, cx - Inches(0.6), cy + Inches(0.5),
+                 Inches(1.2), Inches(0.28),
+                 code, size=11, bold=True, color=TEAL_DEEP,
                  align=PP_ALIGN.CENTER, font=FONT_EN)
-        add_text(s, x, y + Inches(0.5), card_w, Inches(0.45),
-                 kr, size=22, bold=True, color=WHITE,
-                 align=PP_ALIGN.CENTER)
-        # body
-        add_rect(s, x, y + Inches(1.0), card_w, card_h - Inches(1.0),
-                 fill=BG_LIGHT)
-        add_text(s, x + Inches(0.2), y + Inches(1.2), card_w - Inches(0.4),
-                 Inches(0.5), cnt, size=20, bold=True, color=color,
-                 align=PP_ALIGN.CENTER, font=FONT_EN)
-        add_line(s, x + Inches(0.8), y + Inches(1.8),
-                 x + card_w - Inches(0.8), y + Inches(1.8),
-                 color=color, weight=1.5)
-        add_text(s, x + Inches(0.2), y + Inches(1.95), card_w - Inches(0.4),
-                 Inches(1.3), models, size=11, color=TEXT_DARK,
-                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.TOP)
-        add_text(s, x + Inches(0.2), y + Inches(3.3), card_w - Inches(0.4),
-                 Inches(0.9), note, size=10, color=TEXT_MID,
-                 align=PP_ALIGN.CENTER, italic=True, anchor=MSO_ANCHOR.TOP)
+        # number group
+        nums_txt = "·".join(str(n) for n in groups[code])
+        add_text(s, cx - Inches(0.45), cy - Inches(0.2),
+                 Inches(0.9), Inches(0.4),
+                 nums_txt, size=12, bold=True, color=TEAL_DEEP,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                 font=FONT_EN)
+
+    # Legend bar
+    add_rect(s, map_x, map_y + map_h - Inches(0.6), map_w, Inches(0.5),
+             fill=TEAL_DEEP)
+    add_text(s, map_x + Inches(0.15), map_y + map_h - Inches(0.55),
+             map_w - Inches(0.3), Inches(0.2),
+             "PROJECT LOCATIONS",
+             size=9, bold=True, color=LIME, font=FONT_EN)
+    add_text(s, map_x + Inches(0.15), map_y + map_h - Inches(0.34),
+             map_w - Inches(0.3), Inches(0.2),
+             "중국 4 · 인도 2 · 브라질 3   (총 9개 프로젝트 / 3대륙)",
+             size=10, color=WHITE)
 
     # bottom summary
-    add_text(s, Inches(0.5), Inches(6.5), Inches(12.3), Inches(0.5),
-             "총 10개 현대 프로그램 공급 중 · 3대륙 동시 대응 체제 구축",
-             size=13, bold=True, color=TEAL_DEEP, align=PP_ALIGN.CENTER)
+    add_rect(s, Inches(0.5), Inches(6.55), Inches(12.3), Inches(0.45),
+             fill=LIME)
+    add_text(s, Inches(0.7), Inches(6.55), Inches(12), Inches(0.45),
+             "총 9개 현대 프로그램 · 3대륙 동시 대응 — Tenneco 현대 공급 전략의 지리적 기반",
+             size=12, bold=True, color=TEAL_DEEP, anchor=MSO_ANCHOR.MIDDLE)
     add_footer(s, 11)
 
 
@@ -858,42 +1160,141 @@ def slide_india_brazil_project():
 def slide_program_volume():
     s = add_slide()
     add_top_bar(s, 4, "테네코에서의 현대 공급 프로그램",
-                "4-4.  Program Vehicle Volume (2023–2027)")
+                "4-4.  Program Vehicle Volume  |  Sales by country infographic")
 
+    # === LEFT: Compact table ===
     data = [
         ["지역", "Project", "2023", "2024", "2025", "2026", "2027"],
-        ["India",  "BI3",   "81,600",  "80,450",  "80,710",  "6,860",  "–"],
-        ["India",  "Qxi",   "138,300", "116,370", "57,850",  "–",      "–"],
-        ["Brazil", "BR2",   "137,600", "148,800", "145,800", "30,500", "–"],
-        ["Brazil", "SU2b",  "–",       "–",       "70,200",  "73,000", "43,000"],
-        ["Brazil", "BC4b",  "–",       "–",       "–",       "112,500","138,000"],
+        ["🇮🇳 India",  "BI3",   "81,600",  "80,450",  "80,710",  "6,860",  "–"],
+        ["🇮🇳 India",  "Qxi",   "138,300", "116,370", "57,850",  "–",      "–"],
+        ["🇧🇷 Brazil", "BR2",   "137,600", "148,800", "145,800", "30,500", "–"],
+        ["🇧🇷 Brazil", "SU2b",  "–",       "–",       "70,200",  "73,000", "43,000"],
+        ["🇧🇷 Brazil", "BC4b",  "–",       "–",       "–",       "112,500","138,000"],
+        ["합계(추정)", "",      "357,500", "345,620", "354,560", "222,860","181,000"],
     ]
-    make_table(s, Inches(0.6), Inches(1.8), Inches(12.1), Inches(3.5),
-               data, col_widths=[1.2, 1.5, 1.88, 1.88, 1.88, 1.88, 1.88],
-               font_size=12, header_size=12,
-               first_col_fill=BG_SOFT, first_col_color=TEAL_DEEP)
+    tbl = make_table(s, Inches(0.4), Inches(1.75), Inches(7.3), Inches(3.6),
+                     data, col_widths=[1.1, 1.0, 0.84, 0.84, 0.84, 0.84, 0.84],
+                     font_size=9, header_size=10,
+                     first_col_fill=BG_SOFT, first_col_color=TEAL_DEEP)
+    # Highlight totals row (last)
+    try:
+        last = tbl.rows[6]
+        for c in last.cells:
+            c.fill.solid()
+            c.fill.fore_color.rgb = TEAL
+            for p in c.text_frame.paragraphs:
+                for r in p.runs:
+                    r.font.color.rgb = WHITE
+                    r.font.bold = True
+    except Exception:
+        pass
 
-    # totals
-    add_rect(s, Inches(0.6), Inches(5.55), Inches(12.1), Inches(0.45),
-             fill=TEAL)
-    add_text(s, Inches(0.8), Inches(5.55), Inches(12), Inches(0.45),
-             "합계 (추정)         357,500           345,620           354,560           222,860           181,000",
-             size=12, bold=True, color=WHITE, font=FONT_EN,
-             anchor=MSO_ANCHOR.MIDDLE)
+    # === RIGHT: Country ranking infographic with map markers ===
+    # Title ribbon
+    add_rect(s, Inches(7.9), Inches(1.75), Inches(4.9), Inches(0.38),
+             fill=TEAL_DEEP)
+    add_text(s, Inches(7.9), Inches(1.75), Inches(4.9), Inches(0.38),
+             "Volume by Country (2023~2027 누적)",
+             size=10, bold=True, color=LIME,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
 
-    # takeaways
-    takeaways = [
-        "2023~2025: 인도 BI3/Qxi + 브라질 BR2 → 안정적 35만 대/년 수준",
-        "2026~2027: Creta(SU2b) + BC4b 신규 양산으로 브라질 Shift 가속",
-        "인도 Qxi 감소분 상쇄 + BC4b 풀가동 시 연 30만 대 이상 재회복 기대",
+    # Country ranks (simplified totals)
+    # Brazil total = 137600+148800+145800+30500 + 70200+73000+43000 + 112500+138000 = 899,400
+    # India total = 81600+80450+80710+6860 + 138300+116370+57850 = 562,140
+    ranks = [
+        ("01", "🇧🇷", "Brazil", "899,400",  "약 90만 대",  "BR2 · SU2b · BC4b", TEAL_DEEP),
+        ("02", "🇮🇳", "India",  "562,140",  "약 56만 대",  "BI3 · Qxi",         TEAL),
     ]
-    y0 = Inches(6.1)
-    for i, t in enumerate(takeaways):
-        add_rect(s, Inches(0.6), y0 + Inches(0.32*i), Inches(0.25),
-                 Inches(0.25), fill=LIME)
-        add_text(s, Inches(0.95), y0 + Inches(0.32*i) - Inches(0.02),
-                 Inches(11.8), Inches(0.3),
-                 t, size=11, color=TEXT_DARK)
+    y0 = Inches(2.2)
+    for i, (rk, flag, name, units, units_kr, projs, color) in enumerate(ranks):
+        yy = y0 + Inches(1.55 * i)
+        # row card
+        add_rect(s, Inches(7.9), yy, Inches(4.9), Inches(1.45),
+                 fill=BG_LIGHT)
+        # rank tag
+        add_rect(s, Inches(7.9), yy, Inches(0.7), Inches(1.45), fill=color)
+        add_text(s, Inches(7.9), yy, Inches(0.7), Inches(0.7),
+                 rk, size=22, bold=True, color=LIME,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                 font=FONT_EN)
+        add_text(s, Inches(7.9), yy + Inches(0.75), Inches(0.7),
+                 Inches(0.65),
+                 flag, size=22, bold=False, color=WHITE,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        # country name
+        add_text(s, Inches(8.7), yy + Inches(0.1), Inches(2.5),
+                 Inches(0.35),
+                 name, size=15, bold=True, color=TEAL_DEEP, font=FONT_EN)
+        # units big number
+        add_text(s, Inches(8.7), yy + Inches(0.45), Inches(2.5),
+                 Inches(0.5),
+                 units, size=22, bold=True, color=color, font=FONT_EN)
+        add_text(s, Inches(8.7), yy + Inches(0.95), Inches(2.5),
+                 Inches(0.3),
+                 units_kr + " (5년 누적)", size=9, color=TEXT_MID)
+        # projects
+        add_rect(s, Inches(11.3), yy + Inches(0.25), Inches(1.4),
+                 Inches(0.4), fill=color)
+        add_text(s, Inches(11.3), yy + Inches(0.25), Inches(1.4),
+                 Inches(0.4),
+                 "Projects", size=9, bold=True, color=LIME,
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                 font=FONT_EN)
+        add_text(s, Inches(11.3), yy + Inches(0.7), Inches(1.4),
+                 Inches(0.6),
+                 projs, size=9, color=TEAL_DEEP, align=PP_ALIGN.CENTER,
+                 bold=True)
+
+    # === BOTTOM: World map with markers (2 countries) ===
+    map_x = Inches(0.4)
+    map_y = Inches(5.5)
+    map_w = Inches(12.5)
+    map_h = Inches(1.55)
+    add_world_map_base(s, map_x, map_y, map_w, map_h)
+
+    # Brazil marker (#01)
+    br_x = map_x + Emu(int(map_w * 0.23))
+    br_y = map_y + Emu(int(map_h * 0.70))
+    br_big = s.shapes.add_shape(MSO_SHAPE.OVAL,
+                                br_x - Inches(0.25), br_y - Inches(0.25),
+                                Inches(0.5), Inches(0.5))
+    br_big.shadow.inherit = False
+    br_big.fill.solid()
+    br_big.fill.fore_color.rgb = TEAL_DEEP
+    br_big.line.color.rgb = LIME
+    br_big.line.width = Pt(2)
+    add_text(s, br_x - Inches(0.25), br_y - Inches(0.25), Inches(0.5),
+             Inches(0.5),
+             "01", size=12, bold=True, color=LIME,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, font=FONT_EN)
+    add_text(s, br_x - Inches(0.85), br_y + Inches(0.3),
+             Inches(1.7), Inches(0.25),
+             "BRAZIL · 899K", size=9, bold=True, color=TEAL_DEEP,
+             align=PP_ALIGN.CENTER, font=FONT_EN)
+
+    # India marker (#02)
+    in_x = map_x + Emu(int(map_w * 0.70))
+    in_y = map_y + Emu(int(map_h * 0.48))
+    in_big = s.shapes.add_shape(MSO_SHAPE.OVAL,
+                                in_x - Inches(0.25), in_y - Inches(0.25),
+                                Inches(0.5), Inches(0.5))
+    in_big.shadow.inherit = False
+    in_big.fill.solid()
+    in_big.fill.fore_color.rgb = TEAL
+    in_big.line.color.rgb = LIME
+    in_big.line.width = Pt(2)
+    add_text(s, in_x - Inches(0.25), in_y - Inches(0.25), Inches(0.5),
+             Inches(0.5),
+             "02", size=12, bold=True, color=LIME,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE, font=FONT_EN)
+    add_text(s, in_x - Inches(0.8), in_y + Inches(0.3),
+             Inches(1.6), Inches(0.25),
+             "INDIA · 562K", size=9, bold=True, color=TEAL_DEEP,
+             align=PP_ALIGN.CENTER, font=FONT_EN)
+
+    # Key takeaway ribbon at very bottom
+    add_rect(s, Inches(0.4), Inches(7.12), Inches(12.5), Inches(0.08),
+             fill=LIME)
     add_footer(s, 14)
 
 
@@ -1073,28 +1474,33 @@ def slide_competitor_overview():
     comps = [
         ("MANDO", "만도",
          "Korea", "한국 현지 Tier-1",
-         "현대/기아 메인 공급사. 가격 경쟁력 · 즉시 대응력 우위. 2-valve 등 신기술 대응 어려움.",
+         "현대/기아 메인 공급사. 가격·대응력 우위. 2-valve 등 신기술 대응 어려움.",
          TEAL, WHITE),
         ("ZF",  "ZF Friedrichshafen",
          "Germany", "글로벌 Tier-1",
-         "Ioniq6·Genesis Entry ECS 공급. 고성능 라인 인지도 최상위. 가격 高, Air Shock 미지원.",
+         "Ioniq6·Genesis Entry ECS 공급. 고성능 인지도 최상. 가격 高, Air Shock 미지원.",
          TEAL_DARK, WHITE),
         ("BILSTEIN", "Bilstein (thyssenkrupp)",
-         "Germany", "프리미엄 서스펜션 전문",
-         "Genesis High-end (Air Shock+ECS) 공급. 고성능 브랜드 이미지. 2-valve MacPherson 부재.",
+         "Germany", "프리미엄 전문",
+         "Genesis High-end (Air Shock+ECS) 공급. 2-valve MacPherson 부재.",
          TEAL_DEEP, WHITE),
+        ("S&T", "S&T Motiv",
+         "Korea", "한국 2nd Tier-1",
+         "국내 쇼크업소버 2번째 공급사. 가격 우위. 고성능·신기술 실적 제한적.",
+         ACCENT, WHITE),
         ("TENNECO", "Tenneco (Monroe)",
          "USA", "CES Business Hyundai",
-         "2-valve MacPherson·Double Wishbone 대응. 가격 합리적. 현대 고성능 실적 확보 필요.",
+         "2-valve MacPherson·Double Wishbone 대응. 가격 합리. 고성능 실적 확보 필요.",
          LIME, TEAL_DEEP),
     ]
+    # 3 columns layout (2 rows: 3 + 2)
     y0 = Inches(1.85)
-    card_h = Inches(2.55)
-    card_w = Inches(6.1)
+    card_h = Inches(2.5)
+    card_w = Inches(4.05)
     for i, (en, full, country, tier, desc, bg, textc) in enumerate(comps):
-        col = i % 2
-        row = i // 2
-        x = Inches(0.5) + (card_w + Inches(0.1)) * col
+        col = i % 3
+        row = i // 3
+        x = Inches(0.5) + (card_w + Inches(0.12)) * col
         y = y0 + (card_h + Inches(0.12)) * row
         # card
         add_rect(s, x, y, card_w, card_h, fill=BG_LIGHT)
@@ -1134,10 +1540,13 @@ def slide_competitor_matrix():
          "2-valve 등 신기술 부재 / 신규 차종 개발 대응 한계"],
         ["ZF",      "○", "○", "○",
          "고성능 라인 인지도 최상 · 개발 대응력 우수",
-         "상대적으로 높은 가격 · Air Shock + ECS 조합 제품 부재"],
+         "상대적으로 높은 가격 · Air Shock + ECS 조합 부재"],
         ["Bilstein","○", "✕", "○",
          "고성능 · 프리미엄 브랜드 이미지",
          "상대적으로 높은 가격 · 2-valve MacPherson 부재"],
+        ["S&T",     "○", "○", "△",
+         "국내 2nd 벤더 · 가격 우위",
+         "고성능·신기술 개발 실적 제한적"],
         ["Tenneco", "○", "✕", "✕",
          "가격 합리성 (vs ZF/Bilstein) · 2025.4 유럽 Golf 시승 호평",
          "현대 고성능 프로젝트 개발 실적 없음"],
@@ -1146,9 +1555,9 @@ def slide_competitor_matrix():
                      data, col_widths=[1.3, 1.0, 1.0, 1.0, 4.0, 4.0],
                      font_size=10, header_size=11,
                      first_col_fill=TEAL_DEEP, first_col_color=WHITE)
-    # highlight Tenneco row
+    # highlight Tenneco row (last = row 5)
     try:
-        last_row = tbl.rows[4]
+        last_row = tbl.rows[5]
         for c in last_row.cells:
             c.fill.solid()
             c.fill.fore_color.rgb = RGBColor(0xFF, 0xF8, 0xDD)
@@ -1247,42 +1656,95 @@ def slide_genesis_ecs():
 def slide_na_plants():
     s = add_slide()
     add_top_bar(s, 5, "경쟁사 비교 내용",
-                "5-5.  북미 경쟁사 Plant 분포")
+                "5-5.  북미 경쟁사 Plant 분포  |  ZF · Mando · S&T")
 
-    # placeholder map on left
-    add_placeholder(s, Inches(0.5), Inches(1.8), Inches(7.0), Inches(4.8),
-                    label="북미 지도 이미지 삽입 자리\n(ZF · Mando 주요 공장 위치 표시)")
+    # === LEFT: North America map with markers ===
+    map_x = Inches(0.4)
+    map_y = Inches(1.75)
+    map_w = Inches(7.2)
+    map_h = Inches(5.1)
+    add_na_map(s, map_x, map_y, map_w, map_h)
 
-    # Table on right
-    add_rect(s, Inches(7.7), Inches(1.8), Inches(5.1), Inches(0.5),
-             fill=TEAL_DEEP)
-    add_text(s, Inches(7.9), Inches(1.8), Inches(5), Inches(0.5),
-             "주요 북미 거점 (ZF · Mando)",
-             size=13, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
-
-    plants = [
-        ("ZF", "Detroit, MI (USA)", "Powertrain/Chassis HQ"),
-        ("ZF", "Gainesville, GA",   "Chassis / Suspension"),
-        ("ZF", "Mexico Cluster",    "Arteaga / Juarez"),
-        ("Mando","Opelika, AL",     "Shock Absorber Plant"),
-        ("Mando","Monterrey, MX",   "Arteaga — Shock Absorber"),
-        ("Tenneco","Michigan, USA", "R&D + HQ (참고)"),
+    # Plants on NA map: (name, brand, rel_x, rel_y, color)
+    # positions are rough normalized coords within the map box
+    na_plants = [
+        ("ZF — Detroit, MI",       "ZF",    0.56, 0.42, TEAL_DEEP),
+        ("ZF — Gainesville, GA",   "ZF",    0.60, 0.58, TEAL_DEEP),
+        ("Mando — Opelika, AL",    "Mando", 0.55, 0.60, TEAL),
+        ("Mando — Monterrey, MX",  "Mando", 0.40, 0.82, TEAL),
+        ("ZF — Arteaga, MX",       "ZF",    0.38, 0.80, TEAL_DEEP),
+        ("S&T — Michigan, USA",    "S&T",   0.52, 0.44, ACCENT),
+        ("Tenneco — Michigan, USA","Tenneco",0.54, 0.46, LIME),
     ]
-    y = Inches(2.45)
-    for i, (brand, loc, role) in enumerate(plants):
-        yy = y + Inches(0.55*i)
-        # brand tag
-        add_rect(s, Inches(7.7), yy, Inches(1.0), Inches(0.45),
-                 fill=(LIME if brand == "Tenneco" else TEAL))
-        add_text(s, Inches(7.7), yy, Inches(1.0), Inches(0.45),
-                 brand, size=11, bold=True,
-                 color=(TEAL_DEEP if brand == "Tenneco" else WHITE),
+    # draw pins
+    for i, (name, brand, rx, ry, color) in enumerate(na_plants):
+        cx = map_x + Emu(int(map_w * rx))
+        cy = map_y + Emu(int(map_h * ry))
+        # pin circle
+        pin = s.shapes.add_shape(MSO_SHAPE.OVAL,
+                                 cx - Inches(0.14), cy - Inches(0.14),
+                                 Inches(0.28), Inches(0.28))
+        pin.shadow.inherit = False
+        pin.fill.solid()
+        pin.fill.fore_color.rgb = color
+        pin.line.color.rgb = WHITE
+        pin.line.width = Pt(1.5)
+        add_text(s, cx - Inches(0.14), cy - Inches(0.14),
+                 Inches(0.28), Inches(0.28),
+                 str(i+1), size=8, bold=True,
+                 color=(TEAL_DEEP if color == LIME else WHITE),
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
                  font=FONT_EN)
-        add_text(s, Inches(8.8), yy, Inches(4.0), Inches(0.22),
-                 loc, size=11, bold=True, color=TEAL_DEEP)
-        add_text(s, Inches(8.8), yy + Inches(0.22), Inches(4.0), Inches(0.22),
-                 role, size=10, color=TEXT_MID)
+
+    # === RIGHT: Legend list ===
+    add_rect(s, Inches(7.9), Inches(1.75), Inches(5.1), Inches(0.45),
+             fill=TEAL_DEEP)
+    add_text(s, Inches(7.9), Inches(1.75), Inches(5.1), Inches(0.45),
+             "주요 북미 거점 (#번호 = 지도 마커)",
+             size=12, bold=True, color=LIME,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    # legend rows
+    legend_plants = [
+        ("1", "ZF",     "Detroit, MI (USA)",   "Powertrain / Chassis HQ", TEAL_DEEP),
+        ("2", "ZF",     "Gainesville, GA",     "Chassis / Suspension",    TEAL_DEEP),
+        ("3", "Mando",  "Opelika, AL",         "Shock Absorber Plant",    TEAL),
+        ("4", "Mando",  "Monterrey, MX (Arteaga)","Shock Absorber",       TEAL),
+        ("5", "ZF",     "Arteaga, MX",         "Cluster Plant",           TEAL_DEEP),
+        ("6", "S&T",    "Michigan, USA",       "Chassis Component",       ACCENT),
+        ("7", "Tenneco","Michigan, USA",       "R&D + HQ (참고)",         LIME),
+    ]
+    y = Inches(2.3)
+    for i, (num, brand, loc, role, color) in enumerate(legend_plants):
+        yy = y + Inches(0.57*i)
+        # number pin
+        pin = s.shapes.add_shape(MSO_SHAPE.OVAL,
+                                 Inches(7.95), yy + Inches(0.09),
+                                 Inches(0.32), Inches(0.32))
+        pin.shadow.inherit = False
+        pin.fill.solid()
+        pin.fill.fore_color.rgb = color
+        pin.line.fill.background()
+        add_text(s, Inches(7.95), yy + Inches(0.09), Inches(0.32),
+                 Inches(0.32),
+                 num, size=10, bold=True,
+                 color=(TEAL_DEEP if color == LIME else WHITE),
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                 font=FONT_EN)
+        # brand
+        add_rect(s, Inches(8.38), yy + Inches(0.09), Inches(0.95),
+                 Inches(0.32), fill=color)
+        add_text(s, Inches(8.38), yy + Inches(0.09), Inches(0.95),
+                 Inches(0.32),
+                 brand, size=9, bold=True,
+                 color=(TEAL_DEEP if color == LIME else WHITE),
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                 font=FONT_EN)
+        # loc
+        add_text(s, Inches(9.4), yy, Inches(3.5), Inches(0.25),
+                 loc, size=10, bold=True, color=TEAL_DEEP)
+        add_text(s, Inches(9.4), yy + Inches(0.25), Inches(3.5),
+                 Inches(0.25),
+                 role, size=9, color=TEXT_MID, italic=True)
 
     add_footer(s, 24)
 
@@ -1291,46 +1753,90 @@ def slide_na_plants():
 def slide_sa_plants():
     s = add_slide()
     add_top_bar(s, 5, "경쟁사 비교 내용",
-                "5-6.  남미 경쟁사 Plant 분포")
+                "5-6.  남미 경쟁사 Plant 분포  |  ZF · Mando · S&T")
 
-    add_placeholder(s, Inches(0.5), Inches(1.8), Inches(7.0), Inches(4.8),
-                    label="남미 (Central & South America) 지도 이미지 삽입 자리\n" +
-                          "(ZF Brazil · Mando Brazil · ZF Argentina 등)")
+    # === LEFT: South America map with markers ===
+    map_x = Inches(0.4)
+    map_y = Inches(1.75)
+    map_w = Inches(7.2)
+    map_h = Inches(5.1)
+    add_sa_map(s, map_x, map_y, map_w, map_h)
 
-    add_rect(s, Inches(7.7), Inches(1.8), Inches(5.1), Inches(0.5),
-             fill=TEAL_DEEP)
-    add_text(s, Inches(7.9), Inches(1.8), Inches(5), Inches(0.5),
-             "주요 남미 거점",
-             size=13, bold=True, color=WHITE, anchor=MSO_ANCHOR.MIDDLE)
-
-    plants = [
-        ("ZF",    "Brazil — São Bernardo",   "HQ / Production"),
-        ("ZF",    "Sorocaba / Araraquara",   "Chassis / 전장"),
-        ("Mando", "Limeira, Brazil",         "Shock Absorber"),
-        ("ZF",    "San Francisco, Argentina","Chassis / Driveline"),
-        ("참고",   "Tenneco Brazil Cotia",    "현지 거점 (참고)"),
+    sa_plants = [
+        ("ZF — São Bernardo, BR",  "ZF",    0.68, 0.32, TEAL_DEEP),
+        ("ZF — Sorocaba, BR",      "ZF",    0.62, 0.38, TEAL_DEEP),
+        ("Mando — Limeira, BR",    "Mando", 0.66, 0.36, TEAL),
+        ("ZF — Arg. San Francisco","ZF",    0.36, 0.75, TEAL_DEEP),
+        ("S&T — Curitiba, BR",     "S&T",   0.58, 0.48, ACCENT),
+        ("Tenneco — Cotia, BR",    "Tenneco",0.62, 0.30, LIME),
     ]
-    y = Inches(2.45)
-    for i, (brand, loc, role) in enumerate(plants):
-        yy = y + Inches(0.55*i)
-        add_rect(s, Inches(7.7), yy, Inches(1.0), Inches(0.45),
-                 fill=(LIME if brand == "참고" else TEAL))
-        add_text(s, Inches(7.7), yy, Inches(1.0), Inches(0.45),
-                 brand, size=11, bold=True,
-                 color=(TEAL_DEEP if brand == "참고" else WHITE),
+    for i, (name, brand, rx, ry, color) in enumerate(sa_plants):
+        cx = map_x + Emu(int(map_w * rx))
+        cy = map_y + Emu(int(map_h * ry))
+        pin = s.shapes.add_shape(MSO_SHAPE.OVAL,
+                                 cx - Inches(0.14), cy - Inches(0.14),
+                                 Inches(0.28), Inches(0.28))
+        pin.shadow.inherit = False
+        pin.fill.solid()
+        pin.fill.fore_color.rgb = color
+        pin.line.color.rgb = WHITE
+        pin.line.width = Pt(1.5)
+        add_text(s, cx - Inches(0.14), cy - Inches(0.14),
+                 Inches(0.28), Inches(0.28),
+                 str(i+1), size=8, bold=True,
+                 color=(TEAL_DEEP if color == LIME else WHITE),
                  align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
                  font=FONT_EN)
-        add_text(s, Inches(8.8), yy, Inches(4.0), Inches(0.22),
-                 loc, size=11, bold=True, color=TEAL_DEEP)
-        add_text(s, Inches(8.8), yy + Inches(0.22), Inches(4.0), Inches(0.22),
-                 role, size=10, color=TEXT_MID)
+
+    # === RIGHT: Legend ===
+    add_rect(s, Inches(7.9), Inches(1.75), Inches(5.1), Inches(0.45),
+             fill=TEAL_DEEP)
+    add_text(s, Inches(7.9), Inches(1.75), Inches(5.1), Inches(0.45),
+             "주요 남미 거점 (#번호 = 지도 마커)",
+             size=12, bold=True, color=LIME,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+
+    legend_plants = [
+        ("1", "ZF",     "São Bernardo, Brazil", "HQ / Production",        TEAL_DEEP),
+        ("2", "ZF",     "Sorocaba, Brazil",     "Chassis / 전장",          TEAL_DEEP),
+        ("3", "Mando",  "Limeira, Brazil",      "Shock Absorber",          TEAL),
+        ("4", "ZF",     "San Francisco, ARG",   "Chassis / Driveline",     TEAL_DEEP),
+        ("5", "S&T",    "Curitiba, Brazil",     "Chassis Component",       ACCENT),
+        ("6", "Tenneco","Cotia, Brazil",        "현지 거점 (참고)",        LIME),
+    ]
+    y = Inches(2.3)
+    for i, (num, brand, loc, role, color) in enumerate(legend_plants):
+        yy = y + Inches(0.57*i)
+        pin = s.shapes.add_shape(MSO_SHAPE.OVAL,
+                                 Inches(7.95), yy + Inches(0.09),
+                                 Inches(0.32), Inches(0.32))
+        pin.shadow.inherit = False
+        pin.fill.solid()
+        pin.fill.fore_color.rgb = color
+        pin.line.fill.background()
+        add_text(s, Inches(7.95), yy + Inches(0.09), Inches(0.32),
+                 Inches(0.32),
+                 num, size=10, bold=True,
+                 color=(TEAL_DEEP if color == LIME else WHITE),
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                 font=FONT_EN)
+        add_rect(s, Inches(8.38), yy + Inches(0.09), Inches(0.95),
+                 Inches(0.32), fill=color)
+        add_text(s, Inches(8.38), yy + Inches(0.09), Inches(0.95),
+                 Inches(0.32),
+                 brand, size=9, bold=True,
+                 color=(TEAL_DEEP if color == LIME else WHITE),
+                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE,
+                 font=FONT_EN)
+        add_text(s, Inches(9.4), yy, Inches(3.5), Inches(0.25),
+                 loc, size=10, bold=True, color=TEAL_DEEP)
+        add_text(s, Inches(9.4), yy + Inches(0.25), Inches(3.5),
+                 Inches(0.25),
+                 role, size=9, color=TEXT_MID, italic=True)
 
     # bottom note
-    add_rect(s, Inches(0.5), Inches(6.8), Inches(12.3), Inches(0.25),
-             fill=BG_SOFT)
-    add_text(s, Inches(0.7), Inches(6.78), Inches(12), Inches(0.3),
-             "※ 실제 발표 시 각 Plant 아이콘 표시된 남미 지도 이미지 삽입 필요",
-             size=9, color=TEXT_MID, italic=True, anchor=MSO_ANCHOR.MIDDLE)
+    add_rect(s, Inches(0.5), Inches(6.9), Inches(12.3), Inches(0.15),
+             fill=LIME)
     add_footer(s, 25)
 
 
