@@ -603,6 +603,61 @@ body {
     font-size: 16px;
 }
 
+/* ===== 할일 길게 누르기 → 슬라이드 액션 ===== */
+.cl-swipe-wrap {
+    position: relative;
+    overflow: hidden;
+    background: white;
+}
+.cl-swipe-actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 160px;
+    display: flex;
+    align-items: stretch;
+}
+.cl-swipe-actions button {
+    flex: 1;
+    border: none;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    font-family: inherit;
+    letter-spacing: 0.3px;
+}
+.cl-swipe-actions button .cl-btn-icon {
+    font-size: 18px;
+    line-height: 1;
+}
+.cl-btn-postpone { background: #F39C12; }
+.cl-btn-postpone:active { background: #D68910; }
+.cl-btn-delete { background: #E74C3C; }
+.cl-btn-delete:active { background: #C0392B; }
+.today-cl-item.cl-swipe-content {
+    position: relative;
+    z-index: 1;
+    background: white;
+    transition: transform 0.25s ease, background 0.15s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+.cl-swipe-wrap.open .cl-swipe-content {
+    transform: translateX(-160px);
+}
+.cl-swipe-wrap.pressing .cl-swipe-content {
+    background: #f3f7fc;
+}
+
 /* ===== 오늘의 명언 ===== */
 .daily-quote-box {
     margin-top: auto;
@@ -2904,15 +2959,26 @@ async function toggleChecklistItem(clId, idx, checked) {
 }
 
 function openNewChecklist() {
-    $('checklist-modal-title').textContent = '할일 추가';
     $('checklist-form').reset();
-    $('checklist-id').value = '';
     const dateToUse = selectedCalDate || formatDate(new Date());
     $('checklist-title').value = dateToUse;
     initClCalendar(dateToUse);
     $('cl-calendar').classList.add('hidden');
     $('checklist-items').innerHTML = '';
-    $('delete-checklist-btn').classList.add('hidden');
+
+    // 같은 날짜의 기존 할일을 불러와서 편집 가능하게 보여주기
+    const existing = checklists.find(c => c.title === dateToUse);
+    if (existing) {
+        $('checklist-modal-title').textContent = '할일 편집';
+        $('checklist-id').value = existing.id;
+        (existing.items || []).forEach(item => addChecklistItemRow(item.text, item.checked));
+        $('delete-checklist-btn').classList.remove('hidden');
+    } else {
+        $('checklist-modal-title').textContent = '할일 추가';
+        $('checklist-id').value = '';
+        $('delete-checklist-btn').classList.add('hidden');
+    }
+    // 새 항목을 추가할 수 있는 빈 행을 맨 아래에 하나 추가
     addChecklistItemRow();
     $('checklist-modal').classList.remove('hidden');
 }
@@ -3598,13 +3664,154 @@ function renderTodayChecklist(dateStr) {
     const dateTitle = `${d.getMonth()+1}월 ${d.getDate()}일 (${dayNames[d.getDay()]})`;
 
     const itemsHtml = allItems.map((item, flatIdx) => `
-        <div class="today-cl-item" data-flat-idx="${flatIdx}" data-cl-id="${item.clId}" data-item-idx="${item.idx}">
-            <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleChecklistItem('${item.clId}', ${item.idx}, this.checked)">
-            <span class="${item.checked ? 'checked-text' : ''}">${escapeHtml(item.text)}</span>
+        <div class="cl-swipe-wrap" data-cl-id="${item.clId}" data-item-idx="${item.idx}">
+            <div class="cl-swipe-actions">
+                <button type="button" class="cl-btn-postpone" data-action="postpone">
+                    <span class="cl-btn-icon">⏭</span><span>미루기</span>
+                </button>
+                <button type="button" class="cl-btn-delete" data-action="delete">
+                    <span class="cl-btn-icon">🗑</span><span>삭제</span>
+                </button>
+            </div>
+            <div class="today-cl-item cl-swipe-content" data-flat-idx="${flatIdx}">
+                <input type="checkbox" ${item.checked ? 'checked' : ''}>
+                <span class="${item.checked ? 'checked-text' : ''}">${escapeHtml(item.text)}</span>
+            </div>
         </div>
     `).join('');
 
     list.innerHTML = itemsHtml;
+    initChecklistSwipe(list);
+}
+
+// ===== 할일 길게 누르기 → 슬라이드 액션 =====
+function initChecklistSwipe(listEl) {
+    listEl.querySelectorAll('.cl-swipe-wrap').forEach(wrap => {
+        const content = wrap.querySelector('.cl-swipe-content');
+        const checkbox = content.querySelector('input[type="checkbox"]');
+        const clId = wrap.dataset.clId;
+        const itemIdx = parseInt(wrap.dataset.itemIdx);
+
+        let pressTimer = null;
+        let startX = 0, startY = 0;
+        let moved = false;
+
+        const cancelPress = () => {
+            if (pressTimer) { clearTimeout(pressTimer); pressTimer = null; }
+            wrap.classList.remove('pressing');
+        };
+
+        const openWrap = () => {
+            listEl.querySelectorAll('.cl-swipe-wrap.open').forEach(w => {
+                if (w !== wrap) w.classList.remove('open');
+            });
+            wrap.classList.add('open');
+            wrap.classList.remove('pressing');
+            if (navigator.vibrate) navigator.vibrate(25);
+        };
+
+        const onStart = (x, y) => {
+            if (wrap.classList.contains('open')) return;
+            startX = x; startY = y; moved = false;
+            wrap.classList.add('pressing');
+            pressTimer = setTimeout(() => {
+                pressTimer = null;
+                if (!moved) openWrap();
+                else wrap.classList.remove('pressing');
+            }, 500);
+        };
+
+        const onMove = (x, y) => {
+            if (Math.abs(x - startX) > 8 || Math.abs(y - startY) > 8) {
+                moved = true;
+                cancelPress();
+            }
+        };
+
+        content.addEventListener('touchstart', (e) => {
+            if (e.target === checkbox) return;
+            onStart(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive: true });
+        content.addEventListener('touchmove', (e) => {
+            onMove(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive: true });
+        content.addEventListener('touchend', cancelPress);
+        content.addEventListener('touchcancel', cancelPress);
+
+        content.addEventListener('mousedown', (e) => {
+            if (e.button !== 0 || e.target === checkbox) return;
+            onStart(e.clientX, e.clientY);
+        });
+        content.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
+        content.addEventListener('mouseup', cancelPress);
+        content.addEventListener('mouseleave', cancelPress);
+
+        if (checkbox) {
+            checkbox.addEventListener('change', async (e) => {
+                await toggleChecklistItem(clId, itemIdx, e.target.checked);
+            });
+        }
+
+        wrap.querySelector('.cl-btn-delete').addEventListener('click', async (e) => {
+            e.stopPropagation();
+            wrap.classList.remove('open');
+            await deleteChecklistItem(clId, itemIdx);
+        });
+        wrap.querySelector('.cl-btn-postpone').addEventListener('click', async (e) => {
+            e.stopPropagation();
+            wrap.classList.remove('open');
+            await postponeChecklistItem(clId, itemIdx);
+        });
+    });
+}
+
+// 외부 클릭/탭 시 열린 슬라이드 닫기
+if (!window.__clSwipeOutsideBound) {
+    window.__clSwipeOutsideBound = true;
+    const closeOutside = (e) => {
+        const list = document.getElementById('today-checklist-list');
+        if (!list) return;
+        list.querySelectorAll('.cl-swipe-wrap.open').forEach(wrap => {
+            if (!wrap.contains(e.target)) wrap.classList.remove('open');
+        });
+    };
+    document.addEventListener('click', closeOutside);
+    document.addEventListener('touchstart', closeOutside, { passive: true });
+}
+
+// ===== 할일 다음날로 미루기 =====
+async function postponeChecklistItem(clId, idx) {
+    const cl = checklists.find(c => c.id === clId);
+    if (!cl || !cl.items || !cl.items[idx]) return;
+    const item = cl.items[idx];
+
+    const curDate = new Date(cl.title + 'T00:00:00');
+    curDate.setDate(curDate.getDate() + 1);
+    const nextDateStr = formatDate(curDate);
+
+    const remaining = cl.items.filter((_, i) => i !== idx);
+    const ref = db.collection('users').doc(currentUser.uid).collection('checklists');
+    const next = checklists.find(c => c.title === nextDateStr);
+    const postponed = { text: item.text, checked: false };
+    const updatedAt = firebase.firestore.FieldValue.serverTimestamp();
+
+    if (next) {
+        const merged = [...(next.items || []), postponed];
+        await ref.doc(next.id).update({ items: merged, updatedAt });
+    } else {
+        await ref.add({
+            title: nextDateStr,
+            items: [postponed],
+            createdAt: updatedAt,
+            updatedAt
+        });
+    }
+
+    if (remaining.length === 0) {
+        await ref.doc(clId).delete();
+    } else {
+        await ref.doc(clId).update({ items: remaining, updatedAt });
+    }
 }
 
 function toggleChecklistCard(dateStr) {
