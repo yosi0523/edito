@@ -2112,8 +2112,40 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 6px;
     margin-bottom: 10px;
+    flex-wrap: wrap;
 }
+.blog-gen-wrap { padding: 4px 0; }
+.blog-gen-section { margin-bottom: 14px; }
+.blog-gen-label { font-size: 11px; font-weight: 700; color: #888; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 6px; }
+.blog-gen-input { width: 100%; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 14px; box-sizing: border-box; font-family: inherit; }
+.blog-gen-input:focus { outline: none; border-color: var(--primary); }
+.blog-gen-textarea { width: 100%; height: 160px; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 13px; box-sizing: border-box; resize: vertical; font-family: inherit; line-height: 1.5; }
+.blog-gen-textarea:focus { outline: none; border-color: var(--primary); }
+.blog-gen-row { display: flex; gap: 8px; }
+.blog-gen-row .blog-gen-input { flex: 1; }
+.blog-gen-divider { text-align: center; color: #bbb; font-size: 12px; margin: 10px 0; }
+.blog-gen-action-btn { width: 100%; padding: 13px; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; transition: opacity 0.2s; }
+.blog-gen-action-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.blog-gen-fetch-btn { background: #f0f4ff; color: var(--primary); border: 1.5px solid var(--primary); }
+.blog-gen-main-btn { background: var(--primary); color: #fff; margin-top: 4px; }
+.blog-gen-save-sm { padding: 7px 14px; background: #fff; border: 1.5px solid var(--primary); color: var(--primary); border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.blog-gen-status { text-align: center; font-size: 13px; color: #888; padding: 6px 0; min-height: 24px; }
+.blog-gen-q-card { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.blog-gen-q-text { font-size: 14px; font-weight: 600; line-height: 1.5; margin-bottom: 8px; }
+.blog-gen-q-opt { font-size: 13px; color: #555; padding: 3px 0; line-height: 1.5; }
+.blog-gen-q-ans { font-size: 12px; color: var(--primary); font-weight: 700; margin-top: 6px; }
+.blog-gen-save-all { width: 100%; padding: 13px; background: #27ae60; color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 8px; }
+.blog-saved-section { margin-top: 20px; padding-top: 16px; border-top: 1.5px solid var(--border); }
+.blog-saved-title { font-size: 13px; font-weight: 700; color: #888; margin-bottom: 10px; }
+.blog-saved-item { background: #fff; border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); display: flex; justify-content: space-between; align-items: center; }
+.blog-saved-info { font-size: 13px; font-weight: 600; }
+.blog-saved-meta { font-size: 11px; color: #aaa; margin-top: 2px; }
+.blog-saved-del { background: none; border: none; color: #ccc; font-size: 18px; cursor: pointer; padding: 4px; }
+.blog-quiz-btn { width: 100%; padding: 12px; background: var(--primary); color: #fff; border: none; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+.blog-gen-ai-btn { padding: 7px 12px; background: #fff; border: 1.5px solid #e0e0e0; border-radius: 8px; font-size: 12px; color: #666; cursor: pointer; white-space: nowrap; }
+.blog-gen-ai-btn:hover { border-color: var(--primary); color: var(--primary); }
 
 .quiz-history-btn {
     display: flex;
@@ -4481,6 +4513,7 @@ function qGetAllHistoryKeys() {
 }
 
 function renderQuizPage() {
+    quizShowBlogGen = false;
     const content = $('quiz-content');
     if (!content) return;
     const histBar = $('quiz-history-bar');
@@ -4521,9 +4554,12 @@ function renderQuizPage() {
     const hKeys = qGetAllHistoryKeys();
     const todayKey = qDateKey();
     const pastKeys = hKeys.filter(k => k !== todayKey);
-    histBar.innerHTML = (pastKeys.length > 0 ? '<button class="quiz-history-btn" id="quiz-show-hist">이전 문항 다시보기</button>' : '<span></span>') +
-        '<span class="quiz-stat-bar">총 ' + QB.length + '문항 중 ' + totalRounds + '회차</span>';
+    histBar.innerHTML =
+        (pastKeys.length > 0 ? '<button class="quiz-history-btn" id="quiz-show-hist">이전 문항</button>' : '<span></span>') +
+        '<span class="quiz-stat-bar">총 ' + QB.length + '문항 중 ' + totalRounds + '회차</span>' +
+        '<button class="quiz-history-btn" id="quiz-blog-gen-btn">✨ AI 문제</button>';
     if ($('quiz-show-hist')) $('quiz-show-hist').onclick = () => { quizShowHistory = true; renderQuizPage(); };
+    $('quiz-blog-gen-btn').onclick = () => { quizShowBlogGen = true; renderBlogGenPage(); };
 
     // 상태
     const dateLabel = qDateLabel(dateKey);
@@ -4640,6 +4676,244 @@ function renderQuizPage() {
         renderQuizPage();
         content.scrollTop = 0;
     });
+}
+
+// ===== 블로그 AI 문제 생성 =====
+let quizShowBlogGen = false;
+let blogGenQuestions = [];
+
+function renderBlogGenPage() {
+    const content = $('quiz-content');
+    if (!content) return;
+    const apiKey = localStorage.getItem('edito_api_key') || '';
+    const savedSets = JSON.parse(localStorage.getItem('quiz2_blog_sets') || '[]');
+
+    let savedHtml = '';
+    if (savedSets.length > 0) {
+        savedHtml = '<div class="blog-saved-section"><div class="blog-saved-title">저장된 문제 세트 (' + savedSets.length + '개)</div>';
+        savedSets.forEach((s, i) => {
+            savedHtml += '<div class="blog-saved-item"><div><div class="blog-saved-info">' + s.title + '</div><div class="blog-saved-meta">' + s.date + ' · ' + s.questions.length + '문항</div></div><button class="blog-saved-del" data-idx="' + i + '">×</button></div>';
+        });
+        savedHtml += '<button class="blog-quiz-btn" id="blog-start-quiz-btn">저장된 문제로 퀴즈 시작</button></div>';
+    }
+
+    content.innerHTML = `
+<div class="blog-gen-wrap">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+        <button class="quiz-back-btn" id="blog-back-btn">< 퀴즈로</button>
+        <span style="font-size:16px;font-weight:700;color:var(--primary)">✨ AI 문제 생성</span>
+    </div>
+
+    <div class="blog-gen-section">
+        <div class="blog-gen-label">Claude API 키</div>
+        <div class="blog-gen-row">
+            <input type="password" class="blog-gen-input" id="blog-api-key" placeholder="sk-ant-..." value="${apiKey.replace(/"/g,'&quot;')}">
+            <button class="blog-gen-save-sm" id="blog-api-save">저장</button>
+        </div>
+    </div>
+
+    <div class="blog-gen-section">
+        <div class="blog-gen-label">네이버 블로그 URL</div>
+        <div class="blog-gen-row">
+            <input type="url" class="blog-gen-input" id="blog-url-input" placeholder="https://blog.naver.com/...">
+            <button class="blog-gen-ai-btn" id="blog-fetch-btn">불러오기</button>
+        </div>
+    </div>
+
+    <div class="blog-gen-divider">— 또는 내용 직접 붙여넣기 —</div>
+
+    <div class="blog-gen-section">
+        <div class="blog-gen-label">블로그 내용</div>
+        <textarea class="blog-gen-textarea" id="blog-text-input" placeholder="블로그 글 내용을 여기에 붙여넣어 주세요..."></textarea>
+    </div>
+
+    <button class="blog-gen-action-btn blog-gen-main-btn" id="blog-gen-btn">✨ 문제 5개 만들기</button>
+    <div class="blog-gen-status" id="blog-gen-status"></div>
+    <div id="blog-gen-result"></div>
+    ${savedHtml}
+</div>`;
+
+    $('blog-back-btn').onclick = () => { quizShowBlogGen = false; renderQuizPage(); };
+
+    $('blog-api-save').onclick = () => {
+        localStorage.setItem('edito_api_key', $('blog-api-key').value.trim());
+        const btn = $('blog-api-save');
+        btn.textContent = '저장됨 ✓'; btn.style.color = '#27ae60';
+        setTimeout(() => { btn.textContent = '저장'; btn.style.color = ''; }, 1800);
+    };
+
+    $('blog-fetch-btn').onclick = async () => {
+        const url = $('blog-url-input').value.trim();
+        if (!url) return;
+        const btn = $('blog-fetch-btn');
+        btn.disabled = true; btn.textContent = '...';
+        $('blog-gen-status').textContent = '블로그 내용을 불러오는 중...';
+        try {
+            const text = await fetchNaverBlog(url);
+            $('blog-text-input').value = text;
+            $('blog-gen-status').innerHTML = '<span style="color:#27ae60">✓ 불러오기 성공! 아래에서 확인하고 문제를 만들어보세요.</span>';
+        } catch(e) {
+            $('blog-gen-status').innerHTML = '<span style="color:#e74c3c">불러오기 실패. 내용을 직접 붙여넣어 주세요.</span>';
+        }
+        btn.disabled = false; btn.textContent = '불러오기';
+    };
+
+    $('blog-gen-btn').onclick = async () => {
+        const key = localStorage.getItem('edito_api_key') || '';
+        if (!key) { $('blog-gen-status').innerHTML = '<span style="color:#e74c3c">API 키를 입력하고 저장해주세요.</span>'; return; }
+        const text = $('blog-text-input').value.trim();
+        if (!text) { $('blog-gen-status').innerHTML = '<span style="color:#e74c3c">블로그 내용을 입력해주세요.</span>'; return; }
+        const btn = $('blog-gen-btn');
+        btn.disabled = true;
+        $('blog-gen-status').textContent = '⏳ Claude가 문제를 만들고 있어요...';
+        $('blog-gen-result').innerHTML = '';
+        try {
+            const qs = await callClaudeForQuestions(text, key);
+            blogGenQuestions = qs;
+            renderBlogGenResult(qs);
+            $('blog-gen-status').textContent = '';
+        } catch(e) {
+            $('blog-gen-status').innerHTML = '<span style="color:#e74c3c">오류: ' + e.message + '</span>';
+        }
+        btn.disabled = false;
+    };
+
+    if ($('blog-start-quiz-btn')) {
+        $('blog-start-quiz-btn').onclick = () => startBlogQuiz(savedSets.flatMap(s => s.questions));
+    }
+    content.querySelectorAll('.blog-saved-del').forEach(btn => {
+        btn.onclick = () => {
+            const idx = parseInt(btn.dataset.idx);
+            const sets = JSON.parse(localStorage.getItem('quiz2_blog_sets') || '[]');
+            sets.splice(idx, 1);
+            localStorage.setItem('quiz2_blog_sets', JSON.stringify(sets));
+            renderBlogGenPage();
+        };
+    });
+}
+
+async function fetchNaverBlog(url) {
+    const mobileUrl = url.replace('://blog.naver.com', '://m.blog.naver.com');
+    const proxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(mobileUrl);
+    const res = await fetch(proxy, { signal: AbortSignal.timeout(10000) });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const html = await res.text();
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const selectors = ['.se-main-container', '#postViewArea', '.post-view', '.blog-post', 'article'];
+    for (const sel of selectors) {
+        const el = doc.querySelector(sel);
+        if (el && (el.textContent || '').trim().length > 100) return el.textContent.trim().slice(0, 4000);
+    }
+    const body = (doc.body.textContent || '').trim();
+    if (body.length > 200) return body.slice(0, 4000);
+    throw new Error('본문을 찾을 수 없어요');
+}
+
+async function callClaudeForQuestions(content, apiKey) {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+            'x-api-key': apiKey,
+            'anthropic-version': '2023-06-01',
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            model: 'claude-haiku-4-5-20251001',
+            max_tokens: 2048,
+            system: '당신은 제빵 이론 전문가입니다. 주어진 내용을 바탕으로 객관식 5문항을 만들어주세요.\n반드시 JSON 배열만 응답하세요 (다른 텍스트 없이):\n[{"q":"질문","o":["①보기1","②보기2","③보기3","④보기4"],"a":정답인덱스(0~3),"e":"해설"}]\n문제는 제빵 시험 스타일로 한국어로 작성하고, 내용에서 중요한 개념을 다루어 주세요.',
+            messages: [{ role: 'user', content: '다음 내용으로 문제를 만들어주세요:\n\n' + content }]
+        })
+    });
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error?.message || ('API 오류 ' + res.status));
+    }
+    const data = await res.json();
+    const text = data.content[0]?.text || '';
+    const match = text.match(/\[[\s\S]*\]/);
+    if (!match) throw new Error('응답 파싱 실패');
+    return JSON.parse(match[0]);
+}
+
+function renderBlogGenResult(questions) {
+    const labels = ['①','②','③','④'];
+    let html = '<div style="margin-top:16px;">';
+    questions.forEach((q, i) => {
+        html += '<div class="blog-gen-q-card">';
+        html += '<div class="quiz-q-number">문제 ' + (i+1) + '</div>';
+        html += '<div class="blog-gen-q-text">' + q.q + '</div>';
+        q.o.forEach(opt => { html += '<div class="blog-gen-q-opt">' + opt + '</div>'; });
+        html += '<div class="blog-gen-q-ans">정답: ' + labels[q.a] + '</div>';
+        html += '<div class="quiz-explanation" style="margin-top:6px;">' + q.e + '</div>';
+        html += '</div>';
+    });
+    html += '<div style="display:flex;gap:8px;margin-top:4px;">';
+    html += '<button class="blog-gen-action-btn blog-gen-fetch-btn" style="flex:1;font-size:13px;padding:11px;" id="blog-quiz-now-btn">바로 퀴즈 풀기</button>';
+    html += '<button class="blog-gen-save-all" style="flex:1;font-size:13px;padding:11px;" id="blog-save-set-btn">💾 저장하기</button>';
+    html += '</div></div>';
+    $('blog-gen-result').innerHTML = html;
+
+    $('blog-quiz-now-btn').onclick = () => startBlogQuiz(blogGenQuestions);
+    $('blog-save-set-btn').onclick = () => {
+        const sets = JSON.parse(localStorage.getItem('quiz2_blog_sets') || '[]');
+        const url = ($('blog-url-input') ? $('blog-url-input').value.trim() : '') || '블로그 문제';
+        const title = url.replace(/https?:\/\//, '').split('/').slice(0,3).join('/') || '블로그 문제';
+        sets.push({ title, date: new Date().toLocaleDateString('ko-KR'), questions: blogGenQuestions });
+        localStorage.setItem('quiz2_blog_sets', JSON.stringify(sets));
+        $('blog-save-set-btn').textContent = '저장됨 ✓';
+        $('blog-save-set-btn').disabled = true;
+    };
+}
+
+function startBlogQuiz(questions) {
+    if (!questions || questions.length === 0) return;
+    const content = $('quiz-content');
+    let currentIdx = 0;
+    const answered = {};
+
+    function render() {
+        const q = questions[currentIdx];
+        const labels = ['①','②','③','④'];
+        let html = '<div style="padding:0;">';
+        html += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">';
+        html += '<button class="quiz-back-btn" id="blog-quiz-back">< 목록으로</button>';
+        html += '<span style="font-size:13px;color:#888;">' + (currentIdx+1) + ' / ' + questions.length + '문항</span></div>';
+        html += '<div class="quiz-question-card">';
+        html += '<div class="quiz-q-number">문제 ' + (currentIdx+1) + '</div>';
+        html += '<div class="quiz-q-text">' + q.q + '</div>';
+        html += '<div class="quiz-options">';
+        const sel = answered[currentIdx];
+        q.o.forEach((opt, oi) => {
+            let cls = 'quiz-option' + (sel !== undefined ? ' disabled' : '');
+            if (sel !== undefined) {
+                if (oi === q.a) cls += ' correct';
+                else if (sel === oi) cls += ' wrong';
+            }
+            html += '<div class="' + cls + '" data-oi="' + oi + '"><span class="quiz-option-num">' + labels[oi] + '</span><span>' + opt + '</span></div>';
+        });
+        html += '</div>';
+        if (sel !== undefined) html += '<div class="quiz-explanation">' + q.e + '</div>';
+        html += '</div>';
+        if (sel !== undefined && currentIdx < questions.length - 1) {
+            html += '<button class="blog-gen-action-btn blog-gen-main-btn" id="blog-quiz-next" style="margin-top:8px;">다음 문제 →</button>';
+        }
+        if (sel !== undefined && currentIdx === questions.length - 1) {
+            let correct = 0;
+            questions.forEach((_, i) => { if (answered[i] === questions[i].a) correct++; });
+            html += '<div class="quiz-result" style="display:block;margin-top:16px;"><div class="quiz-result-score">' + correct + '<span>/' + questions.length + '</span></div><div class="quiz-result-msg">' + (correct === questions.length ? '완벽해요! 🎉' : '잘 했어요! 다시 풀어보세요') + '</div></div>';
+            html += '<button class="blog-gen-action-btn blog-gen-fetch-btn" id="blog-quiz-retry" style="margin-top:8px;">다시 풀기</button>';
+        }
+        html += '</div>';
+        content.innerHTML = html;
+
+        $('blog-quiz-back').onclick = renderBlogGenPage;
+        if ($('blog-quiz-next')) $('blog-quiz-next').onclick = () => { currentIdx++; render(); content.scrollTop = 0; };
+        if ($('blog-quiz-retry')) $('blog-quiz-retry').onclick = () => { Object.keys(answered).forEach(k => delete answered[k]); currentIdx = 0; render(); };
+        content.querySelectorAll('.quiz-option:not(.disabled)').forEach(el => {
+            el.onclick = () => { answered[currentIdx] = parseInt(el.dataset.oi); render(); };
+        });
+    }
+    render();
 }
 
 function renderQuizHistory() {
