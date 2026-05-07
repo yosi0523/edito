@@ -21,7 +21,7 @@ window.addEventListener('scroll', () => {
   document.getElementById('nav')?.classList.toggle('nav--scrolled', window.scrollY > 40);
 });
 
-// Order form (Formspree, with Naver Form fallback)
+// Order form (Formspree, with Kakao/phone fallback when not configured)
 document.getElementById('orderForm')?.addEventListener('submit', async e => {
   const form = e.target;
   e.preventDefault();
@@ -30,6 +30,8 @@ document.getElementById('orderForm')?.addEventListener('submit', async e => {
     if (naverUrl) {
       window.open(naverUrl, '_blank', 'noopener');
       alert('주문은 네이버 폼에서 받고 있어요. 새 창에서 폼을 열었으니 그곳에 다시 작성해 주세요 🙏');
+    } else {
+      alert('주문 폼은 준비 중입니다. 빠른 문의는 카카오톡 채널(@EditO) 또는 010-6238-1934 로 부탁드려요 🍪');
     }
     return;
   }
