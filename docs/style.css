@@ -214,6 +214,16 @@ h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .frow--end{grid-template-columns:1fr auto;align-items:center;margin-top:8px}
 .frow--end small{color:rgba(255,255,255,.38);font-size:.82rem}
+.naver-cta{display:flex;align-items:center;gap:14px;background:#03C75A;color:#fff;border-radius:14px;padding:16px 20px;margin-bottom:18px;transition:transform .2s,box-shadow .2s,background .2s}
+.naver-cta:hover{background:#02b552;transform:translateY(-1px);box-shadow:0 8px 22px rgba(3,199,90,.32)}
+.naver-cta__icon{width:36px;height:36px;border-radius:8px;background:#fff;color:#03C75A;display:grid;place-items:center;font-family:var(--ff-serif);font-weight:700;font-size:1.2rem;flex:none}
+.naver-cta__text{flex:1;display:flex;flex-direction:column;gap:2px;color:#fff}
+.naver-cta__text strong{color:#fff;font-size:1rem;font-weight:600}
+.naver-cta__text small{color:rgba(255,255,255,.78);font-size:.78rem}
+.naver-cta__arrow{font-size:1.2rem;color:#fff;transition:transform .2s}
+.naver-cta:hover .naver-cta__arrow{transform:translateX(3px)}
+.form-divider{display:flex;align-items:center;gap:12px;margin:18px 0 22px;color:rgba(255,255,255,.32);font-size:.78rem;letter-spacing:.04em}
+.form-divider::before,.form-divider::after{content:"";flex:1;height:1px;background:rgba(255,255,255,.1)}
 
 /* --- Footer --- */
 .footer{background:var(--brown2);color:#fff;padding-top:60px}

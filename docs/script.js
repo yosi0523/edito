@@ -21,11 +21,18 @@ window.addEventListener('scroll', () => {
   document.getElementById('nav')?.classList.toggle('nav--scrolled', window.scrollY > 40);
 });
 
-// Order form (Formspree)
+// Order form (Formspree, with Naver Form fallback)
 document.getElementById('orderForm')?.addEventListener('submit', async e => {
   const form = e.target;
-  if (!form.action || form.action.includes('YOUR_FORM_ID')) return; // not configured yet — fall back to default submit
   e.preventDefault();
+  if (!form.action || form.action.includes('YOUR_FORM_ID')) {
+    const naverUrl = form.dataset.naverUrl;
+    if (naverUrl) {
+      window.open(naverUrl, '_blank', 'noopener');
+      alert('주문은 네이버 폼에서 받고 있어요. 새 창에서 폼을 열었으니 그곳에 다시 작성해 주세요 🙏');
+    }
+    return;
+  }
   const btn = form.querySelector('button[type="submit"]');
   const original = btn.textContent;
   btn.disabled = true;
