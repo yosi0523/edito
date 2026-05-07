@@ -21,10 +21,32 @@ window.addEventListener('scroll', () => {
   document.getElementById('nav')?.classList.toggle('nav--scrolled', window.scrollY > 40);
 });
 
-// Order form demo
-document.getElementById('orderForm')?.addEventListener('submit', e => {
+// Order form (Formspree)
+document.getElementById('orderForm')?.addEventListener('submit', async e => {
+  const form = e.target;
+  if (!form.action || form.action.includes('YOUR_FORM_ID')) return; // not configured yet — fall back to default submit
   e.preventDefault();
-  const d = Object.fromEntries(new FormData(e.target));
-  alert(`문의 접수!\n\n이름: ${d.name}\n연락처: ${d.phone}\n\n빠른 시일 내 연락드리겠습니다 🍪\n(데모 — 실제 문의: 010-6238-1934)`);
-  e.target.reset();
+  const btn = form.querySelector('button[type="submit"]');
+  const original = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = '보내는 중…';
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      alert('문의가 접수되었습니다. 영업일 1일 이내에 연락드릴게요 🍪');
+      form.reset();
+    } else {
+      const data = await res.json().catch(() => ({}));
+      alert(data?.errors?.[0]?.message || '전송에 실패했습니다. 잠시 후 다시 시도해 주세요.');
+    }
+  } catch {
+    alert('네트워크 오류로 전송하지 못했습니다. 카카오톡(@EditO)으로 문의 부탁드립니다.');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = original;
+  }
 });
