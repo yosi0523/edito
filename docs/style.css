@@ -200,6 +200,9 @@ h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:
 .order__left h3{color:#fff;margin-bottom:16px;font-family:var(--ff-serif);font-size:2rem;letter-spacing:-.01em}
 .order__left>p{color:rgba(255,255,255,.55);line-height:1.85;font-size:.95rem}
 .order__left>p i{font-style:italic;color:#F5D49A}
+.order__account{margin-top:24px;padding:18px 20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px}
+.order__account strong{color:#fff;font-size:.95rem}
+.order__account small{display:block;margin-top:8px;color:rgba(255,255,255,.45);font-size:.82rem;line-height:1.7}
 .order__right{padding:56px 52px;border-left:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column;gap:14px}
 .order__channel{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:18px 20px;transition:background .2s;color:#fff}
 .order__channel:hover{background:rgba(255,255,255,.12)}
