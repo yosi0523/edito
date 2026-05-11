@@ -72,130 +72,22 @@ body {
 .login-logo {
     text-align: center;
     margin-bottom: 48px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
 }
 
-/* ── Still Life 로고 ── */
-.logo-symbol {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 12px;
-    height: 70px;
+.logo-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
 }
 
-.logo-cake {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.login-logo h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary);
 }
 
-.cake-candle {
-    width: 3px;
-    height: 12px;
-    background: #5c3d1e;
-    position: relative;
-}
-
-.cake-candle::before {
-    content: '';
-    position: absolute;
-    top: -5px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 5px;
-    height: 5px;
-    background: #d4a054;
-    border-radius: 50% 50% 30% 30%;
-}
-
-.cake-top {
-    width: 28px;
-    height: 18px;
-    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-    background: #8a6a44;
-}
-
-.cake-body {
-    width: 44px;
-    height: 28px;
-    background: #b8956a;
-}
-
-.cake-base {
-    width: 48px;
-    height: 6px;
-    background: #7a5234;
-    border-radius: 0 0 2px 2px;
-}
-
-.logo-fork {
-    width: 3px;
-    height: 52px;
-    background: #5c3d1e;
-    position: relative;
-    border-radius: 2px;
-}
-
-.logo-fork::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 14px;
-    height: 16px;
-    border-top: 1.5px solid #5c3d1e;
-    border-left: 1.5px solid #5c3d1e;
-    border-right: 1.5px solid #5c3d1e;
-    border-radius: 2px 2px 0 0;
-}
-
-.logo-text {
-    text-align: center;
-}
-
-.logo-edit {
-    font-family: 'DM Serif Display', serif;
-    font-size: 42px;
-    letter-spacing: 3px;
-    color: #2a1f14;
-    line-height: 1;
-}
-
-.logo-o-ring {
-    display: inline-block;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: 2px solid #7a5234;
-    line-height: 28px;
-    text-align: center;
-    font-family: 'DM Serif Display', serif;
-    font-size: 22px;
-    color: #7a5234;
-    vertical-align: middle;
-    margin-left: 2px;
-    margin-bottom: 4px;
-}
-
-.logo-divider {
-    width: 60px;
-    height: 1px;
-    background: linear-gradient(to right, transparent, #7a5234, transparent);
-    margin: 8px auto;
-}
-
-.logo-sub {
-    font-family: 'Josefin Sans', sans-serif;
-    font-weight: 100;
-    font-size: 10px;
-    letter-spacing: 5px;
-    color: #8a6a44;
-    text-transform: uppercase;
+.login-logo p {
+    color: var(--text-light);
+    margin-top: 8px;
 }
 
 .google-btn {
