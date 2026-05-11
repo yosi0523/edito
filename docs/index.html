@@ -338,32 +338,33 @@
       </div>
     </div>
 
-    <div class="order__info">
-      <details class="order__detail">
-        <summary>교환 · 반품 안내</summary>
-        <div class="order__detail-body">
+    <div class="order__tabs" id="orderTabs">
+      <div class="order__tabs-header">
+        <button class="order__tab-btn active" data-tab="tab-return">교환 · 반품</button>
+        <button class="order__tab-btn" data-tab="tab-storage">보관 안내</button>
+        <button class="order__tab-btn" data-tab="tab-allergy">알레르기</button>
+        <button class="order__tab-toggle" id="tabToggle" aria-label="안내 펼치기/접기">
+          <span class="order__tab-arrow">▾</span>
+        </button>
+      </div>
+      <div class="order__tabs-body" id="tabBody">
+        <div class="order__tab-panel active" id="tab-return">
           <p>식품 특성상 단순 변심에 의한 교환 · 반품이 불가합니다</p>
           <p>제작 시작 후 주문 취소가 불가합니다</p>
           <p>상품 하자 시 수령 당일 사진과 함께 연락주세요</p>
           <p>배송 중 파손 시 수령 즉시 사진 촬영 후 고객센터로 연락주세요</p>
         </div>
-      </details>
-      <details class="order__detail">
-        <summary>보관 안내</summary>
-        <div class="order__detail-body">
+        <div class="order__tab-panel" id="tab-storage">
           <p>유통기한: 제조일로부터 약 2주 (상온 밀봉 보관 기준)</p>
           <p>개봉 후 밀폐 용기에 보관하고 가급적 빨리 드세요</p>
           <p>장기 보관 시 냉동 보관 후 상온 해동하여 드세요</p>
         </div>
-      </details>
-      <details class="order__detail">
-        <summary>알레르기 안내</summary>
-        <div class="order__detail-body">
+        <div class="order__tab-panel" id="tab-allergy">
           <p>본 제품은 밀, 계란, 우유, 대두, 버터를 사용합니다</p>
           <p>일부 제품에 견과류(아몬드, 피칸 등)가 포함되어 있습니다</p>
           <p>알레르기가 있으신 분은 주문 전 꼭 확인해 주세요</p>
         </div>
-      </details>
+      </div>
     </div>
   </div>
 </section>
