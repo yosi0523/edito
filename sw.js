@@ -1,4 +1,4 @@
-const CACHE_NAME = 'edito-root-v2';
+const CACHE_NAME = 'edito-root-v3';
 const urlsToCache = [
     '/',
     '/index.html',
