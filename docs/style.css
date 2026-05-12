@@ -212,7 +212,7 @@ h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:
 /* --- Order Tabs --- */
 .order__tabs{margin-top:48px}
 .order__tabs-header{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--line)}
-.order__tab-btn{padding:12px 24px;font-family:var(--ff-serif);font-size:.9rem;font-weight:500;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer;transition:color .2s,border-color .2s}
+.order__tab-btn{padding:12px 24px;font-family:var(--ff-sans);font-size:.9rem;font-weight:500;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer;transition:color .2s,border-color .2s}
 .order__tab-btn.active{color:var(--brown2);border-bottom-color:var(--kraft)}
 .order__tab-btn:hover{color:var(--brown2)}
 .order__tab-toggle{margin-left:auto;padding:8px 14px;background:none;border:1px solid var(--line);border-radius:8px;color:var(--muted);cursor:pointer;transition:background .2s,transform .2s;font-size:.8rem}
