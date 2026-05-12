@@ -53,7 +53,7 @@ h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:
 .nav{position:sticky;top:0;z-index:100;background:rgba(253,250,246,.92);backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--line)}
 .nav__inner{max-width:var(--wrap);margin:0 auto;padding:0 24px;height:66px;display:flex;align-items:center}
 .logo{display:flex;align-items:center}
-.logo__img{height:32px;width:auto}
+.logo__img{height:30px;width:auto}
 .logo--light .logo__img{filter:brightness(0) invert(1)}
 .nav__links{display:flex;gap:32px;margin:0 auto}
 .nav__links a{font-size:.9rem;font-weight:500;color:#4A3020;position:relative;padding-bottom:2px}
