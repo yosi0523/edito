@@ -130,7 +130,7 @@ h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:
 .cookie-row svg{filter:drop-shadow(0 2px 4px rgba(0,0,0,.4));flex-shrink:0}
 
 .pcard__body{padding:22px 22px 24px;display:flex;flex-direction:column;gap:12px;flex:1}
-.pcard__body h3{color:var(--brown2)}
+.pcard__body h3{font-family:var(--ff-sans);color:var(--brown2)}
 .pcard__body p{color:var(--muted);font-size:.92rem;line-height:1.65}
 .pcard__foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:14px;border-top:1px solid var(--line)}
 .price{font-family:var(--ff-sans);font-size:1.3rem;font-weight:600;color:var(--brown2)}
@@ -172,7 +172,7 @@ h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:
 .story__ing{margin-top:80px;padding-top:56px;border-top:1px solid var(--line)}
 .story__ing-head{text-align:center;max-width:560px;margin:0 auto 40px}
 .story__ing-head .label{color:var(--kraft)}
-.story__ing-head h3{font-family:var(--ff-serif);font-size:1.9rem;color:var(--brown2);margin:8px 0 10px;letter-spacing:-.01em}
+.story__ing-head h3{font-family:var(--ff-sans);font-size:1.9rem;font-weight:600;color:var(--brown2);margin:8px 0 10px;letter-spacing:-.01em}
 .story__ing-head p{color:var(--muted);font-size:.95rem}
 .ing__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
 .ing__item{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:26px 22px;transition:transform .3s ease,box-shadow .3s ease}
