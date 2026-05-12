@@ -133,7 +133,7 @@ h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:
 .pcard__body h3{color:var(--brown2)}
 .pcard__body p{color:var(--muted);font-size:.92rem;line-height:1.65}
 .pcard__foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:14px;border-top:1px solid var(--line)}
-.price{font-family:var(--ff-serif);font-size:1.3rem;font-weight:600;color:var(--brown2)}
+.price{font-family:var(--ff-sans);font-size:1.3rem;font-weight:600;color:var(--brown2)}
 .price s{font-size:.82em;font-weight:400;color:var(--muted);margin-right:4px}
 .price strong{font-weight:700;color:var(--kraft)}
 .price__cur{font-size:.78em;font-weight:500;margin-right:2px}
