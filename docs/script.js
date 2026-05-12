@@ -21,18 +21,3 @@ window.addEventListener('scroll', () => {
   document.getElementById('nav')?.classList.toggle('nav--scrolled', window.scrollY > 40);
 });
 
-// Order tabs
-const tabWrap = document.getElementById('orderTabs');
-const tabToggle = document.getElementById('tabToggle');
-if (tabWrap && tabToggle) {
-  tabToggle.addEventListener('click', () => tabWrap.classList.toggle('open'));
-  tabWrap.querySelectorAll('.order__tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      tabWrap.querySelectorAll('.order__tab-btn').forEach(b => b.classList.remove('active'));
-      tabWrap.querySelectorAll('.order__tab-panel').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById(btn.dataset.tab)?.classList.add('active');
-      if (!tabWrap.classList.contains('open')) tabWrap.classList.add('open');
-    });
-  });
-}
