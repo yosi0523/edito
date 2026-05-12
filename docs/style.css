@@ -178,7 +178,7 @@ h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:
 .ing__item{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:26px 22px;transition:transform .3s ease,box-shadow .3s ease}
 .ing__item:hover{transform:translateY(-4px);box-shadow:var(--sh2)}
 .ing__icon{font-size:2.2rem;margin-bottom:12px}
-.ing__item h4{color:var(--brown2);margin-bottom:8px}
+.ing__item h4{font-family:var(--ff-sans);color:var(--brown2);margin-bottom:8px}
 .ing__item p{color:var(--muted);font-size:.9rem;line-height:1.65}
 
 /* --- Gift --- */
@@ -197,7 +197,7 @@ h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:
 .order__box{background:linear-gradient(135deg,#2E1A0E,#4A2C17 60%,#5C3520);border-radius:28px;overflow:hidden;box-shadow:var(--sh);display:grid;grid-template-columns:1fr 1fr;align-items:center}
 .order__left{padding:56px 52px;color:#fff}
 .order__left .label{color:rgba(255,255,255,.55)}
-.order__left h3{color:#fff;margin-bottom:16px;font-family:var(--ff-serif);font-size:2rem;letter-spacing:-.01em}
+.order__left h3{color:#fff;margin-bottom:16px;font-family:var(--ff-sans);font-size:2rem;font-weight:600;letter-spacing:-.01em}
 .order__left>p{color:rgba(255,255,255,.55);line-height:1.85;font-size:.95rem}
 .order__left>p i{font-style:italic;color:#F5D49A}
 .order__account{margin-top:24px;padding:18px 20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px}
