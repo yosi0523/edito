@@ -210,18 +210,18 @@ h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:
 
 /* --- Order --- */
 .order{padding:100px 0;background:var(--cream)}
-.order__box{background:linear-gradient(135deg,#2E1A0E,#4A2C17 60%,#5C3520);border-radius:24px;overflow:hidden;box-shadow:var(--sh);display:flex;flex-direction:column}
+.order__box{background:linear-gradient(135deg,#2E1A0E,#4A2C17 60%,#5C3520);border-radius:24px;overflow:hidden;box-shadow:var(--sh);display:flex;flex-direction:column;justify-content:space-between}
 .order__top{padding:36px 32px 0;color:#fff}
 .order__top .label{color:rgba(255,255,255,.55)}
-.order__top h3{color:#fff;margin-bottom:10px;font-family:var(--ff-sans);font-size:1.6rem;font-weight:600;letter-spacing:-.01em}
+.order__top h3{color:#fff;margin-bottom:8px;font-family:var(--ff-sans);font-size:1.6rem;font-weight:600;letter-spacing:-.01em}
 .order__top>p{color:rgba(255,255,255,.5);font-size:.88rem;line-height:1.7}
-.order__channels{padding:24px 32px 0;display:flex;flex-direction:column;gap:10px;flex:1}
+.order__channels{padding:28px 32px 0;display:flex;flex-direction:column;gap:10px}
 .order__channel{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 16px;transition:background .2s;color:#fff}
 .order__channel:hover{background:rgba(255,255,255,.12)}
 .order__channel>span{font-size:1.3rem}
 .order__channel strong{display:block;font-size:.9rem}
 .order__channel small{color:rgba(255,255,255,.45);font-size:.78rem}
-.order__payment{margin:20px 32px 36px;padding:20px 0 0;border-top:1px solid rgba(255,255,255,.1)}
+.order__payment{margin:0 32px 36px;padding:24px 0 0;border-top:1px solid rgba(255,255,255,.1);margin-top:auto}
 .order__payment h4{font-family:var(--ff-sans);font-size:.78rem;font-weight:600;color:rgba(255,255,255,.45);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
 .order__account{margin-bottom:12px}
 .order__bank{color:#fff;font-size:1.05rem;font-weight:600;letter-spacing:.02em;line-height:1.5}
