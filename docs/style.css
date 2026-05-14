@@ -206,9 +206,9 @@ h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:
 /* --- Order --- */
 .order{padding:100px 0;background:var(--cream)}
 .order__box{background:linear-gradient(135deg,#2E1A0E,#4A2C17 60%,#5C3520);border-radius:28px;overflow:hidden;box-shadow:var(--sh);display:grid;grid-template-columns:1fr 1fr;align-items:stretch}
-.order__top{padding:48px 44px;color:#fff;display:flex;flex-direction:column;justify-content:center}
+.order__top{padding:44px;color:#fff;display:flex;flex-direction:column;justify-content:center}
 .order__top .label{color:rgba(255,255,255,.55)}
-.order__top h3{color:#fff;margin-bottom:12px;font-family:var(--ff-sans);font-size:1.8rem;font-weight:600;letter-spacing:-.01em}
+.order__top h3{color:#fff;margin-bottom:10px;font-family:var(--ff-sans);font-size:1.8rem;font-weight:600;letter-spacing:-.01em}
 .order__top>p{color:rgba(255,255,255,.5);font-size:.92rem;line-height:1.7}
 .order__box-right{padding:44px;border-left:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column;gap:12px;justify-content:center}
 .order__channels-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -217,12 +217,10 @@ h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:
 .order__channel>span{font-size:1.3rem}
 .order__channel strong{display:block;font-size:.92rem}
 .order__channel small{color:rgba(255,255,255,.45);font-size:.78rem}
-.order__payment{padding:18px 0 0;border-top:1px solid rgba(255,255,255,.1);margin-top:4px}
-.order__payment h4{font-family:var(--ff-sans);font-size:.78rem;font-weight:600;color:rgba(255,255,255,.45);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
-.order__account{margin-bottom:12px}
-.order__bank{color:#fff;font-size:1.05rem;font-weight:600;letter-spacing:.02em;line-height:1.5}
+.order__account{margin-top:24px;padding:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px}
+.order__bank{color:#fff;font-size:1rem;font-weight:600;letter-spacing:.01em;margin-bottom:10px}
 .order__pay-info{display:flex;flex-wrap:wrap;gap:6px}
-.order__pay-info span{font-size:.75rem;color:rgba(255,255,255,.55);background:rgba(255,255,255,.06);padding:5px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.08)}
+.order__pay-info span{font-size:.75rem;color:rgba(255,255,255,.5);background:rgba(255,255,255,.05);padding:5px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.08)}
 /* --- Naver CTA --- */
 .naver-cta{display:flex;align-items:center;gap:14px;background:#03C75A;color:#fff;border-radius:14px;padding:18px 20px;transition:transform .2s,box-shadow .2s,background .2s}
 .naver-cta:hover{background:#02b552;transform:translateY(-1px);box-shadow:0 8px 22px rgba(3,199,90,.32)}
