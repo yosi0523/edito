@@ -231,7 +231,7 @@ h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:
 .naver-cta__arrow{font-size:1.2rem;color:#fff;transition:transform .2s}
 .naver-cta:hover .naver-cta__arrow{transform:translateX(3px)}
 /* --- Order Notices --- */
-.order__notices{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:64px;padding-top:48px;border-top:1px solid var(--line)}
+.order__notices{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:56px}
 .order__notice{padding:26px 22px;border-radius:16px;display:flex;flex-direction:column;gap:8px}
 .order__notice-icon{font-size:1.4rem;margin-bottom:4px;opacity:.55}
 .order__notice--return{background:#F5EDE2}
