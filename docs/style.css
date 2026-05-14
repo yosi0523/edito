@@ -142,7 +142,7 @@ h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:
 .tag{font-size:.78rem;color:var(--muted);background:var(--cream2);padding:5px 11px;border-radius:999px}
 
 /* --- Order Split Layout --- */
-.order__split{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:start}
+.order__split{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:stretch}
 .order__left .label{margin-bottom:14px}
 .order__left h2{margin-bottom:36px}
 
@@ -210,12 +210,12 @@ h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:
 
 /* --- Order --- */
 .order{padding:100px 0;background:var(--cream)}
-.order__box{background:linear-gradient(135deg,#2E1A0E,#4A2C17 60%,#5C3520);border-radius:24px;overflow:hidden;box-shadow:var(--sh)}
+.order__box{background:linear-gradient(135deg,#2E1A0E,#4A2C17 60%,#5C3520);border-radius:24px;overflow:hidden;box-shadow:var(--sh);display:flex;flex-direction:column}
 .order__top{padding:36px 32px 0;color:#fff}
 .order__top .label{color:rgba(255,255,255,.55)}
 .order__top h3{color:#fff;margin-bottom:10px;font-family:var(--ff-sans);font-size:1.6rem;font-weight:600;letter-spacing:-.01em}
 .order__top>p{color:rgba(255,255,255,.5);font-size:.88rem;line-height:1.7}
-.order__channels{padding:24px 32px 0;display:flex;flex-direction:column;gap:10px}
+.order__channels{padding:24px 32px 0;display:flex;flex-direction:column;gap:10px;flex:1}
 .order__channel{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 16px;transition:background .2s;color:#fff}
 .order__channel:hover{background:rgba(255,255,255,.12)}
 .order__channel>span{font-size:1.3rem}
