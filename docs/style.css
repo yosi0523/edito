@@ -149,6 +149,17 @@ h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:
 .process__step h4{color:var(--brown2);margin-bottom:10px;font-family:var(--ff-sans);font-size:1.18rem;font-weight:600;letter-spacing:-.005em;line-height:1.35}
 .process__step p{color:var(--muted);font-size:.92rem;line-height:1.75}
 .process__note{text-align:center;margin-top:44px;color:var(--muted);font-size:.85rem;letter-spacing:.01em}
+
+/* --- Schedule Notice --- */
+.schedule-notice{display:flex;align-items:flex-start;gap:20px;max-width:640px;margin:-28px auto 72px;padding:28px 32px;background:#fff;border:1px solid var(--line);border-left:3px solid var(--kraft);border-radius:0 16px 16px 0;box-shadow:var(--sh2)}
+.schedule-notice__icon{font-size:1.6rem;flex:none;margin-top:2px}
+.schedule-notice__content h4{font-family:var(--ff-sans);font-size:1.05rem;font-weight:600;color:var(--brown2);margin-bottom:8px}
+.schedule-notice__content>p{color:var(--muted);font-size:.9rem;line-height:1.7;margin-bottom:12px}
+.schedule-notice__content>p em{font-style:normal;color:var(--kraft);font-weight:600}
+.schedule-notice__details{display:flex;flex-direction:column;gap:4px}
+.schedule-notice__details>span{font-size:.88rem;color:var(--brown2);font-weight:500;line-height:1.7}
+.schedule-notice__sub{color:var(--muted)!important;font-weight:400!important;font-size:.82rem!important;margin-top:4px}
+
 .nav--scrolled{box-shadow:0 8px 32px rgba(30,15,5,.06)}
 
 /* --- Story --- */
@@ -265,6 +276,7 @@ h2 .num{font-family:var(--ff-serif);font-size:1.25em;font-weight:500;font-style:
   .gift__img{aspect-ratio:3/2}
   .process__steps{grid-template-columns:1fr;gap:32px;margin-bottom:56px}
   .process__step:not(:last-child)::after{display:none}
+  .schedule-notice{margin:-8px 0 56px;padding:22px 20px;gap:14px}
   .order__notices{grid-template-columns:1fr}
   .order__box{grid-template-columns:1fr}
   .order__left{padding:36px 28px 24px}
