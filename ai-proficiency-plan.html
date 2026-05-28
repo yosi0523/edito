@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>클래식 아트실 AI 숙련도 평가 기준 수립 계획</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root {
+  --nhn-black:  #191919;
+  --nhn-white:  #ffffff;
+  --nhn-blue:   #0F80F6;
+  --nhn-red:    #EB453D;
+  --nhn-green:  #01A058;
+  --nhn-orange: #FF9000;
+  --nhn-yellow: #FCF683;
+  --nhn-brown:  #DAC0A9;
+  --nhn-gray:   #DCDCDC;
+
+  --ink:   #191919;
+  --ink-2: #2e2e2e;
+  --ink-3: #545454;
+  --ink-4: #767676;
+  --ink-5: #a1a1a1;
+  --ink-6: #c8c8c8;
+
+  --surface:    #ffffff;
+  --surface-1:  #f7f7f7;
+  --surface-2:  #efefef;
+
+  --line:        #191919;
+  --line-soft:   #e3e3e3;
+  --line-softer: #ededed;
+
+  --accent:  #0F80F6;
+  --danger:  #EB453D;
+  --success: #01A058;
+
+  --font-sans:    "Pretendard", sans-serif;
+  --font-mono:    "Pretendard", sans-serif;
+  --font-display: "Pretendard", sans-serif;
+
+  --fs-display-1: 56px;
+  --fs-display-2: 40px;
+  --fs-h1: 48px;
+  --fs-h2: 40px;
+  --fs-h3: 20px;
+  --fs-h4: 15px;
+  --fs-lede: 17px;
+  --fs-body: 15px;
+  --fs-body-sm: 13px;
+  --fs-caption: 12px;
+  --fs-micro: 12px;
+
+  --lh-tight:  1.15;
+  --lh-snug:   1.25;
+  --lh-normal: 1.4;
+  --lh-loose:  1.7;
+
+  --max: 800px;
+  --pad-x: 56px;
+  --section-py: 72px;
+
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --dur: 240ms;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-loose);
+  font-weight: 500;
+  color: var(--ink-2);
+  font-feature-settings: "ss01", "cv11", "tnum";
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  background: var(--surface);
+}
+a { color: inherit; text-decoration: none; }
+.mono { font-feature-settings: "tnum"; }
+.tnum { font-feature-settings: "tnum"; }
+
+/* ───── COVER ───── */
+.cover {
+  background:
+    radial-gradient(ellipse 70% 55% at 25% 0%, rgba(15, 128, 246, 0.18), transparent 65%),
+    radial-gradient(ellipse 60% 50% at 90% 100%, rgba(235, 69, 61, 0.10), transparent 60%),
+    var(--ink);
+  color: var(--surface);
+  overflow: hidden;
+  padding: 96px var(--pad-x);
+  min-height: 60vh;
+  display: flex;
+  align-items: stretch;
+}
+.cover-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 80px;
+}
+.cover-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+}
+.cover-head-main { flex: 1; }
+.cover-eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.70);
+  margin-bottom: 24px;
+}
+.cover-title {
+  font-size: var(--fs-display-1);
+  line-height: 1.25;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+  color: var(--surface);
+}
+.cover-summary {
+  margin-top: 28px;
+  font-size: var(--fs-lede);
+  line-height: var(--lh-loose);
+  color: rgba(255,255,255,0.72);
+  font-weight: 500;
+}
+.cover-confidential {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--surface);
+  border: 1px solid rgba(255,255,255,0.40);
+  padding: 6px 10px 6px 22px;
+  position: relative;
+  white-space: nowrap;
+  font-weight: 600;
+}
+.cover-confidential::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--nhn-red);
+}
+.cover-meta {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 48px;
+}
+.cover-meta-item { display: flex; flex-direction: column; gap: 6px; }
+.cover-meta-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+}
+.cover-meta-value {
+  font-size: var(--fs-body);
+  color: var(--surface);
+  font-weight: 600;
+}
+
+/* ───── MAIN ───── */
+main { padding: 0 var(--pad-x); }
+.section { padding: var(--section-py) 0; }
+.section-inner { max-width: var(--max); margin: 0 auto; }
+.section-inner > * { margin-top: 56px; }
+.section-inner > *:first-child { margin-top: 0; }
+.section-inner > .section-tag,
+.section-inner > .section-head { margin-top: 0; }
+
+.section-tag { border-top: 3px solid var(--line); margin-bottom: 28px; min-height: 0; }
+.section-tag > * { display: none !important; }
+
+.section-head { display: block; margin-bottom: 56px; }
+.section-head > h2 { margin-bottom: 24px; }
+.section-head h2 {
+  font-family: var(--font-sans) !important;
+  font-size: var(--fs-h2) !important;
+  line-height: var(--lh-snug) !important;
+  letter-spacing: 0 !important;
+  font-weight: 700 !important;
+  color: var(--ink) !important;
+}
+.section-head h2 .num-prefix {
+  display: inline-block;
+  margin-right: 16px;
+  color: var(--ink-4);
+  font-weight: 700;
+}
+
+.lede {
+  font-size: var(--fs-lede);
+  line-height: var(--lh-loose);
+  letter-spacing: -0.005em;
+  color: var(--ink-3);
+  font-weight: 500;
+}
+.lede + .lede { margin-top: 16px; }
+.lede b { color: var(--ink); font-weight: 700; }
+
+h3, .h3 {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-snug);
+  letter-spacing: 0;
+  font-weight: 700;
+  color: var(--ink);
+}
+.section-inner h3 { margin-top: 56px; margin-bottom: 0; }
+.section-inner h3:first-child { margin-top: 0; }
+
+h4 {
+  font-size: var(--fs-h4);
+  line-height: var(--lh-snug);
+  letter-spacing: 0;
+  font-weight: 700;
+  color: var(--ink);
+}
+.section-inner h4 { margin-top: 36px; margin-bottom: 0; }
+
+p { color: var(--ink-2); }
+strong, b { color: var(--ink); font-weight: 700; }
+
+ul.bul { list-style: none; padding: 0; }
+ul.bul li {
+  position: relative;
+  padding-left: 18px;
+  margin-top: 10px;
+  color: var(--ink-2);
+}
+ul.bul li:first-child { margin-top: 0; }
+ul.bul li::before {
+  content: "·";
+  position: absolute;
+  left: 4px;
+  top: 0;
+  color: var(--ink-4);
+  font-weight: 700;
+  line-height: var(--lh-loose);
+}
+
+/* ───── BLOCK ───── */
+.block > * + * { margin-top: 24px; }
+.block > .callout { margin-top: 32px; }
+
+.block-head {
+  margin-bottom: 20px;
+  padding-bottom: 0;
+  border-bottom: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.block-head h3 {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: var(--lh-snug);
+  letter-spacing: 0;
+  color: var(--ink);
+}
+.block-head .meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  color: var(--ink-4);
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+/* ───── TABLE ───── */
+.table-wrap {
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  overflow-x: auto;
+}
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th {
+  text-align: left;
+  padding: 12px 16px;
+  background: var(--surface-2);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  text-transform: uppercase;
+  letter-spacing: 0;
+  font-weight: 600;
+  white-space: nowrap;
+}
+thead th.num, td.num { text-align: right; font-feature-settings: "tnum"; }
+tbody td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line-softer);
+  color: var(--ink-2);
+  vertical-align: top;
+  font-size: 13.5px;
+}
+tbody tr:last-child td { border-bottom: none; }
+.status-pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0;
+  font-weight: 600;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.status-pill.pill-done   { background: rgba(1, 160, 88, 0.12);  color: var(--success); }
+.status-pill.pill-open   { background: rgba(15, 128, 246, 0.10); color: var(--accent); }
+.status-pill.pill-todo   { background: var(--surface-2);         color: var(--ink-4); }
+
+/* ───── CALLOUT ───── */
+.callout {
+  margin-top: 32px;
+  margin-bottom: 0;
+  padding: 24px 28px;
+  background: rgba(252, 246, 131, 0.30);
+  border-left: none;
+}
+.callout.callout-note      { background: rgba(15, 128, 246, 0.08); }
+.callout.callout-important { background: rgba(235, 69, 61, 0.08); }
+
+.callout .lbl {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  text-transform: uppercase;
+  color: var(--ink-4);
+  margin-bottom: 10px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.callout p {
+  font-size: var(--fs-body);
+  color: var(--ink);
+  line-height: var(--lh-loose);
+}
+.callout p + p { margin-top: 8px; }
+
+/* ───── PART DIVIDER ───── */
+.part-divider {
+  padding: 0 var(--pad-x);
+  margin-top: 120px;
+}
+.part-divider:first-of-type { margin-top: var(--section-py); }
+.part-divider .section-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  width: 100%;
+  background:
+    linear-gradient(115deg, rgba(15, 128, 246, 0.10) 0%, transparent 35%, transparent 65%, rgba(1, 160, 88, 0.06) 100%),
+    var(--ink);
+  color: var(--surface);
+  padding: 40px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.part-divider .part-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.70);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.part-divider h1 {
+  color: var(--surface);
+  letter-spacing: 0;
+  font-size: var(--fs-h1);
+  line-height: var(--lh-snug);
+  font-weight: 700;
+}
+.part-divider .part-meta {
+  display: block;
+  margin-top: 12px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.70);
+  font-weight: 600;
+}
+
+/* ───── SIDE NAV ───── */
+.side-nav {
+  position: fixed;
+  top: 96px;
+  left: max(24px, calc(50% - (var(--max) / 2) - 40px - 200px));
+  z-index: 90;
+  width: 200px;
+  max-height: calc(100vh - 128px);
+  overflow-y: auto;
+}
+.side-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-left: 2px solid var(--line-soft);
+}
+.side-nav-list li { margin: 0; padding: 0; }
+.side-nav-list a {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px;
+  align-items: baseline;
+  padding: 7px 0 7px 12px;
+  margin-left: -2px;
+  border-left: 2px solid transparent;
+  color: var(--ink-4);
+  transition: color var(--dur) var(--ease), border-left-color var(--dur) var(--ease);
+}
+.side-nav-list a:hover { color: var(--ink); }
+.side-nav-list a.active { color: var(--nhn-blue); border-left-color: var(--nhn-blue); }
+.side-nav-list a.active .sn-num { color: var(--nhn-blue); }
+.side-nav-list a.active .sn-title { color: var(--nhn-blue); }
+.side-nav-list .sn-num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  color: var(--ink-5);
+  letter-spacing: 0;
+}
+.side-nav-list .sn-title {
+  font-size: var(--fs-body-sm);
+  font-weight: 500;
+  line-height: var(--lh-snug);
+  letter-spacing: -0.005em;
+  color: var(--ink-4);
+}
+.side-nav-list a.sn-h1 { color: var(--ink-4); }
+.side-nav-list a.sn-h1 .sn-num {
+  font-size: 11px;
+  letter-spacing: 0;
+  font-weight: 700;
+  color: var(--ink-4);
+  text-transform: uppercase;
+}
+.side-nav-list a.sn-h1 .sn-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-4);
+}
+.side-nav-list a.sn-h1.active,
+.side-nav-list a.sn-h1.active .sn-num,
+.side-nav-list a.sn-h1.active .sn-title { color: var(--nhn-blue); }
+.side-nav-list:has(a.sn-h1) a:not(.sn-h1) { padding-left: 20px; }
+@media (max-width: 1499px) { .side-nav { display: none; } }
+
+/* ───── SCROLL TOP ───── */
+.scroll-top {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+  color: var(--surface);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity var(--dur) var(--ease),
+              transform var(--dur) var(--ease),
+              background var(--dur) var(--ease);
+  box-shadow: 0 6px 20px rgba(25, 25, 25, 0.18),
+              0 1px 2px rgba(25, 25, 25, 0.08);
+  z-index: 100;
+}
+.scroll-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.scroll-top:hover { background: var(--ink-2); }
+.scroll-top:active { transform: translateY(0) scale(0.96); }
+.scroll-top:focus-visible {
+  outline: 2px solid var(--nhn-blue);
+  outline-offset: 2px;
+}
+@media (max-width: 880px) {
+  .scroll-top { right: 20px; bottom: 20px; }
+}
+
+/* ───── FOOTER ───── */
+.footer {
+  background: var(--surface);
+  border-top: 1px solid var(--line-soft);
+  padding: 28px var(--pad-x);
+  margin-top: 160px;
+}
+.footer-inner { max-width: var(--max); margin: 0 auto; }
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+}
+.footer-left { flex: 1; }
+.footer-line { display: flex; gap: 4px; align-items: baseline; }
+.footer-line-sub { margin-top: 4px; color: var(--ink-3); font-size: var(--fs-micro); }
+.footer-line-sub .dot { color: var(--ink-5); margin: 0 2px; }
+.footer-doc-title {
+  font-size: var(--fs-body-sm);
+  font-weight: 700;
+  color: var(--ink);
+}
+.footer-confidential {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  border: 1px solid var(--line-soft);
+  padding: 6px 10px 6px 22px;
+  position: relative;
+  white-space: nowrap;
+  font-weight: 600;
+}
+.footer-confidential::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--nhn-red);
+}
+.footer-disclaimer {
+  margin-top: 24px;
+  font-size: var(--fs-micro);
+  color: var(--ink-4);
+  max-width: 720px;
+  line-height: var(--lh-loose);
+}
+.footer-copyright {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--surface-1);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  color: var(--ink-5);
+  letter-spacing: 0;
+}
+
+@media (max-width: 880px) {
+  :root { --pad-x: 24px; --section-py: 64px; }
+  .cover { padding: 64px var(--pad-x); }
+  .cover-title { font-size: 40px; }
+  .cover-meta { grid-template-columns: 1fr; gap: 16px; }
+  .footer { margin-top: 96px; }
+  .part-divider .section-inner { padding: 28px; }
+  .part-divider h1 { font-size: 36px; }
+  .section-head h2 { font-size: 32px !important; }
+}
+</style>
+</head>
+<body>
+  <!-- COVER -->
+  <section class="cover" id="cover">
+    <div class="cover-inner">
+      <div class="cover-head">
+        <div class="cover-head-main">
+          <div class="cover-eyebrow">Classic Art Team — AI Proficiency Evaluation Plan</div>
+          <h1 class="cover-title">클래식 아트실 AI 숙련도 평가 기준 수립 계획</h1>
+          <p class="cover-summary">
+            클래식 아트실 구성원의 AI 활용 숙련도를 인사·보상 평가에 반영하기 위한<br>
+            7단계 수립 계획. 하반기 평가 사이클 안에 도입을 목표로 한다.
+          </p>
+        </div>
+        <span class="cover-confidential">대외비</span>
+      </div>
+      <div class="cover-meta">
+        <div class="cover-meta-item"><span class="cover-meta-label">Date</span><span class="cover-meta-value mono">-</span></div>
+        <div class="cover-meta-item"><span class="cover-meta-label">Team</span><span class="cover-meta-value">-</span></div>
+        <div class="cover-meta-item"><span class="cover-meta-label">Author</span><span class="cover-meta-value">-</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIDE NAV -->
+  <aside class="side-nav" aria-label="Section navigation">
+    <ul class="side-nav-list">
+      <li><a href="#part-1" data-target="part-1" class="sn-h1"><span class="sn-num">PART I</span><span class="sn-title">사전 단계</span></a></li>
+      <li><a href="#exec" data-target="exec"><span class="sn-num">01</span><span class="sn-title">계획 개요</span></a></li>
+      <li><a href="#phase1" data-target="phase1"><span class="sn-num">02</span><span class="sn-title">목적·범위 정의</span></a></li>
+      <li><a href="#phase2" data-target="phase2"><span class="sn-num">03</span><span class="sn-title">현황 진단</span></a></li>
+
+      <li><a href="#part-2" data-target="part-2" class="sn-h1"><span class="sn-num">PART II</span><span class="sn-title">기준 설계</span></a></li>
+      <li><a href="#phase3" data-target="phase3"><span class="sn-num">04</span><span class="sn-title">역량 차원 정의</span></a></li>
+      <li><a href="#phase4" data-target="phase4"><span class="sn-num">05</span><span class="sn-title">숙련도 레벨 루브릭</span></a></li>
+      <li><a href="#phase5" data-target="phase5"><span class="sn-num">06</span><span class="sn-title">평가 방법·공유 가산점</span></a></li>
+
+      <li><a href="#part-3" data-target="part-3" class="sn-h1"><span class="sn-num">PART III</span><span class="sn-title">실행과 운영</span></a></li>
+      <li><a href="#phase6" data-target="phase6"><span class="sn-num">07</span><span class="sn-title">파일럿 운영</span></a></li>
+      <li><a href="#phase7" data-target="phase7"><span class="sn-num">08</span><span class="sn-title">정식 도입과 운영</span></a></li>
+      <li><a href="#decision" data-target="decision"><span class="sn-num">09</span><span class="sn-title">의사결정 현황</span></a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <!-- ───── PART I ───── -->
+    <section class="part-divider" id="part-1">
+      <div class="section-inner">
+        <div class="part-eyebrow">PART I</div>
+        <h1>사전 단계</h1>
+        <span class="part-meta">Foundation — 목적 정의부터 현황 진단까지</span>
+      </div>
+    </section>
+
+    <!-- 01 계획 개요 -->
+    <section class="section" id="exec">
+      <div class="section-inner">
+        <div class="section-tag"></div>
+        <div class="section-head">
+          <h2><span class="num-prefix">01</span>계획 개요</h2>
+          <p class="lede">
+            클래식 아트실의 AI 숙련도를 <b>인사·보상 평가에 직접 반영</b>하기 위해 7단계로 기준을 수립한다.
+            적용 대상은 <b>아트실 전원</b>이며, 도입 시점은 <b>하반기 평가 사이클 안</b>으로 한다.
+          </p>
+          <p class="lede">
+            본 계획의 중심에는 두 가지 원칙이 있다. 첫째 <b>객관성</b>—보상에 반영되는 만큼 평가지의 신뢰도가 높아야 한다.
+            둘째 <b>공유 인센티브</b>—개인 성과뿐 아니라 노하우를 팀에 전파한 사람에게 가산점을 부여해
+            "혼자 잘하는 사람"이 아닌 "함께 발전시키는 사람"이 평가에서 보상받게 만든다.
+          </p>
+        </div>
+
+        <div class="block">
+          <div class="block-head"><h3>전체 단계 한눈에 보기</h3></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>단계</th>
+                  <th>이름</th>
+                  <th class="num">기간</th>
+                  <th>핵심 산출물</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Phase 1</td><td>목적·범위 정의</td><td class="num">1주</td><td>평가 헌장</td></tr>
+                <tr><td>Phase 2</td><td>현황 진단</td><td class="num">2주</td><td>현황 보고서</td></tr>
+                <tr><td>Phase 3</td><td>역량 차원 정의</td><td class="num">2주</td><td>차원 매트릭스</td></tr>
+                <tr><td>Phase 4</td><td>숙련도 레벨 루브릭</td><td class="num">1주</td><td>레벨 루브릭</td></tr>
+                <tr><td>Phase 5</td><td>평가 방법·공유 가산점</td><td class="num">2주</td><td>평가지 + 가산점 규정</td></tr>
+                <tr><td>Phase 6</td><td>파일럿 운영</td><td class="num">3~4주</td><td>운영 보고서</td></tr>
+                <tr><td>Phase 7</td><td>정식 도입·운영</td><td class="num">지속</td><td>운영 가이드</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="lbl">Key Takeaway</div>
+          <p>총 <b>11~12주</b>의 준비 기간이 필요하다. 하반기 평가 일정에서 역산해 <b>지금부터 Phase 1을 곧바로 착수</b>해야 캘리브레이션 워크숍을 평가 시작 전에 마칠 수 있다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 목적·범위 정의 -->
+    <section class="section" id="phase1">
+      <div class="section-inner">
+        <div class="section-tag"></div>
+        <div class="section-head">
+          <h2><span class="num-prefix">02</span>목적·범위 정의</h2>
+          <p class="lede">
+            평가의 용도·대상·결과 활용 세 가지가 가장 먼저 정해져야 한다.
+            이번 계획에서는 <b>세 항목 모두 의사결정이 완료</b>되었고, 품질 기준 연계 하나가 후속 검토 대상으로 남아 있다.
+          </p>
+        </div>
+
+        <div class="block">
+          <div class="block-head"><h3>확정된 의사결정 사항</h3></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>항목</th>
+                  <th>확정 내용</th>
+                  <th>다음 단계 영향</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>평가 강도</td>
+                  <td><b>인사·보상에 직접 반영</b></td>
+                  <td>객관 평가 비중 80% 이상 구성</td>
+                </tr>
+                <tr>
+                  <td>적용 범위</td>
+                  <td><b>아트실 전원 동일 기준</b></td>
+                  <td>루브릭 단일안으로 설계</td>
+                </tr>
+                <tr>
+                  <td>도입 시점</td>
+                  <td><b>하반기 평가 사이클 안</b></td>
+                  <td>역산 일정으로 즉시 착수</td>
+                </tr>
+                <tr>
+                  <td>품질 기준 연계</td>
+                  <td>후속 검토 (NDS 적합도 지표화 여부)</td>
+                  <td>Phase 3 차원 정의에서 다시 다룸</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="callout callout-important">
+          <div class="lbl">Important</div>
+          <p>보상에 직접 반영되는 만큼, 평가 결과 이의제기 절차와 재검토 프로세스를 평가 헌장에 미리 명문화해야 한다. 사이클 도중 규칙을 바꾸면 신뢰가 무너진다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 현황 진단 -->
+    <section class="section" id="phase2">
+      <div class="section-inner">
+        <div class="section-tag"></div>
+        <div class="section-head">
+          <h2><span class="num-prefix">03</span>현황 진단</h2>
+          <p class="lede">
+            루브릭을 설계하기 전에 <b>아트실의 현재 위치</b>를 가시화한다.
+            어떤 도구를 누가 어떻게 쓰고 있는지, 어디서 막히는지, 누가 이미 동료에게 노하우를 나누고 있는지를 2주 안에 수집한다.
+          </p>
+        </div>
+
+        <h3>주요 활동</h3>
+        <ul class="bul">
+          <li><b>도구 인벤토리</b> — Midjourney·Stable Diffusion·Firefly·Runway·ChatGPT·Figma AI 등 실제 사용 도구 표로 정리</li>
+          <li><b>인터뷰 5~8명</b> — 직무별 활용 워크플로우, 막히는 지점, 동료 공유 경험 청취</li>
+          <li><b>케이스 수집</b> — 잘 쓴 사례 5건, 실패·한계 사례 5건</li>
+          <li><b>공유 활동 매핑</b> — 사내 채널·세미나·1:1 멘토링 등 비공식 공유 활동을 식별 (Phase 5 가산점의 기초)</li>
+          <li><b>외부 벤치마크</b> — 국내외 디자인 조직의 AI 평가 체계 1~2건 조사</li>
+        </ul>
+
+        <div class="callout">
+          <div class="lbl">So What</div>
+          <p>현황 진단에서 드러난 <b>실제 사용 패턴과 공유 행동</b>이 역량 차원과 가산점 규정의 후보가 된다. 책상 위 이론이 아니라 아트실에서 일어나는 일을 기준에 담아야 평가가 살아 움직인다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───── PART II ───── -->
+    <section class="part-divider" id="part-2">
+      <div class="section-inner">
+        <div class="part-eyebrow">PART II</div>
+        <h1>기준 설계</h1>
+        <span class="part-meta">Criteria Design — 차원·레벨·공유 가산점</span>
+      </div>
+    </section>
+
+    <!-- 04 역량 차원 정의 -->
+    <section class="section" id="phase3">
+      <div class="section-inner">
+        <div class="section-tag"></div>
+        <div class="section-head">
+          <h2><span class="num-prefix">04</span>역량 차원 정의</h2>
+          <p class="lede">
+            "AI 숙련도"는 단일 점수가 아닌 <b>여러 차원의 합</b>이다.
+            아트실 업무 특성에 맞춰 7개 축을 잡고, 그중 <b>"확산·공유"는 기본 차원에 포함시키는 동시에 가산점 메커니즘으로도 별도 보정</b>한다(다음 섹션 참고).
+          </p>
+        </div>
+
+        <div class="block">
+          <div class="block-head"><h3>차원 매트릭스 (초안)</h3></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th class="num">#</th>
+                  <th>차원</th>
+                  <th>설명</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td class="num">1</td><td>도구 활용도</td><td>주요 AI 도구의 기능을 깊이 다루는 능력</td></tr>
+                <tr><td class="num">2</td><td>프롬프트 설계</td><td>의도를 결과물로 끌어내는 프롬프트 구성력</td></tr>
+                <tr><td class="num">3</td><td>큐레이션·후보정</td><td>생성물 중 선택·합성·보정하는 안목</td></tr>
+                <tr><td class="num">4</td><td>워크플로우 통합</td><td>실제 업무 파이프라인에 AI를 끼워 넣는 역량</td></tr>
+                <tr><td class="num">5</td><td>효율성</td><td>Time-to-deliver, 반복 작업 자동화 정도</td></tr>
+                <tr><td class="num">6</td><td>윤리·저작권</td><td>학습 데이터·라이선스·표절 리스크 인지</td></tr>
+                <tr><td class="num">7</td><td><b>확산·공유</b></td><td>가이드 작성, 멘토링, 사내 세미나, 채널 공유 등 팀 전파 활동</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="callout callout-note">
+          <div class="lbl">Note</div>
+          <p>"품질 적합도(NDS 적합도)" 차원은 의사결정 후속 검토 사항으로 보류했다. 차원으로 넣을지, 산출물 리뷰 시 체크리스트로만 활용할지 Phase 3 회의에서 확정한다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 숙련도 레벨 루브릭 -->
+    <section class="section" id="phase4">
+      <div class="section-inner">
+        <div class="section-tag"></div>
+        <div class="section-head">
+          <h2><span class="num-prefix">05</span>숙련도 레벨 루브릭</h2>
+          <p class="lede">
+            각 역량 차원을 <b>5단계 루브릭</b>(L0~L4)으로 환산해, 평가자가 모호함 없이 점수를 매기게 한다.
+            각 레벨에는 관찰 가능한 행동 또는 산출물 예시를 한두 개 붙여 해석 편차를 줄인다.
+          </p>
+        </div>
+
+        <div class="block">
+          <div class="block-head"><h3>레벨 정의 — 공통 골격</h3></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>레벨</th>
+                  <th>명칭</th>
+                  <th>관찰 가능한 행동</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>L0</td><td>인지</td><td>도구 이름·용도만 안다</td></tr>
+                <tr><td>L1</td><td>기초</td><td>가이드를 보고 따라 한다</td></tr>
+                <tr><td>L2</td><td>활용</td><td>본인 업무에 일상적으로 적용한다</td></tr>
+                <tr><td>L3</td><td>능숙</td><td>비표준 케이스를 해결하고 양산 품질을 낸다</td></tr>
+                <tr><td>L4</td><td>선도</td><td>팀 표준·가이드를 만들고 타인을 가르친다</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="block-head"><h3>"확산·공유" 차원의 특별 정의</h3></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>레벨</th>
+                  <th>대표 행동</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>L0</td><td>본인 작업에만 사용</td></tr>
+                <tr><td>L1</td><td>요청 시 즉답으로 도와줌</td></tr>
+                <tr><td>L2</td><td>채널·DM에 정리된 팁을 정기 공유</td></tr>
+                <tr><td>L3</td><td>사내 세미나·핸즈온을 직접 운영</td></tr>
+                <tr><td>L4</td><td>팀 공식 가이드 작성·운영, 멘티의 레벨업이 측정됨</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="lbl">Implication</div>
+          <p>"확산·공유"는 정성 평가가 쉬운 영역이라 루브릭 행동 예시를 가장 구체적으로 명문화한다. <b>측정 가능성</b>이 부족하면 사이드 트랙이 되기 쉽고, 그러면 보상 연계에 흠집이 난다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 평가 방법·공유 가산점 -->
+    <section class="section" id="phase5">
+      <div class="section-inner">
+        <div class="section-tag"></div>
+        <div class="section-head">
+          <h2><span class="num-prefix">06</span>평가 방법·공유 가산점</h2>
+          <p class="lede">
+            단일 방법으로는 신뢰도가 낮다. <b>자기·리더·동료·산출물·실기</b> 5종 평가를 조합하고,
+            여기에 <b>공유·확산 활동에 대한 가산점</b>을 별도로 얹는다.
+            "혼자 잘하는 L4"보다 "팀을 함께 끌어올리는 L4"가 더 높은 최종 점수를 받게 만드는 것이 핵심.
+          </p>
+        </div>
+
+        <div class="block">
+          <div class="block-head"><h3>기본 평가 방법과 비중 (예시)</h3></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>방법</th>
+                  <th class="num">비중</th>
+                  <th>비고</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>자기평가</td><td class="num">15%</td><td>루브릭 체크리스트</td></tr>
+                <tr><td>리더 평가</td><td class="num">35%</td><td>정성 + 점수</td></tr>
+                <tr><td>동료 평가 (2~3인)</td><td class="num">20%</td><td>익명, 360도</td></tr>
+                <tr><td>산출물 포트폴리오</td><td class="num">20%</td><td>최근 6개월 3건</td></tr>
+                <tr><td>실기 과제</td><td class="num">10%</td><td>표준 브리프</td></tr>
+                <tr><td><b>합계</b></td><td class="num"><b>100%</b></td><td>기본 점수</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="block-head"><h3>공유 가산점 (Bonus) — 별도 트랙</h3></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>활동</th>
+                  <th class="num">단위 점수</th>
+                  <th>검증</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>사내 세미나·핸즈온 발표 (1회)</td><td class="num">+3p</td><td>참석자 사인 또는 녹화</td></tr>
+                <tr><td>팀 공식 가이드·SOP 작성</td><td class="num">+5p</td><td>리더 검토 후 채택</td></tr>
+                <tr><td>채널·문서에 재사용 가능한 팁 공유 (월 정기)</td><td class="num">+1p / 월</td><td>채널 로그</td></tr>
+                <tr><td>멘토링 (멘티 레벨 상승 시)</td><td class="num">+4p</td><td>멘티 평가 결과 변화</td></tr>
+                <tr><td>다른 부서 협업 지원 (요청 기반)</td><td class="num">+2p</td><td>요청자 사인</td></tr>
+                <tr><td><b>가산점 상한</b></td><td class="num"><b>+15p</b></td><td>기본 100점 위에 최대 +15p</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="lbl">Highlight</div>
+          <p>가산점은 <b>"기본 100점 만점 외 별도 트랙"</b>으로 설계해, 본인 숙련도가 낮아도 공유 활동만으로 점수를 끌어올릴 수 있게 한다. 단, 상한 +15p로 둬서 공유 활동이 본업을 가리지 않도록 균형을 잡는다.</p>
+        </div>
+
+        <div class="callout callout-note">
+          <div class="lbl">Note</div>
+          <p>가산점 항목·점수는 파일럿 운영에서 실제 측정 가능성을 확인한 뒤 보정한다. 너무 후하면 인플레가 발생하고, 너무 박하면 동기부여가 안 된다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───── PART III ───── -->
+    <section class="part-divider" id="part-3">
+      <div class="section-inner">
+        <div class="part-eyebrow">PART III</div>
+        <h1>실행과 운영</h1>
+        <span class="part-meta">Execution — 파일럿부터 지속 운영까지</span>
+      </div>
+    </section>
+
+    <!-- 07 파일럿 운영 -->
+    <section class="section" id="phase6">
+      <div class="section-inner">
+        <div class="section-tag"></div>
+        <div class="section-head">
+          <h2><span class="num-prefix">07</span>파일럿 운영</h2>
+          <p class="lede">
+            완성도가 높아 보여도 실제로 적용해 보기 전엔 알 수 없다.
+            자원자 5~8명을 대상으로 <b>3~4주의 파일럿</b>을 돌려, 루브릭 문구와 가산점 점수를 보정한다.
+          </p>
+        </div>
+
+        <h3>주요 활동</h3>
+        <ul class="bul">
+          <li><b>평가자 캘리브레이션 워크숍</b> — 동일 산출물을 여러 평가자가 매겨보고 편차 분석</li>
+          <li><b>가산점 시뮬레이션</b> — 최근 6개월 공유 활동을 가산점으로 환산해 인플레/디플레 여부 확인</li>
+          <li><b>피평가자 피드백</b> — 루브릭 표현이 모호하지 않은지, 빠진 차원·가산점 항목은 없는지 청취</li>
+          <li><b>가중치 보정</b> — 자기·동료·리더 평가 간 상관계수를 보고 비중 재조정</li>
+        </ul>
+
+        <div class="callout callout-important">
+          <div class="lbl">Important</div>
+          <p>캘리브레이션 워크숍을 생략하면, 같은 산출물을 두 평가자가 L2와 L4로 매기는 일이 발생한다. <b>최소 1회는 필수</b>이며, 이상적으로는 매 평가 사이클 시작 전 30분 워크숍으로 정착시킨다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 08 정식 도입과 운영 -->
+    <section class="section" id="phase7">
+      <div class="section-inner">
+        <div class="section-tag"></div>
+        <div class="section-head">
+          <h2><span class="num-prefix">08</span>정식 도입과 운영</h2>
+          <p class="lede">
+            파일럿 결과를 반영한 후 정식 운영에 들어간다. <b>도입 시점은 하반기 평가 사이클</b>이며,
+            결과는 인사·보상에 직접 반영된다. 매년 도구·시장 변화에 맞춰 차원과 가산점을 갱신한다.
+          </p>
+        </div>
+
+        <div class="block">
+          <div class="block-head"><h3>운영 캘린더 (하반기 평가 기준 역산)</h3></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>시점</th>
+                  <th>활동</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>평가 시작 −12주</td><td>Phase 1~2 (목적 정의 + 현황 진단)</td></tr>
+                <tr><td>평가 시작 −9주</td><td>Phase 3~4 (차원 + 루브릭 확정)</td></tr>
+                <tr><td>평가 시작 −7주</td><td>Phase 5 (평가지 + 공유 가산점 규정)</td></tr>
+                <tr><td>평가 시작 −5주</td><td>Phase 6 파일럿 시작</td></tr>
+                <tr><td>평가 시작 −2주</td><td>평가자 캘리브레이션 워크숍</td></tr>
+                <tr><td>평가 시작</td><td>자기평가·동료 평가 오픈</td></tr>
+                <tr><td>평가 +2주</td><td>리더 평가, 산출물 리뷰, 가산점 집계</td></tr>
+                <tr><td>평가 +4주</td><td>결과 통합 + 1:1 피드백 + 이의제기 기간</td></tr>
+                <tr><td>연 1회</td><td>차원·루브릭·가산점·도구 인벤토리 리프레시</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="lbl">Key Takeaway</div>
+          <p>AI 도구·시장 변화는 1년이면 차원 자체가 낡는다. <b>매년 리프레시</b>를 캘린더에 못 박지 않으면, 평가 기준이 현실과 어긋난다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 09 의사결정 현황 -->
+    <section class="section" id="decision">
+      <div class="section-inner">
+        <div class="section-tag"></div>
+        <div class="section-head">
+          <h2><span class="num-prefix">09</span>의사결정 현황</h2>
+          <p class="lede">
+            본 계획에 영향을 주는 4가지 핵심 의사결정 중 <b>3가지가 확정</b>되었고, 1가지는 후속 검토 중이다.
+            확정된 항목 기준으로 Phase 1~2 착수가 가능하며, 후속 검토 항목은 Phase 3 안에서 결론을 낸다.
+          </p>
+        </div>
+
+        <div class="block">
+          <div class="block-head"><h3>4대 의사결정 상태</h3></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th class="num">#</th>
+                  <th>항목</th>
+                  <th>상태</th>
+                  <th>결정</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="num">1</td>
+                  <td>평가 강도</td>
+                  <td><span class="status-pill pill-done">확정</span></td>
+                  <td>인사·보상에 <b>직접 반영</b></td>
+                </tr>
+                <tr>
+                  <td class="num">2</td>
+                  <td>대상 범위</td>
+                  <td><span class="status-pill pill-done">확정</span></td>
+                  <td>아트실 <b>전원 동일 기준</b></td>
+                </tr>
+                <tr>
+                  <td class="num">3</td>
+                  <td>타임라인</td>
+                  <td><span class="status-pill pill-done">확정</span></td>
+                  <td><b>하반기 평가 사이클</b> 안 도입</td>
+                </tr>
+                <tr>
+                  <td class="num">4</td>
+                  <td>품질 기준 연계 (NDS 적합도)</td>
+                  <td><span class="status-pill pill-open">검토 중</span></td>
+                  <td>차원으로 vs 체크리스트로 — Phase 3에서 결론</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="block-head"><h3>추가 합의 사항</h3></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>항목</th>
+                  <th>합의 내용</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>공유·확산 인센티브</td>
+                  <td>"혼자 잘하는 사람"이 아닌 "함께 발전시키는 사람"이 평가에서 보상받도록, <b>기본 점수 외 별도 가산점 트랙</b>(최대 +15p)을 설계</td>
+                </tr>
+                <tr>
+                  <td>가산점 메커니즘</td>
+                  <td>세미나·가이드·채널 공유·멘토링·부서 협업 5종 활동을 점수화. 단 상한을 둬 본업을 가리지 않게 균형</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="lbl">So What</div>
+          <p>4번 항목(품질 기준 연계)은 보류해도 Phase 1~2는 즉시 착수 가능하다. <b>지금부터 Phase 1을 시작</b>하고, Phase 3 회의에서 NDS 적합도를 차원·체크리스트 중 어느 쪽으로 다룰지 함께 확정한다.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-row">
+        <div class="footer-left">
+          <div class="footer-line">
+            <span class="footer-doc-title">클래식 아트실 AI 숙련도 평가 기준 수립 계획</span>
+          </div>
+          <div class="footer-line footer-line-sub">
+            <span>-</span><span class="dot">·</span>
+            <span>-</span><span class="dot">·</span>
+            <span class="mono">-</span>
+          </div>
+        </div>
+        <div class="footer-right">
+          <span class="footer-confidential">대외비</span>
+        </div>
+      </div>
+      <p class="footer-disclaimer">
+        본 문서는 NHN의 대외비 자료입니다. 허가된 사용자 이외의 접근 및 배포를 금지하며, 이를 위반하는 경우 인사 및 민형사상 책임을 질 수 있습니다.
+      </p>
+      <div class="footer-copyright">© NHN Corp. All Rights Reserved.</div>
+    </div>
+  </footer>
+
+  <button class="scroll-top" type="button" aria-label="맨 위로">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <path d="M7 11V3M7 3L3 7M7 3L11 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+<script>
+  // SIDE NAV — anchor pin + active section tracking
+  document.addEventListener('DOMContentLoaded', function() {
+    const nav = document.querySelector('.side-nav');
+    const links = document.querySelectorAll('.side-nav-list a');
+    const map = {};
+    links.forEach(a => { map[a.dataset.target] = a; });
+    const sections = Object.keys(map).map(id => document.getElementById(id)).filter(Boolean);
+    const firstSection = sections[0];
+    const isPartFirst = firstSection && firstSection.classList.contains('part-divider');
+    const anchorEl = isPartFirst ? firstSection : (firstSection?.querySelector('h1, h2') || firstSection);
+    const PIN_TOP = 32;
+
+    function getAnchorY() { return anchorEl.getBoundingClientRect().top + window.scrollY; }
+    function update() {
+      const y = window.scrollY + window.innerHeight * 0.3;
+      let active = sections[0];
+      for (const s of sections) { if (s.offsetTop <= y) active = s; }
+      links.forEach(a => a.classList.remove('active'));
+      if (active && map[active.id]) map[active.id].classList.add('active');
+      if (nav && anchorEl) {
+        const anchorY = getAnchorY();
+        nav.style.top = Math.max(PIN_TOP, anchorY - window.scrollY) + 'px';
+      }
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(update);
+    window.addEventListener('load', update);
+  });
+
+  // SCROLL TOP button
+  document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.querySelector('.scroll-top');
+    if (!btn) return;
+    const SHOW_AFTER = Math.max(600, window.innerHeight * 0.6);
+    function toggle() {
+      btn.classList.toggle('visible', window.scrollY > SHOW_AFTER);
+    }
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    window.addEventListener('scroll', toggle, { passive: true });
+    window.addEventListener('resize', toggle);
+    toggle();
+  });
+
+  // FOOTER — auto-hide empty meta
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.footer-line-sub').forEach(line => {
+      Array.from(line.children).forEach(el => {
+        if (!el.classList.contains('dot') && el.textContent.trim() === '-') el.remove();
+      });
+      let kids = Array.from(line.children);
+      for (let i = kids.length - 1; i >= 0; i--) {
+        const el = kids[i];
+        if (!el.classList.contains('dot')) continue;
+        const p = el.previousElementSibling, n = el.nextElementSibling;
+        if (!p || !n || p.classList.contains('dot') || n.classList.contains('dot')) el.remove();
+      }
+    });
+  });
+</script>
+</body>
+</html>
